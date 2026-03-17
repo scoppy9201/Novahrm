@@ -1,8 +1,6 @@
-# NovaHRM – Modern Human Resource Management System
-
-**NovaHRM** is a modern, open-source **Human Resource Management (HRM)** system built with **Laravel** and **FilamentPHP**.
-
-It is designed with a clean architecture, scalable structure, and developer-friendly approach to help teams build and customize HR systems quickly.
+<p align="center">
+  <strong>Modern Human Resource Management System</strong>
+</p>
 
 <p align="center">
   <img src="img.png" alt="HRM System Preview"
@@ -10,6 +8,21 @@ It is designed with a clean architecture, scalable structure, and developer-frie
        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
        0 10px 10px -5px rgba(0, 0, 0, 0.04);" />
 </p>
+
+<p align="center">
+<a href="#"><img src="https://img.shields.io/badge/Laravel-12.x-FF2D20?style=flat&logo=laravel" alt="Laravel Version"></a>
+<a href="#"><img src="https://img.shields.io/badge/PHP-8.2+-777BB4?style=flat&logo=php" alt="PHP Version"></a>
+<a href="#"><img src="https://img.shields.io/badge/Filament-3.x-F59E0B?style=flat" alt="Filament"></a>
+<a href="#"><img src="https://img.shields.io/badge/License-MIT-green" alt="License"></a>
+</p>
+
+---
+
+## About NovaHRM
+
+**NovaHRM** is a modern, open-source **Human Resource Management (HRM)** system built with **Laravel** and **FilamentPHP**.
+
+It is designed with a clean architecture, scalable structure, and developer-friendly approach to help teams build and customize HR systems quickly.
 
 ---
 
@@ -138,7 +151,7 @@ No traditional Blade-based admin UI is used.
 
 ---
 
-## 🛠 Use Cases
+## Use Cases
 
 * HRM systems for companies
 * Internal management tools
@@ -147,7 +160,7 @@ No traditional Blade-based admin UI is used.
 
 ---
 
-## 🛣 Roadmap
+## Roadmap
 
 * Recruitment module
 * Performance review
