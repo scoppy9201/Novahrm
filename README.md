@@ -94,7 +94,7 @@ NovaHRM provides a solid foundation for building full-featured HRM or ERP system
 ## Installation
 
 ```bash
-git clone https://github.com/your-username/novahrm.git
+git clone https://github.com/scoppy9201/Novahrm
 cd novahrm
 
 composer install
