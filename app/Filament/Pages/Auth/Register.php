@@ -67,6 +67,4 @@ class Register extends BaseRegister
 
         return $employee;
     }
-
-
 }
