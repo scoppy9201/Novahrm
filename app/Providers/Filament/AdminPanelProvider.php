@@ -31,7 +31,7 @@ class AdminPanelProvider extends PanelProvider
 
             ->default()
             ->id('admin')
-            ->path('/')
+            ->path('admin')
             ->passwordReset()
             ->profile()
             ->login()
@@ -39,11 +39,11 @@ class AdminPanelProvider extends PanelProvider
             ->registration(Register::class)
             ->databaseNotifications()
             ->authPasswordBroker('employees')
-            ->brandName(
-                'Admin Panel',
-            )
+            ->brandName('NovaHRM')
+            ->favicon(asset('images/logo.png'))
+            ->brandLogoHeight('240px')
             ->colors([
-                'primary' => Color::Sky,
+                'primary' => Color::hex('#1565C0'),
             ])
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
@@ -78,6 +78,5 @@ class AdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
                 // 'role:admin'
             ]);
-
     }
 }

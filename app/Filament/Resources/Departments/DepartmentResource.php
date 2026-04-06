@@ -6,18 +6,30 @@ use App\Filament\Resources\Departments\Schemas\DepartmentTable;
 use Filament\Schemas\Schema;
 use App\Filament\Resources\Departments\Pages\ListDepartments;
 use App\Models\Department;
-use Filament\Forms;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Table;
 use App\Filament\Resources\Departments\Schemas\DepartmentForm;
 
 class DepartmentResource extends Resource
 {
     protected static ?string $model = Department::class;
-
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-group';
     protected static string|\UnitEnum|null $navigationGroup = 'Organization';
+
+    public static function getModelLabel(): string
+    {
+        return __('app.department');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('app.departments');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('app.departments');
+    }
 
     public static function form(Schema $schema): Schema
     {
@@ -31,18 +43,15 @@ class DepartmentResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
     {
         return [
             'index' => ListDepartments::route('/'),
-            // 'create' => Pages\CreateDepartment::route('/create'),
-            // 'edit' => Pages\EditDepartment::route('/{record}/edit'),
+            'create' => Pages\CreateDepartment::route('/create'),
+            'edit' => Pages\EditDepartment::route('/{record}/edit'),
         ];
     }
-
 }
