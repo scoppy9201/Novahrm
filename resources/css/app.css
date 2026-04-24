@@ -2344,4 +2344,116 @@
         .ind-tabs { gap: 6px; }
         .ind-tab { padding: 7px 12px; font-size: 12px; }
     }
+
+    /* ── FLOATING CONTACT BUTTONS ── */
+    .fab-wrap {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 12px;
+        z-index: 9999;
+    }
+
+    .fab-btn {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+        transition: transform 0.2s, box-shadow 0.2s;
+        position: relative;
+        text-decoration: none;
+    }
+    .fab-btn:hover {
+        transform: translateY(-3px) scale(1.08);
+        box-shadow: 0 8px 28px rgba(0,0,0,0.35);
+    }
+    .fab-btn:hover .fab-tooltip {
+        opacity: 1;
+        transform: translateY(-50%) translateX(0);
+        pointer-events: auto;
+    }
+
+    .fab-ai    { background: linear-gradient(135deg, #1565C0, #2196F3); }
+    .fab-zalo  { background: #0068FF; }
+    .fab-phone { background: #22c55e; }
+
+    .fab-btn svg { width: 24px; height: 24px; fill: white; flex-shrink: 0; }
+
+    .fab-tooltip {
+        position: absolute;
+        right: 62px;
+        top: 50%;
+        transform: translateY(-50%) translateX(6px);
+        background: rgba(10, 20, 45, 0.95);
+        border: 1px solid rgba(96,165,250,0.25);
+        color: #e0eeff;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 6px 12px;
+        border-radius: 8px;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s, transform 0.2s;
+        backdrop-filter: blur(10px);
+    }
+    .fab-tooltip::after {
+        content: '';
+        position: absolute;
+        right: -5px;
+        top: 50%;
+        transform: translateY(-50%) rotate(45deg);
+        width: 8px; height: 8px;
+        background: rgba(10,20,45,0.95);
+        border-right: 1px solid rgba(96,165,250,0.25);
+        border-top: 1px solid rgba(96,165,250,0.25);
+    }
+
+    /* Pulse animation cho nút phone */
+    .fab-phone::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: #22c55e;
+        animation: fabPulse 2.5s ease-in-out infinite;
+        z-index: -1;
+    }
+    @keyframes fabPulse {
+        0%, 100% { transform: scale(1); opacity: 0.5; }
+        50%       { transform: scale(1.4); opacity: 0; }
+    }
+    /* ── SHAKE ANIMATION ── */
+    @keyframes fabShake {
+        0%, 100% { transform: rotate(0deg); }
+        15%       { transform: rotate(-15deg) scale(1.1); }
+        30%       { transform: rotate(12deg) scale(1.1); }
+        45%       { transform: rotate(-10deg); }
+        60%       { transform: rotate(8deg); }
+        75%       { transform: rotate(-5deg); }
+        90%       { transform: rotate(3deg); }
+    }
+
+    .fab-btn {
+        animation: fabShake 3s ease-in-out infinite;
+    }
+
+    /* Mỗi nút delay khác nhau để không lắc đồng thời */
+    .fab-ai    { animation-delay: 0s; }
+    .fab-zalo  { animation-delay: 1s; }
+    .fab-phone { animation-delay: 2s; }
+
+    /* Dừng lắc khi hover */
+    .fab-btn:hover {
+        animation: none;
+        transform: translateY(-3px) scale(1.08);
+    }
 </style>

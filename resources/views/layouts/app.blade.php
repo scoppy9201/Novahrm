@@ -11,6 +11,7 @@
 <body>
     @include('partials.navbar')
     @yield('content')
+    @include('partials.floating')
     @include('partials.footer')
 </body>
 </html>
