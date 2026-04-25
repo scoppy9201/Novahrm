@@ -6,12 +6,17 @@
     <title>NovaHRM - Hệ thống quản lý nhân sự</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=be-vietnam-pro:300,400,500,600,700,800,900" rel="stylesheet" />
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+    @vite([
+        'app/packages/Nova/Core/src/resources/css/app.css',
+        'app/packages/Nova/Core/src/resources/js/app.js'
+    ])
 </head>
 <body>
-    @include('partials.navbar')
+    @include('core::partials.navbar')
     @yield('content')
-    @include('partials.floating')
-    @include('partials.footer')
+    @include('core::partials.floating')
+    @include('core::partials.footer')
+    @include('core::components.demo-modal')
 </body>
 </html>

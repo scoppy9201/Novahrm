@@ -6,11 +6,14 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                "resources/css/app.css",
-                "resources/js/app.js",
-                "resources/css/filament/admin/theme.css",
+                "app/packages/Nova/Core/src/resources/css/app.css",
+                "app/packages/Nova/Core/src/resources/js/app.js",
             ],
-            refresh: [...refreshPaths, "app/Livewire/**"],
+            refresh: [
+                ...refreshPaths, 
+                "app/Livewire/**",
+                "app/packages/**"
+            ],
         }),
         tailwindcss(),
     ],
