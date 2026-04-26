@@ -32,7 +32,7 @@
     </div>
 
     <div class="nav-right">
-        <a href="#" class="btn-login">Đăng nhập</a>
+        <a href="{{ route('login') }}" class="btn-login">Đăng nhập</a>
         <a href="#" class="btn-demo" id="btnOpenDemo">Đăng ký Demo</a>
     </div>
 </nav>

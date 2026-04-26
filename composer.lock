@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f2158d65f89799ad4998e8d59e6688e7",
+    "content-hash": "2b83e96814273e8ecb4bd122d557cc31",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -3876,6 +3876,28 @@
                 "source": "https://github.com/nikic/PHP-Parser/tree/v5.6.1"
             },
             "time": "2025-08-13T20:13:15+00:00"
+        },
+        {
+            "name": "nova/auth",
+            "version": "dev-dev",
+            "dist": {
+                "type": "path",
+                "url": "app/packages/Nova/Auth",
+                "reference": "f97b011aa2c843afef79faa84c2d128ce7ae1b24"
+            },
+            "require": {
+                "php": "^8.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Nova\\Auth\\": "src/"
+                }
+            },
+            "description": "Nova Auth Package",
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "nunomaduro/termwind",
@@ -10673,8 +10695,10 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": {},
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "nova/auth": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
