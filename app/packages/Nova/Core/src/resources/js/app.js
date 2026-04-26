@@ -1,5 +1,6 @@
 import './bootstrap';
-
+import './nova-ui.js';
+import provinces from '../../../../../../Data/provinces.json';
 document.addEventListener('DOMContentLoaded', () => {
 
     // ── NAVBAR SCROLL ──
@@ -342,8 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = '';
     }
 
-    // Tất cả btn-demo đều mở modal
-    document.querySelectorAll('.btn-demo, .journey-cta-btn, .btn-hero-fill').forEach(btn => {
+    document.querySelectorAll('[data-demo="open"], .btn-demo, .journey-cta-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
             openDemoModal();
@@ -354,7 +354,214 @@ document.addEventListener('DOMContentLoaded', () => {
     demoOverlay?.addEventListener('click', (e) => {
         if (e.target === demoOverlay) closeDemoModal();
     });
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeDemoModal();
+
+    document.getElementById('demoForm')?.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        // Validate trước
+        if (!validateDemoForm()) return;
+
+        const confirmed = await novaConfirm({
+            title: 'Xác nhận đăng ký?',
+            message: 'Thông tin của bạn sẽ được gửi đến đội ngũ tư vấn NovaHRM.',
+            confirmText: 'Đồng ý',
+            cancelText: 'Huỷ',
+            type: 'info'
+        });
+
+        if (!confirmed) return;
+
+        const btn = document.getElementById('demoSubmitBtn');
+        btn.textContent = 'Đang gửi...';
+        btn.disabled = true;
+
+        try {
+            const res = await fetch('/demo-register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    full_name:    document.getElementById('df_name').value,
+                    email:        document.getElementById('df_email').value,
+                    phone:        document.getElementById('df_phone').value,
+                    company_name: document.getElementById('df_company').value,
+                    product:      document.getElementById('df_product').value,
+                    position:     document.getElementById('df_position').value,
+                    city:         document.getElementById('df_city').value,
+                    company_size: document.getElementById('df_size').value,
+                    _token:       document.querySelector('meta[name="csrf-token"]').content,
+                })
+            });
+
+            const result = await res.json();
+
+            if (result.success) {
+                closeDemoModal();
+                document.getElementById('demoForm').reset();
+                novaToast(result.message, 'success');
+            } else {
+                novaToast('Có lỗi xảy ra, vui lòng thử lại!', 'error');
+            }
+        } catch (err) {
+            novaToast('Có lỗi xảy ra, vui lòng thử lại!', 'error');
+        } finally {
+            btn.textContent = 'Nhận tư vấn giải pháp';
+            btn.disabled = false;
+        }
+    });
+
+    function loadProvinces() {
+        const select = document.getElementById('df_city');
+        if (!select) return;
+
+        while (select.options.length > 1) {
+            select.remove(1);
+        }
+
+        provinces.forEach(p => {
+            const option = document.createElement('option');
+            option.value = p.name;
+            option.textContent = p.name;
+            select.appendChild(option);
+        });
+    }
+
+    loadProvinces();
+
+    // VALIDATE HELPERS 
+    function showError(inputEl, msg) {
+        inputEl.classList.add('error');
+        // Xóa error cũ nếu có
+        const old = inputEl.parentElement.querySelector('.demo-field-error');
+        if (old) old.remove();
+
+        const err = document.createElement('div');
+        err.className = 'demo-field-error';
+        err.textContent = msg;
+        inputEl.parentElement.appendChild(err);
+    }
+
+    function clearError(inputEl) {
+        inputEl.classList.remove('error');
+        const old = inputEl.parentElement.querySelector('.demo-field-error');
+        if (old) old.remove();
+    }
+
+    function validateDemoForm() {
+        let valid = true;
+
+        const name     = document.getElementById('df_name');
+        const email    = document.getElementById('df_email');
+        const phone    = document.getElementById('df_phone');
+        const company  = document.getElementById('df_company');
+        const product  = document.getElementById('df_product');
+        const position = document.getElementById('df_position');
+        const city     = document.getElementById('df_city');
+        const size     = document.getElementById('df_size');
+
+        // Không cho nhập số vào họ tên
+        document.getElementById('df_name')?.addEventListener('keypress', function(e) {
+            if (/[0-9]/.test(e.key)) {
+                e.preventDefault();
+            }
+        });
+
+        // Không cho paste số vào họ tên
+        document.getElementById('df_name')?.addEventListener('input', function() {
+            this.value = this.value.replace(/[0-9]/g, '');
+            clearError(this);
+        });
+
+        // Họ và tên
+        const nameRegex = /^[a-zA-ZÀ-ỹ\s]+$/;
+        if (!name.value.trim()) {
+            showError(name, 'Vui lòng nhập họ và tên');
+            valid = false;
+        } else if (name.value.trim().length < 2) {
+            showError(name, 'Họ và tên phải có ít nhất 2 ký tự');
+            valid = false;
+        } else if (!nameRegex.test(name.value.trim())) {
+            showError(name, 'Họ và tên không được chứa số hoặc ký tự đặc biệt');
+            valid = false;
+        } else {
+            clearError(name);
+        }
+
+        // Email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email.value.trim()) {
+            showError(email, 'Vui lòng nhập email');
+            valid = false;
+        } else if (!emailRegex.test(email.value.trim())) {
+            showError(email, 'Email không đúng định dạng');
+            valid = false;
+        } else {
+            clearError(email);
+        }
+
+        // Số điện thoại - đúng 10 số
+        const phoneRegex = /^(0[3|5|7|8|9])+([0-9]{8})$/;
+        if (!phone.value.trim()) {
+            showError(phone, 'Vui lòng nhập số điện thoại');
+            valid = false;
+        } else if (!phoneRegex.test(phone.value.trim())) {
+            showError(phone, 'Số điện thoại phải đúng 10 số (VD: 0912345678)');
+            valid = false;
+        } else {
+            clearError(phone);
+        }
+
+        // Tên công ty
+        if (!company.value.trim()) {
+            showError(company, 'Vui lòng nhập tên công ty');
+            valid = false;
+        } else {
+            clearError(company);
+        }
+
+        // Sản phẩm
+        if (!product.value) {
+            showError(product, 'Vui lòng chọn sản phẩm quan tâm');
+            valid = false;
+        } else {
+            clearError(product);
+        }
+
+        // Vị trí
+        if (!position.value) {
+            showError(position, 'Vui lòng chọn vị trí công việc');
+            valid = false;
+        } else {
+            clearError(position);
+        }
+
+        // Tỉnh thành
+        if (!city.value) {
+            showError(city, 'Vui lòng chọn tỉnh/thành phố');
+            valid = false;
+        } else {
+            clearError(city);
+        }
+
+        // Quy mô
+        if (!size.value) {
+            showError(size, 'Vui lòng chọn quy mô nhân sự');
+            valid = false;
+        } else {
+            clearError(size);
+        }
+
+        return valid;
+    }
+
+    // Clear error khi user nhập lại
+    ['df_name','df_email','df_phone','df_company'].forEach(id => {
+        document.getElementById(id)?.addEventListener('input', function() {
+            clearError(this);
+        });
+    });
+    ['df_product','df_position','df_city','df_size'].forEach(id => {
+        document.getElementById(id)?.addEventListener('change', function() {
+            clearError(this);
+        });
     });
 });

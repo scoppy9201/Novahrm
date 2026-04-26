@@ -18,7 +18,7 @@
             Xây dựng chiến lược phát triển nhân sự hoàn chỉnh, từ tuyển dụng, hội nhập, đào tạo. Xử lý công lương linh hoạt & trọn vẹn, biến các thủ tục C&B phức tạp thành hạnh phúc
         </p>
         <div class="hero-btns">
-            <a href="#" class="btn-hero-fill">
+            <a href="#" class="btn-hero-fill" data-demo="open">
                 Đăng ký Demo
                 <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>

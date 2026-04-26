@@ -50,93 +50,100 @@
             <div class="demo-form-title">Đăng ký tư vấn miễn phí</div>
             <div class="demo-form-sub">Điền thông tin để chuyên gia liên hệ trong vòng 24 giờ</div>
 
-            <div class="demo-form-group">
-                <label class="demo-form-label">Họ và tên <span>*</span></label>
-                <input class="demo-input" type="text" placeholder="Nhập tên của bạn">
-            </div>
+            <form id="demoForm">
+                @csrf
 
-            <div class="demo-form-group">
-                <label class="demo-form-label">Sản phẩm bạn quan tâm <span>*</span></label>
-                <div class="demo-select-wrap">
-                    <select class="demo-select">
-                        <option value="" disabled selected>Lựa chọn sản phẩm</option>
-                        <option>Nova E-Hiring</option>
-                        <option>Nova HRM</option>
-                        <option>Nova Payroll</option>
-                        <option>Nova Schedule</option>
-                        <option>Nova Checkin</option>
-                        <option>Nova Timeoff</option>
-                        <option>Toàn bộ nền tảng</option>
-                    </select>
+                <div class="demo-form-group">
+                    <label class="demo-form-label">Họ và tên <span>*</span></label>
+                    <input id="df_name" class="demo-input" type="text" placeholder="Nhập tên của bạn">
                 </div>
-            </div>
 
-            <div class="demo-form-row">
                 <div class="demo-form-group">
-                    <label class="demo-form-label">Email <span>*</span></label>
-                    <input class="demo-input" type="email" placeholder="Nhập email của bạn">
-                </div>
-                <div class="demo-form-group">
-                    <label class="demo-form-label">Số điện thoại <span>*</span></label>
-                    <input class="demo-input" type="tel" placeholder="Nhập số điện thoại">
-                </div>
-            </div>
-
-            <div class="demo-form-row">
-                <div class="demo-form-group">
-                    <label class="demo-form-label">Vị trí công việc <span>*</span></label>
+                    <label class="demo-form-label">Sản phẩm bạn quan tâm <span>*</span></label>
                     <div class="demo-select-wrap">
-                        <select class="demo-select">
-                            <option value="" disabled selected>Lựa chọn vị trí</option>
-                            <option>Giám đốc / CEO</option>
-                            <option>Trưởng phòng HR</option>
-                            <option>Nhân viên HR</option>
-                            <option>Kế toán / Tài chính</option>
-                            <option>IT / Kỹ thuật</option>
-                            <option>Khác</option>
+                        <select id="df_product" class="demo-select">
+                            <option value="" disabled selected>Lựa chọn sản phẩm</option>
+                            <option>Nova E-Hiring</option>
+                            <option>Nova HRM</option>
+                            <option>Nova Payroll</option>
+                            <option>Nova Schedule</option>
+                            <option>Nova Checkin</option>
+                            <option>Nova Timeoff</option>
+                            <option>Toàn bộ nền tảng</option>
                         </select>
                     </div>
                 </div>
-                <div class="demo-form-group">
-                    <label class="demo-form-label">Tên công ty <span>*</span></label>
-                    <input class="demo-input" type="text" placeholder="Nhập tên công ty của bạn">
-                </div>
-            </div>
 
-            <div class="demo-form-row">
-                <div class="demo-form-group">
-                    <label class="demo-form-label">Tỉnh/Thành phố <span>*</span></label>
-                    <div class="demo-select-wrap">
-                        <select class="demo-select">
-                            <option value="" disabled selected>Lựa chọn khu vực</option>
-                            <option>Hà Nội</option>
-                            <option>TP. Hồ Chí Minh</option>
-                            <option>Đà Nẵng</option>
-                            <option>Cần Thơ</option>
-                            <option>Khác</option>
-                        </select>
+                <div class="demo-form-row">
+                    <div class="demo-form-group">
+                        <label class="demo-form-label">Email <span>*</span></label>
+                        <input id="df_email" class="demo-input" type="email" placeholder="Nhập email của bạn">
+                    </div>
+                    <div class="demo-form-group">
+                        <label class="demo-form-label">Số điện thoại <span>*</span></label>
+                        <input id="df_phone" class="demo-input" type="tel" placeholder="Nhập số điện thoại">
                     </div>
                 </div>
-                <div class="demo-form-group">
-                    <label class="demo-form-label">Quy mô nhân sự <span>*</span></label>
-                    <div class="demo-select-wrap">
-                        <select class="demo-select">
-                            <option value="" disabled selected>Lựa chọn quy mô</option>
-                            <option>Dưới 50 người</option>
-                            <option>50 - 200 người</option>
-                            <option>200 - 500 người</option>
-                            <option>500 - 1000 người</option>
-                            <option>Trên 1000 người</option>
-                        </select>
+
+                <div class="demo-form-row">
+                    <div class="demo-form-group">
+                        <label class="demo-form-label">Vị trí công việc <span>*</span></label>
+                        <div class="demo-select-wrap">
+                            <select id="df_position" class="demo-select">
+                                <option value="" disabled selected>Lựa chọn vị trí</option>
+                                <option>Giám đốc / CEO</option>
+                                <option>Trưởng phòng HR</option>
+                                <option>Nhân viên HR</option>
+                                <option>Kế toán / Tài chính</option>
+                                <option>IT / Kỹ thuật</option>
+                                <option>Khác</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="demo-form-group">
+                        <label class="demo-form-label">Tên công ty <span>*</span></label>
+                        <input id="df_company" class="demo-input" type="text" placeholder="Nhập tên công ty của bạn">
                     </div>
                 </div>
-            </div>
 
-            <button class="demo-submit-btn">Nhận tư vấn giải pháp</button>
-            <div class="demo-form-note">
-                Bằng cách nhấn "nhận tư vấn giải pháp", tôi xác nhận rằng tôi đã đọc và đồng ý với
-                <a href="#">Chính sách quyền riêng tư</a> của NovaHRM
-            </div>
+                <div class="demo-form-row">
+                    <div class="demo-form-group">
+                        <label class="demo-form-label">Tỉnh/Thành phố <span>*</span></label>
+                        <div class="demo-select-wrap">
+                            <select id="df_city" class="demo-select">
+                                <option value="" disabled selected>Lựa chọn khu vực</option>
+                                <option>Hà Nội</option>
+                                <option>TP. Hồ Chí Minh</option>
+                                <option>Đà Nẵng</option>
+                                <option>Cần Thơ</option>
+                                <option>Khác</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="demo-form-group">
+                        <label class="demo-form-label">Quy mô nhân sự <span>*</span></label>
+                        <div class="demo-select-wrap">
+                            <select id="df_size" class="demo-select">
+                                <option value="" disabled selected>Lựa chọn quy mô</option>
+                                <option>Dưới 50 người</option>
+                                <option>50 - 200 người</option>
+                                <option>200 - 500 người</option>
+                                <option>500 - 1000 người</option>
+                                <option>Trên 1000 người</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" id="demoSubmitBtn" class="demo-submit-btn">
+                    Nhận tư vấn giải pháp
+                </button>
+
+                <div class="demo-form-note">
+                    Bằng cách nhấn "nhận tư vấn giải pháp", tôi xác nhận rằng tôi đã đọc và đồng ý với
+                    <a href="#">Chính sách quyền riêng tư</a> của NovaHRM
+                </div>
+            </form>
         </div>
     </div>
 </div>
