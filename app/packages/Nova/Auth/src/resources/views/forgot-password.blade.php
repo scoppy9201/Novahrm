@@ -237,6 +237,7 @@
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json',       
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                 },
                 body: JSON.stringify({ email })
@@ -258,7 +259,8 @@
     // OTP input navigation
     document.querySelectorAll('.otp-input').forEach((input, i, inputs) => {
         input.addEventListener('input', () => {
-            input.value = input.value.replace(/\D/g, '');
+            // Chỉ giữ 1 số, lấy ký tự cuối nếu nhập nhiều
+            input.value = input.value.replace(/\D/g, '').slice(-1);
             if (input.value && i < inputs.length - 1) inputs[i + 1].focus();
         });
         input.addEventListener('keydown', e => {
@@ -309,6 +311,7 @@
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json',          // ← thêm
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                 },
                 body: JSON.stringify({ email: currentEmail, otp })
@@ -337,6 +340,7 @@
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json',          // ← thêm
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                 },
                 body: JSON.stringify({ email: currentEmail, password, password_confirmation: confirm })

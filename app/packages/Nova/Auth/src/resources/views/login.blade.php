@@ -7,6 +7,12 @@
     <title>Đăng nhập — NovaHRM</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=be-vietnam-pro:300,400,500,600,700,800,900" rel="stylesheet"/>
+    <script>
+        window.__routes = {
+            novaIdSend:      "{{ route('nova-id.send') }}",
+            novaIdVerifyOtp: "{{ route('nova-id.verify-otp') }}",
+        };
+    </script>
     @vite([
         'app/packages/Nova/Auth/src/resources/css/app.css',
         'app/packages/Nova/Auth/src/resources/js/app.js',
@@ -44,7 +50,7 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('login') }}" id="loginForm">
+            <form method="POST" action="{{ route('login.store') }}" id="loginForm">
                 @csrf
 
                 {{-- Email --}}
@@ -115,7 +121,7 @@
                 
             </form>
 
-            <a href="#" class="btn-nova-sso">
+            <a href="#" class="btn-nova-sso" onclick="event.preventDefault(); nidOpen()">
                 <div class="login-logo-icon">
                     <svg viewBox="0 0 16 16"><path d="M8 1L14 4V8C14 11.3 11.3 13.8 8 15C4.7 13.8 2 11.3 2 8V4L8 1Z"/></svg>
                 </div>
@@ -256,5 +262,20 @@
         </div>
     </div>
 </div>
+    {{-- Flash flags --}}
+    @if(session('login_success'))
+        <script>window.__loginSuccess = true;</script>
+    @endif
+
+    @if(session('logout_success'))
+        <script>window.__logoutSuccess = true;</script>
+    @endif
+
+    {{-- Form logout ẩn --}}
+    <form id="logoutForm" method="POST" action="{{ route('logout') }}" style="display:none;">
+        @csrf
+    </form>
+
+    @include('nova-auth::nova-id-modal')
 </body>
 </html>
