@@ -2,7 +2,7 @@
 
 namespace Nova\Auth\Http\Controllers;
 
-use App\Models\Employee;
+use Nova\Auth\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Cache;

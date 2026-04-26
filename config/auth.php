@@ -63,7 +63,7 @@ return [
     'providers' => [
         'employees' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\Employee::class),
+            'model'  => \Nova\Auth\Models\Employee::class, 
             'table' => 'employees'
         ],
 
