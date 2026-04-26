@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img src="img.png" alt="HRM System Preview"
+  <img src="logo.png" alt="HRM System Preview"
        style="max-width: 100%; border-radius: 8px;
        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
        0 10px 10px -5px rgba(0, 0, 0, 0.04);" />
