@@ -39,6 +39,17 @@ class Employee extends Authenticatable
         'next_of_kin_relationship',
         'next_of_kin_phone',
         'next_of_kin_email',
+        'avatar',
+        'language',
+        'address',
+        'job_title',
+        'occupation',
+        'office',
+        'office_id',
+        'manager_id',
+        'email_personal',
+        'bio',
+        'role',
     ];
 
     protected $hidden = [
@@ -64,6 +75,13 @@ class Employee extends Authenticatable
             'date_of_birth'     => 'date',
             'is_active'         => 'boolean',
             'password'          => 'hashed',
+            'office_id'         => 'integer',
+            'manager_id'        => 'integer',
         ];
+    }
+
+    public function manager(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Employee::class, 'manager_id');
     }
 }

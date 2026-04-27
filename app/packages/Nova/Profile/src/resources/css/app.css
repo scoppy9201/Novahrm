@@ -1,0 +1,637 @@
+/* ── Topbar ── */
+.profile-topbar {
+    background: #fff;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.profile-topbar-row1 {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.profile-breadcrumb {
+    font-size: 11.5px;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 2px;
+}
+
+.profile-breadcrumb a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.15s;
+}
+
+.profile-breadcrumb a:hover {
+    color: #475569;
+}
+
+.profile-breadcrumb svg {
+    width: 12px;
+    height: 12px;
+    stroke: #cbd5e1;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.profile-breadcrumb span {
+    color: #475569;
+    font-weight: 600;
+}
+
+.profile-page-title {
+    font-size: 19px;
+    font-weight: 900;
+    color: #0f172a;
+    letter-spacing: -0.4px;
+    line-height: 1;
+}
+
+.profile-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-topbar-tabs {
+    display: flex;
+    gap: 0;
+}
+
+.profile-tab {
+    padding: 0 18px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 0.05em;
+    border-bottom: 2.5px solid transparent;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.15s;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.profile-tab:hover {
+    color: #475569;
+    background: #f8fafc;
+}
+
+.profile-tab.active {
+    color: #1d4ed8;
+    border-bottom-color: #1d4ed8;
+}
+
+/* ── Layout body ── */
+.profile-body {
+    flex: 1;
+    overflow: auto;
+    padding: 22px 24px;
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 18px;
+    align-items: start;
+}
+
+/* ── Sidebar card ── */
+.profile-side {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    position: sticky;
+    top: 0;
+}
+
+.profile-avatar-block {
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.profile-av-wrap {
+    position: relative;
+    width: 70px;
+    height: 70px;
+}
+
+.profile-av-circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2563eb, #60a5fa);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 900;
+    color: #fff;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px #e2e8f0;
+    overflow: hidden;
+}
+
+.profile-av-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-av-edit {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #fff;
+    border: 1.5px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.profile-av-edit:hover {
+    background: #eff6ff;
+    border-color: #93c5fd;
+}
+
+.profile-av-edit svg {
+    width: 10px;
+    height: 10px;
+    stroke: #475569;
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.profile-av-name {
+    font-size: 14px;
+    font-weight: 800;
+    color: #0f172a;
+    text-align: center;
+    letter-spacing: -0.3px;
+}
+
+.profile-av-role {
+    font-size: 11px;
+    color: #2563eb;
+    font-weight: 600;
+    text-align: center;
+}
+
+.profile-av-id {
+    font-size: 10px;
+    color: #94a3b8;
+    font-weight: 700;
+    font-family: 'Courier New', monospace;
+    background: #f8fafc;
+    padding: 2px 9px;
+    border-radius: 5px;
+    border: 1px solid #e2e8f0;
+}
+
+.profile-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    background: #f0fdf4;
+    color: #16a34a;
+    border: 1px solid #bbf7d0;
+}
+
+.profile-status-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #22c55e;
+    animation: profile-pulse 2s infinite;
+}
+
+@keyframes profile-pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.3; }
+}
+
+/* Meta list trong sidebar */
+.profile-meta-list {
+    padding: 8px 0;
+}
+
+.profile-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 18px;
+    cursor: default;
+    transition: background 0.12s;
+}
+
+.profile-meta-item:hover {
+    background: #f8fafc;
+}
+
+.profile-meta-item svg {
+    width: 15px;
+    height: 15px;
+    stroke: #94a3b8;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+}
+
+.profile-meta-label {
+    font-size: 10px;
+    color: #94a3b8;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.profile-meta-val {
+    font-size: 12px;
+    color: #334155;
+    font-weight: 600;
+    margin-top: 1px;
+}
+
+/* ── Main content ── */
+.profile-main {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+}
+
+/* ── Form card ── */
+.profile-form-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 18px 22px;
+}
+
+.profile-form-card-title {
+    font-size: 10px;
+    font-weight: 800;
+    color: #94a3b8;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-form-card-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #f1f5f9;
+}
+
+/* ── Form grid ── */
+.profile-form-grid {
+    display: grid;
+    gap: 14px;
+}
+
+.profile-grid-2 { grid-template-columns: 1fr 1fr; }
+.profile-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+.profile-grid-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+.profile-col-full { grid-column: 1 / -1; }
+
+/* ── Form group ── */
+.profile-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.profile-form-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+}
+
+/* ── Input / Select / Textarea ── */
+.profile-input,
+.profile-select,
+.profile-textarea {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 8px 11px;
+    font-size: 12.5px;
+    color: #0f172a;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.profile-input:hover,
+.profile-select:hover,
+.profile-textarea:hover {
+    border-color: #cbd5e1;
+}
+
+.profile-input:focus,
+.profile-select:focus,
+.profile-textarea:focus {
+    border-color: #93c5fd;
+    box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.2);
+}
+
+.profile-input::placeholder,
+.profile-textarea::placeholder {
+    color: #cbd5e1;
+}
+
+.profile-input[disabled],
+.profile-select[disabled],
+.profile-textarea[disabled] {
+    background: #f8fafc;
+    color: #94a3b8;
+    cursor: not-allowed;
+}
+
+.profile-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 14px;
+    padding-right: 32px;
+    cursor: pointer;
+}
+
+.profile-textarea {
+    resize: vertical;
+    min-height: 72px;
+    line-height: 1.6;
+}
+
+/* ── Danger zone ── */
+.profile-danger-zone {
+    background: #fff;
+    border: 1px solid #fee2e2;
+    border-radius: 12px;
+    padding: 18px 22px;
+}
+
+.profile-danger-title {
+    font-size: 10px;
+    font-weight: 800;
+    color: #ef4444;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+}
+
+.profile-danger-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid #fef2f2;
+}
+
+.profile-danger-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.profile-danger-row-label {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.profile-danger-row-desc {
+    font-size: 11px;
+    color: #94a3b8;
+    margin-top: 2px;
+}
+
+/* ── Buttons (đồng bộ với btn-primary / btn-icon hiện tại) ── */
+.btn-profile-save {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 16px;
+    background: #1d4ed8;
+    color: #fff;
+    border: none;
+    border-radius: 9px;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    transition: all 0.15s;
+    white-space: nowrap;
+}
+
+.btn-profile-save:hover {
+    background: #1e40af;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(29, 78, 216, 0.3);
+}
+
+.btn-profile-save svg {
+    width: 14px;
+    height: 14px;
+    stroke: #fff;
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.btn-profile-cancel {
+    padding: 7px 14px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #64748b;
+    cursor: pointer;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    transition: all 0.15s;
+}
+
+.btn-profile-cancel:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #334155;
+}
+
+.btn-profile-danger {
+    padding: 6px 14px;
+    background: #fff;
+    border: 1px solid #fca5a5;
+    border-radius: 8px;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #dc2626;
+    cursor: pointer;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    transition: all 0.15s;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.btn-profile-danger:hover {
+    background: #fef2f2;
+    border-color: #ef4444;
+}
+
+/* ── Badge / Tag ── */
+.profile-badge-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.profile-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 10.5px;
+    font-weight: 700;
+    cursor: default;
+}
+
+.profile-badge-blue   { background: #eff6ff; color: #1d4ed8; }
+.profile-badge-purple { background: #f5f3ff; color: #7c3aed; }
+.profile-badge-green  { background: #f0fdf4; color: #15803d; }
+.profile-badge-amber  { background: #fffbeb; color: #b45309; }
+.profile-badge-red    { background: #fef2f2; color: #b91c1c; }
+.profile-badge-gray   { background: #f8fafc; color: #475569; border: 1px solid #e2e8f0; }
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+    .profile-body {
+        grid-template-columns: 220px 1fr;
+    }
+
+    .profile-grid-3 {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .profile-grid-4 {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-body {
+        grid-template-columns: 1fr;
+        padding: 16px;
+    }
+
+    .profile-side {
+        position: static;
+    }
+
+    .profile-grid-2,
+    .profile-grid-3,
+    .profile-grid-4 {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-col-full {
+        grid-column: 1;
+    }
+}
+
+/* ── Tab panel SPA ── */
+.profile-tab-panel {
+    display: none;
+}
+
+.profile-tab-panel.active {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* ── Flash alerts ── */
+.profile-alert-success,
+.profile-alert-error {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 12.5px;
+    font-weight: 600;
+}
+
+.profile-alert-success {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #15803d;
+}
+
+.profile-alert-error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #b91c1c;
+}
+
+.profile-alert-success svg,
+.profile-alert-error svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.profile-alert-error ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
