@@ -12,6 +12,8 @@ export default defineConfig({
                 "app/packages/Nova/Auth/src/resources/js/app.js",
                 "app/packages/Nova/Dashboard/src/resources/css/app.css", 
                 "app/packages/Nova/Dashboard/src/resources/js/app.js",   
+                "app/packages/Nova/Profile/src/resources/css/app.css",
+                "app/packages/Nova/Profile/src/resources/js/app.js",
             ],
             refresh: [
                 ...refreshPaths, 
