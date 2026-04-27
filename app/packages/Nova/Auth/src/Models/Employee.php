@@ -84,4 +84,9 @@ class Employee extends Authenticatable
     {
         return $this->belongsTo(Employee::class, 'manager_id');
     }
+
+    public function notificationPreference(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(\App\packages\Nova\Profile\src\Models\NotificationPreference::class, 'employee_id');
+    }
 }

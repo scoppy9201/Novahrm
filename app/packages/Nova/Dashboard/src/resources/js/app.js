@@ -1,3 +1,5 @@
+import '../../../../Core/src/resources/js/nova-ui.js';
+
 const chartDefaults = {
     responsive: true,
     maintainAspectRatio: false,
@@ -126,4 +128,26 @@ avatarBtn.addEventListener('click', (e) => {
 
 document.addEventListener('click', () => {
     userMenu.classList.remove('open');
+});
+
+document.querySelectorAll('[data-logout]').forEach(link => {
+    link.addEventListener('click', async (e) => {
+        e.preventDefault();
+
+        const confirmed = await novaConfirm({
+            title: 'Đăng xuất',
+            message: 'Bạn có chắc chắn muốn đăng xuất khỏi hệ thống không?',
+            confirmText: 'Đăng xuất',
+            cancelText: 'Huỷ',
+            type: 'warning',
+        });
+
+        if (!confirmed) return;
+
+        novaToast('Đang đăng xuất...', 'info', 1200);
+
+        const formId = link.dataset.logoutForm;
+        const form = formId ? document.getElementById(formId) : null;
+        setTimeout(() => form?.submit(), 500);
+    });
 });

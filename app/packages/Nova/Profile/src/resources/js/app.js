@@ -1,10 +1,27 @@
-document.addEventListener('DOMContentLoaded', () => {
+import '../../../../Core/src/resources/js/nova-ui.js';
 
-    /* 1. Sidebar toggle (dùng chung) */
-    const sidebar       = document.getElementById('sidebar');
+document.addEventListener('DOMContentLoaded', () => {
+    const hash = window.location.hash?.replace('#', '');
+    if (hash) {
+        const matchTab = document.querySelector(`.profile-tab[data-tab="${hash}"]`);
+        if (matchTab) matchTab.click();
+    }
+
+    if (window.__profileSuccess) {
+        novaToast(window.__profileSuccess, 'success');
+    }
+
+    if (Array.isArray(window.__profileErrors)) {
+        window.__profileErrors.forEach((message, index) => {
+            if (!message) return;
+            setTimeout(() => novaToast(message, 'error', 4200), index * 180);
+        });
+    }
+
+    const sidebar = document.getElementById('sidebar');
     const sidebarToggle = document.getElementById('sidebar-toggle');
-    const avatarBtn     = document.getElementById('sidebar-avatar-btn');
-    const userMenu      = document.getElementById('user-menu');
+    const avatarBtn = document.getElementById('sidebar-avatar-btn');
+    const userMenu = document.getElementById('user-menu');
 
     if (sidebarToggle && sidebar) {
         sidebarToggle.addEventListener('click', () => {
@@ -30,8 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         userMenu.addEventListener('click', (e) => e.stopPropagation());
     }
 
-    /* 2. SPA Tab switching */
-    const tabs   = document.querySelectorAll('.profile-tab');
+    const tabs = document.querySelectorAll('.profile-tab');
     const panels = document.querySelectorAll('.profile-tab-panel');
 
     tabs.forEach(tab => {
@@ -41,15 +57,10 @@ document.addEventListener('DOMContentLoaded', () => {
             tabs.forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
 
-            panels.forEach(p => {
-                if (p.id === 'panel-' + target) {
-                    p.classList.add('active');
-                } else {
-                    p.classList.remove('active');
-                }
+            panels.forEach(panel => {
+                panel.classList.toggle('active', panel.id === 'panel-' + target);
             });
 
-            /* Đổi action button: tab bảo mật không cần nút Lưu thay đổi ở topbar */
             const saveBtn = document.querySelector('.btn-profile-save[form="profile-form"]');
             if (saveBtn) {
                 saveBtn.style.display = target === 'ho-so' ? '' : 'none';
@@ -57,22 +68,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    /* 3. Avatar preview trước khi upload */
     const avatarInput = document.getElementById('avatar-input');
-    const avPreview   = document.getElementById('av-preview');
+    const avPreview = document.getElementById('av-preview');
 
     if (avatarInput && avPreview) {
         avatarInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (!file) return;
 
-            /* Validate: chỉ nhận ảnh, tối đa 2MB */
             if (!file.type.startsWith('image/')) {
-                alert('Vui lòng chọn file ảnh hợp lệ.');
+                novaToast('Vui lòng chọn file ảnh hợp lệ.', 'error');
+                avatarInput.value = '';
                 return;
             }
+
             if (file.size > 2 * 1024 * 1024) {
-                alert('Ảnh không được vượt quá 2MB.');
+                novaToast('Ảnh không được vượt quá 2MB.', 'warning');
+                avatarInput.value = '';
                 return;
             }
 
@@ -84,44 +96,93 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /* 4. Auto-dismiss flash alert */
-    const alerts = document.querySelectorAll('.profile-alert-success, .profile-alert-error');
-    alerts.forEach(alert => {
-        setTimeout(() => {
-            alert.style.opacity = '0';
-            alert.style.transition = 'opacity 0.4s ease';
-            setTimeout(() => alert.remove(), 400);
-        }, 4000);
-    });
-
-    /* 5. Confirm xoá tài khoản */
     const btnDelete = document.getElementById('btn-delete-account');
     if (btnDelete) {
-        btnDelete.addEventListener('click', () => {
-            const confirmed = confirm(
-                'Bạn có chắc chắn muốn xoá tài khoản?\nHành động này KHÔNG THỂ hoàn tác.'
-            );
-            if (confirmed) {
-                /* Gửi request DELETE — tạo form động */
-                const form   = document.createElement('form');
-                form.method  = 'POST';
-                form.action  = '/profile/delete';
+        btnDelete.addEventListener('click', async () => {
+            const confirmed = await novaConfirm({
+                title: 'Xoá tài khoản?',
+                message: 'Hành động này không thể hoàn tác. Toàn bộ dữ liệu của tài khoản sẽ bị xoá vĩnh viễn.',
+                confirmText: 'Xoá ngay',
+                cancelText: 'Huỷ',
+                type: 'danger',
+            });
 
-                const csrf   = document.createElement('input');
-                csrf.type    = 'hidden';
-                csrf.name    = '_token';
-                csrf.value   = document.querySelector('meta[name="csrf-token"]')?.content ?? '';
+            if (!confirmed) return;
 
-                const method = document.createElement('input');
-                method.type  = 'hidden';
-                method.name  = '_method';
-                method.value = 'DELETE';
+            novaToast('Đang xử lý yêu cầu xoá tài khoản...', 'warning', 1200);
 
-                form.appendChild(csrf);
-                form.appendChild(method);
-                document.body.appendChild(form);
-                form.submit();
-            }
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/profile';
+
+            const csrf = document.createElement('input');
+            csrf.type = 'hidden';
+            csrf.name = '_token';
+            csrf.value = document.querySelector('meta[name="csrf-token"]')?.content ?? '';
+
+            const method = document.createElement('input');
+            method.type = 'hidden';
+            method.name = '_method';
+            method.value = 'DELETE';
+
+            form.appendChild(csrf);
+            form.appendChild(method);
+            document.body.appendChild(form);
+
+            setTimeout(() => form.submit(), 400);
+        });
+    }
+
+    document.querySelectorAll('[data-logout]').forEach(link => {
+        link.addEventListener('click', async (e) => {
+            e.preventDefault();
+
+            const confirmed = await novaConfirm({
+                title: 'Đăng xuất',
+                message: 'Bạn có chắc chắn muốn đăng xuất khỏi hệ thống không?',
+                confirmText: 'Đăng xuất',
+                cancelText: 'Huỷ',
+                type: 'warning',
+            });
+
+            if (!confirmed) return;
+
+            novaToast('Đang đăng xuất...', 'info', 1200);
+
+            const formId = link.dataset.logoutForm;
+            const form = formId ? document.getElementById(formId) : null;
+            setTimeout(() => form?.submit(), 500);
+        });
+    });
+
+    const btnSuspend = document.getElementById('btn-suspend-account');
+    if (btnSuspend) {
+        btnSuspend.addEventListener('click', async () => {
+            const confirmed = await novaConfirm({
+                title: 'Đình chỉ tài khoản?',
+                message: 'Tài khoản sẽ bị tạm khoá. Bạn sẽ bị đăng xuất ngay lập tức.',
+                confirmText: 'Đình chỉ',
+                cancelText: 'Huỷ',
+                type: 'warning',
+            });
+
+            if (!confirmed) return;
+
+            novaToast('Đang xử lý...', 'warning', 1200);
+
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/profile/suspend';
+
+            const csrf = document.createElement('input');
+            csrf.type = 'hidden';
+            csrf.name = '_token';
+            csrf.value = document.querySelector('meta[name="csrf-token"]')?.content ?? '';
+
+            form.appendChild(csrf);
+            document.body.appendChild(form);
+
+            setTimeout(() => form.submit(), 400);
         });
     }
 });

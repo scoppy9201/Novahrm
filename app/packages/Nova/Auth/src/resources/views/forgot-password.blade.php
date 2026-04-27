@@ -211,12 +211,10 @@
     }
 
     function showAlert(id, msg) {
-        const el = document.getElementById(id);
-        el.style.display = 'flex';
-        document.getElementById(id + '-msg').textContent = msg;
+        novaToast(msg, 'error', 4200);
     }
     function hideAlert(id) {
-        document.getElementById(id).style.display = 'none';
+        return id;
     }
 
     function setLoading(btnId, loading) {
@@ -246,6 +244,7 @@
             if (!res.ok) throw new Error(data.message || 'Có lỗi xảy ra.');
             currentEmail = email;
             document.getElementById('otp-email-display').textContent = email;
+            novaToast('Mã OTP đã được gửi đến email của bạn.', 'success');
             goTo('step-otp');
             startTimer();
             document.getElementById('otp0').focus();
@@ -318,6 +317,7 @@
             });
             const data = await res.json();
             if (!res.ok) throw new Error(data.message || 'Mã OTP không hợp lệ.');
+            novaToast('Xác nhận OTP thành công.', 'success');
             goTo('step-reset');
         } catch (e) {
             showAlert('alert-otp', e.message);
@@ -347,6 +347,7 @@
             });
             const data = await res.json();
             if (!res.ok) throw new Error(data.message || 'Có lỗi xảy ra.');
+            novaToast('Đặt lại mật khẩu thành công. Đang chuyển tới trang đăng nhập...', 'success', 1800);
             window.location.href = '/login';
         } catch (e) {
             showAlert('alert-reset', e.message);
