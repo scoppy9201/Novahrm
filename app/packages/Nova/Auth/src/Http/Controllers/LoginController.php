@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -18,7 +20,6 @@ class LoginController extends Controller
 
     public function store(Request $request)
     {
-        // 1. Validate
         $request->validate([
             'email'    => ['required', 'email', 'max:255'],
             'password' => ['required', 'string', 'min:6'],
@@ -29,7 +30,6 @@ class LoginController extends Controller
             'password.min'      => 'Mật khẩu tối thiểu 6 ký tự.',
         ]);
 
-        // 2. Rate limiting
         $throttleKey = Str::lower($request->input('email')) . '|' . $request->ip();
 
         if (RateLimiter::tooManyAttempts($throttleKey, 5)) {
@@ -39,18 +39,22 @@ class LoginController extends Controller
             ]);
         }
 
-        // 3. Attempt
         if (! Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
             RateLimiter::hit($throttleKey, 300);
-
             throw ValidationException::withMessages([
                 'email' => 'Email hoặc mật khẩu không chính xác.',
             ]);
         }
 
-        // 4. Success
         RateLimiter::clear($throttleKey);
         $request->session()->regenerate();
+
+        // Save session vào DB trước, sau đó mới update user_id
+        $request->session()->save();
+
+        DB::table('sessions')
+            ->where('id', $request->session()->getId())
+            ->update(['user_id' => Auth::id()]);
 
         return redirect()->intended('/dashboard')
             ->with('login_success', true);

@@ -17,11 +17,9 @@ use Illuminate\Support\Facades\Mail;
 
 class NovaIdController extends Controller
 {
-    // Token hết hạn sau 15 phút
     private const EXPIRES_MINUTES = 15;
 
     // POST /nova-id/send
-    // Body: { email: string, type: 'magic_link'|'otp' }
     public function send(Request $request): JsonResponse
     {
         $data = $request->validate([
@@ -36,14 +34,13 @@ class NovaIdController extends Controller
         $email = strtolower($data['email']);
         $type  = $data['type'];
 
-        // Kiểm tra user tồn tại — silent fail để tránh user enumeration
+        // Silent fail — tránh user enumeration
         $user = Employee::where('email', $email)->first();
         if (! $user) {
-            // Trả về ok: true để FE không biết email có tồn tại không
             return response()->json(['ok' => true]);
         }
 
-        // Xoá token cũ chưa dùng của email này (cùng type)
+        // Xoá token cũ chưa dùng
         NovaIdToken::where('email', $email)
             ->where('type', $type)
             ->where('used', false)
@@ -56,7 +53,7 @@ class NovaIdController extends Controller
         return $this->sendOtp($email);
     }
 
-    // GET /nova-id/verify?token=xxx  (click từ email)
+    // GET /nova-id/verify?token=xxx
     public function verifyMagicLink(Request $request): RedirectResponse
     {
         $tokenStr = $request->query('token', '');
@@ -76,7 +73,6 @@ class NovaIdController extends Controller
                 ->withErrors(['nova_id' => 'Tài khoản không tồn tại.']);
         }
 
-        // Đánh dấu đã dùng
         $record->update(['used' => true]);
 
         Auth::login($user, remember: true);
@@ -86,7 +82,6 @@ class NovaIdController extends Controller
     }
 
     // POST /nova-id/verify-otp
-    // Body: { email: string, otp: string }
     public function verifyOtp(Request $request): JsonResponse
     {
         $data = $request->validate([
@@ -111,7 +106,6 @@ class NovaIdController extends Controller
             ], 422);
         }
 
-        // So sánh OTP (hash để tránh timing attack)
         if (! hash_equals($record->otp, $data['otp'])) {
             return response()->json([
                 'message' => 'Mã OTP không chính xác.',
@@ -134,14 +128,14 @@ class NovaIdController extends Controller
         ]);
     }
 
-    // Private helpers
+    // Private helpers 
     private function sendMagicLink(string $email): JsonResponse
     {
         $plainToken = Str::random(64);
 
         NovaIdToken::create([
             'email'      => $email,
-            'token'      => hash('sha256', $plainToken),  // lưu hash
+            'token'      => hash('sha256', $plainToken),
             'type'       => 'magic_link',
             'expires_at' => now()->addMinutes(self::EXPIRES_MINUTES),
         ]);
@@ -152,25 +146,26 @@ class NovaIdController extends Controller
             ['token' => $plainToken]
         );
 
-        Mail::to($email)->queue(new NovaIdMagicLinkMail($link));
+        // Đổi queue → send để gửi ngay không cần worker
+        Mail::to($email)->send(new NovaIdMagicLinkMail($link));
 
         return response()->json(['ok' => true]);
     }
 
     private function sendOtp(string $email): JsonResponse
     {
-        // OTP 6 chữ số, padding 0 nếu cần
         $otp = str_pad((string) random_int(0, 999999), 6, '0', STR_PAD_LEFT);
 
         NovaIdToken::create([
             'email'      => $email,
-            'token'      => Str::random(64), // bắt buộc unique, không dùng
+            'token'      => Str::random(64),
             'otp'        => $otp,
             'type'       => 'otp',
             'expires_at' => now()->addMinutes(self::EXPIRES_MINUTES),
         ]);
 
-        Mail::to($email)->queue(new NovaIdOtpMail($otp));
+        // Truyền $email + type 'login' để view hiển thị đúng nội dung
+        Mail::to($email)->send(new NovaIdOtpMail($otp, $email, 'login'));
 
         return response()->json(['ok' => true]);
     }

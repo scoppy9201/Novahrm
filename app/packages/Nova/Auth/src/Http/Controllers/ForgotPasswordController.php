@@ -2,12 +2,13 @@
 
 namespace Nova\Auth\Http\Controllers;
 
+use Nova\Auth\Mail\NovaIdOtpMail;
 use Nova\Auth\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class ForgotPasswordController extends Controller
 {
@@ -31,10 +32,9 @@ class ForgotPasswordController extends Controller
 
         Cache::put($key, $otp, now()->addMinutes(10));
 
-        // Tạm thời log để test, sau thay bằng Mail
-        Log::info("OTP cho {$request->email}: {$otp}");
+        Mail::to($request->email)->send(new NovaIdOtpMail($otp, $request->email, 'forgot_password'));
 
-        return response()->json(['message' => 'Đã gửi mã OTP.']);
+        return response()->json(['message' => 'Đã gửi mã OTP đến email của bạn.']);
     }
 
     public function verifyOtp(Request $request)
@@ -61,8 +61,8 @@ class ForgotPasswordController extends Controller
     public function reset(Request $request)
     {
         $request->validate([
-            'email'                 => ['required', 'email', 'exists:employees,email'],
-            'password'              => ['required', 'string', 'min:8', 'confirmed'],
+            'email'    => ['required', 'email', 'exists:employees,email'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ], [
             'email.exists'       => 'Không tìm thấy tài khoản với email này.',
             'password.min'       => 'Mật khẩu tối thiểu 8 ký tự.',
@@ -77,7 +77,7 @@ class ForgotPasswordController extends Controller
             ], 422);
         }
 
-        $employee = Employee::where('email', $request->email)->first();
+        $employee = Employee::where('email', $request->email)->firstOrFail();
         $employee->update(['password' => Hash::make($request->password)]);
 
         Cache::forget('otp_' . md5($request->email));
