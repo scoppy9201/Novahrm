@@ -35,21 +35,6 @@
             <h1 class="login-heading">Đăng nhập</h1>
             <p class="login-subheading">Chào mừng trở lại. Đăng nhập để bắt đầu làm việc.</p>
 
-            {{-- Error message --}}
-            @if ($errors->any())
-                <div class="login-alert">
-                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                    {{ $errors->first() }}
-                </div>
-            @endif
-
-            @if (session('error'))
-                <div class="login-alert">
-                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                    {{ session('error') }}
-                </div>
-            @endif
-
             <form method="POST" action="{{ route('login.store') }}" id="loginForm">
                 @csrf
 
@@ -272,6 +257,12 @@
     @endif
 
     {{-- Form logout ẩn --}}
+    @if ($errors->any())
+        <script>window.__loginError = @json($errors->first());</script>
+    @elseif (session('error'))
+        <script>window.__loginError = @json(session('error'));</script>
+    @endif
+
     <form id="logoutForm" method="POST" action="{{ route('logout') }}" style="display:none;">
         @csrf
     </form>

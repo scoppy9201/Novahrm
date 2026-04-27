@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'NovaHRM')</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=be-vietnam-pro:400,500,600,700,800,900" rel="stylesheet"/>
@@ -83,10 +84,9 @@
         <div class="user-menu" id="user-menu">
             <a href="{{ route('profile.index') }}" class="user-menu-item {{ request()->routeIs('profile.*') ? 'active' : '' }}">
                 <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                Thông tin cá nhân
+                Tài khoản của tôi
             </a>
-            <a href="#" class="user-menu-item danger"
-               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <a href="#" class="user-menu-item danger" data-logout data-logout-form="logout-form">
                 <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
                 Đăng xuất
             </a>

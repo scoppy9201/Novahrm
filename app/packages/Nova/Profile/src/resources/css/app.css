@@ -2,7 +2,7 @@
 .profile-topbar {
     background: #fff;
     border-bottom: 1px solid #e2e8f0;
-    padding: 0 24px;
+    padding: 16px 24px 8px;
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
@@ -10,10 +10,11 @@
 }
 
 .profile-topbar-row1 {
-    height: 52px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 14px;
 }
 
 .profile-breadcrumb {
@@ -22,7 +23,7 @@
     display: flex;
     align-items: center;
     gap: 5px;
-    margin-bottom: 2px;
+    margin-bottom: 8px;
 }
 
 .profile-breadcrumb a {
@@ -55,7 +56,7 @@
     font-weight: 900;
     color: #0f172a;
     letter-spacing: -0.4px;
-    line-height: 1;
+    line-height: 1.15;
 }
 
 .profile-actions {
@@ -67,11 +68,12 @@
 .profile-topbar-tabs {
     display: flex;
     gap: 0;
+    align-items: center;
 }
 
 .profile-tab {
     padding: 0 18px;
-    height: 40px;
+    height: 44px;
     display: flex;
     align-items: center;
     font-size: 11.5px;

@@ -13,6 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->web(append: [
             \App\Http\Middleware\SetSessionUserId::class,
+            \App\packages\Nova\Auth\src\Http\Middleware\CheckEmployeeActive::class, 
         ]);
 
         $middleware->alias([
