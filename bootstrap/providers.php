@@ -5,4 +5,5 @@ return [
     App\packages\Nova\Core\src\Providers\CoreServiceProvider::class,
     App\packages\Nova\Auth\src\Providers\AuthServiceProvider::class,
     Spatie\Permission\PermissionServiceProvider::class,
+    App\packages\Nova\Dashboard\src\Providers\DashboardServiceProvider::class, 
 ];

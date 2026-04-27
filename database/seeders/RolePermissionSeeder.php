@@ -18,4 +18,10 @@ class RolePermissionSeeder extends Seeder
         $employee = Role::firstOrCreate(['name' => 'employee']);
         $employee = Role::firstOrCreate(['name' => 'guest']);
     }
+
+    /**
+     * Tài khoản mặc định
+     * admin@novahrm.com
+     * password123
+     */
 }
