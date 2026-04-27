@@ -12,18 +12,30 @@ class NovaIdOtpMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct(public readonly string $otp) {}
+    public function __construct(
+        public readonly string $otp,
+        public readonly string $email = '',
+        public readonly string $type = 'login' // 'login' | 'forgot_password'
+    ) {}
 
     public function envelope(): Envelope
     {
-        return new Envelope(subject: 'Mã OTP đăng nhập Nova ID');
+        $subject = $this->type === 'forgot_password'
+            ? 'Mã OTP đặt lại mật khẩu — NovaHRM'
+            : 'Mã OTP đăng nhập Nova ID — NovaHRM';
+
+        return new Envelope(subject: $subject);
     }
 
     public function content(): Content
     {
         return new Content(
-            view: 'nova-auth::emails.otp',
-            with: ['otp' => $this->otp],
+            view: 'nova-auth::otp',
+            with: [
+                'otp'   => $this->otp,
+                'email' => $this->email,
+                'type'  => $this->type,
+            ],
         );
     }
 }

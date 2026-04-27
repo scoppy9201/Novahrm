@@ -22,7 +22,7 @@ class NovaIdMagicLinkMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'nova-auth::emails.magic-link',
+            view: 'nova-auth::magic-link',  
             with: ['link' => $this->link],
         );
     }
