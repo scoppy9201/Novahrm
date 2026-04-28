@@ -13,60 +13,136 @@
 
 <div class="hrm-layout">
     <aside class="sidebar" id="sidebar">
-
         <div class="sidebar-logo">
             <div class="logo-icon">
                 <svg viewBox="0 0 16 16"><path d="M8 1L14 4V8C14 11.3 11.3 13.8 8 15C4.7 13.8 2 11.3 2 8V4L8 1Z"/></svg>
             </div>
-            <span class="logo-text">Nova<span>HRM</span></span>
+            <div class="logo-text">
+                <span class="logo-eyebrow">Nền tảng</span>
+                <span class="logo-name">Nova<span>HRM</span></span>
+            </div>
         </div>
 
-        <nav class="sidebar-nav">
-            <a href="{{ route('dashboard') }}" class="sidebar-item {{ request()->routeIs('dashboard') ? 'active' : '' }}" title="Bảng điều khiển">
-                <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
-                <span class="sidebar-item-label">Bảng điều khiển</span>
-            </a>
-            <a href="#" class="sidebar-item" title="Nhân viên">
-                <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                <span class="sidebar-item-label">Nhân viên</span>
-            </a>
-            <a href="#" class="sidebar-item" title="Sơ đồ tổ chức">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><line x1="12" y1="7" x2="12" y2="13"/><line x1="12" y1="13" x2="5" y2="17"/><line x1="12" y1="13" x2="19" y2="17"/></svg>
-                <span class="sidebar-item-label">Sơ đồ tổ chức</span>
-            </a>
-            <a href="#" class="sidebar-item" title="Vị trí & Phòng ban">
-                <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-                <span class="sidebar-item-label">Vị trí & Phòng ban</span>
-            </a>
-            <a href="#" class="sidebar-item" title="Tài liệu">
-                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                <span class="sidebar-item-label">Tài liệu</span>
-            </a>
-            <a href="#" class="sidebar-item" title="Chấm công">
-                <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                <span class="sidebar-item-label">Chấm công</span>
-            </a>
-            <a href="#" class="sidebar-item" title="Bảng lương">
-                <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                <span class="sidebar-item-label">Bảng lương</span>
-            </a>
-            <a href="#" class="sidebar-item" title="Tuyển dụng">
-                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                <span class="sidebar-item-label">Tuyển dụng</span>
-            </a>
-            <a href="#" class="sidebar-item" title="Đào tạo">
-                <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-                <span class="sidebar-item-label">Đào tạo</span>
-            </a>
-            <a href="#" class="sidebar-item" title="Chính sách">
-                <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                <span class="sidebar-item-label">Chính sách</span>
-            </a>
-            <a href="#" class="sidebar-item" title="Cài đặt">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
-                <span class="sidebar-item-label">Cài đặt</span>
-            </a>
-        </nav>
+        <div class="sidebar-search" id="sidebar-search-wrap">
+            <svg viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input
+                id="sidebar-search-input"
+                type="text"
+                placeholder="Tìm tính năng..."
+                autocomplete="off"
+            />
+        </div>
+
+        <div class="sidebar-nav-wrap">
+            <nav class="sidebar-nav">
+                <div class="sidebar-group is-active" data-sidebar-group data-group-name="Nova HRM+">
+                    <button class="sidebar-group-trigger" type="button" title="Nova HRM+">
+                        <span class="sidebar-group-icon">
+                            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        </span>
+                        <span class="sidebar-group-text">
+                            <span class="sidebar-group-title">Nova HRM+</span>
+                            <span class="sidebar-group-subtitle">Quản trị nhân sự cốt lõi</span>
+                        </span>
+                    </button>
+                    <div class="sidebar-submenu">
+                        <a href="{{ route('dashboard') }}" class="sidebar-submenu-item {{ request()->routeIs('dashboard') ? 'active' : '' }}" data-sidebar-search-item data-search-label="Bảng điều khiển">
+                            <span class="submenu-bullet"></span>
+                            <span class="sidebar-submenu-label">Bảng điều khiển</span>
+                        </a>
+                        <a href="#" class="sidebar-submenu-item" data-sidebar-search-item data-search-label="Nhân viên">
+                            <span class="submenu-bullet"></span>
+                            <span class="sidebar-submenu-label">Nhân viên</span>
+                        </a>
+                        <a href="#" class="sidebar-submenu-item" data-sidebar-search-item data-search-label="Sơ đồ tổ chức">
+                            <span class="submenu-bullet"></span>
+                            <span class="sidebar-submenu-label">Sơ đồ tổ chức</span>
+                        </a>
+                        <a href="#" class="sidebar-submenu-item" data-sidebar-search-item data-search-label="Vị trí và phòng ban">
+                            <span class="submenu-bullet"></span>
+                            <span class="sidebar-submenu-label">Vị trí &amp; Phòng ban</span>
+                        </a>
+                        <a href="#" class="sidebar-submenu-item" data-sidebar-search-item data-search-label="Tài liệu">
+                            <span class="submenu-bullet"></span>
+                            <span class="sidebar-submenu-label">Tài liệu</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="sidebar-group" data-sidebar-group data-group-name="Nova Phát Triển">
+                    <button class="sidebar-group-trigger" type="button" title="Nova Phát Triển">
+                        <span class="sidebar-group-icon accent-purple">
+                            <svg viewBox="0 0 24 24"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-6"/><path d="M4 20h16"/></svg>
+                        </span>
+                        <span class="sidebar-group-text">
+                            <span class="sidebar-group-title">Nova Phát Triển</span>
+                            <span class="sidebar-group-subtitle">Tuyển dụng và nâng lực đội ngũ</span>
+                        </span>
+                    </button>
+                    <div class="sidebar-submenu">
+                        <a href="#" class="sidebar-submenu-item" data-sidebar-search-item data-search-label="Tuyển dụng">
+                            <span class="submenu-bullet"></span>
+                            <span class="sidebar-submenu-label">Tuyển dụng</span>
+                        </a>
+                        <a href="#" class="sidebar-submenu-item" data-sidebar-search-item data-search-label="Đào tạo">
+                            <span class="submenu-bullet"></span>
+                            <span class="sidebar-submenu-label">Đào tạo</span>
+                        </a>
+                        <a href="#" class="sidebar-submenu-item" data-sidebar-search-item data-search-label="Chính sách">
+                            <span class="submenu-bullet"></span>
+                            <span class="sidebar-submenu-label">Chính sách</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="sidebar-group" data-sidebar-group data-group-name="Nova Vận Hành">
+                    <button class="sidebar-group-trigger" type="button" title="Nova Vận Hành">
+                        <span class="sidebar-group-icon accent-amber">
+                            <svg viewBox="0 0 24 24"><path d="M4 13h5l2-8 4 14 2-6h3"/></svg>
+                        </span>
+                        <span class="sidebar-group-text">
+                            <span class="sidebar-group-title">Nova Vận Hành</span>
+                            <span class="sidebar-group-subtitle">Công, lương và vận hành nội bộ</span>
+                        </span>
+                    </button>
+                    <div class="sidebar-submenu">
+                        <a href="#" class="sidebar-submenu-item" data-sidebar-search-item data-search-label="Chấm công">
+                            <span class="submenu-bullet"></span>
+                            <span class="sidebar-submenu-label">Chấm công</span>
+                        </a>
+                        <a href="#" class="sidebar-submenu-item" data-sidebar-search-item data-search-label="Bảng lương">
+                            <span class="submenu-bullet"></span>
+                            <span class="sidebar-submenu-label">Bảng lương</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="sidebar-group sidebar-group-settings" data-sidebar-group data-group-name="Cấu hình">
+                    <button class="sidebar-group-trigger" type="button" title="Cấu hình">
+                        <span class="sidebar-group-icon accent-slate">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82 2 2 0 1 1-2.83 2.83 1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51 2 2 0 1 1-4 0 1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33 2 2 0 1 1-2.83-2.83 1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1 2 2 0 1 1 0-4 1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82 2 2 0 1 1 2.83-2.83 1.65 1.65 0 0 0 1.82.33h0A1.65 1.65 0 0 0 10 2.6a2 2 0 1 1 4 0 1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33 2 2 0 1 1 2.83 2.83 1.65 1.65 0 0 0-.33 1.82v0A1.65 1.65 0 0 0 21.4 10a2 2 0 1 1 0 4 1.65 1.65 0 0 0-1.51 1z"/></svg>
+                        </span>
+                        <span class="sidebar-group-text">
+                            <span class="sidebar-group-title">Cấu hình</span>
+                            <span class="sidebar-group-subtitle">Thiết lập hệ thống và tài khoản</span>
+                        </span>
+                    </button>
+                    <div class="sidebar-submenu">
+                        <a href="{{ route('profile.index') }}" class="sidebar-submenu-item {{ request()->routeIs('profile.*') ? 'active' : '' }}" data-sidebar-search-item data-search-label="Tài khoản của tôi">
+                            <span class="submenu-bullet"></span>
+                            <span class="sidebar-submenu-label">Tài khoản của tôi</span>
+                        </a>
+                        <a href="#" class="sidebar-submenu-item" data-sidebar-search-item data-search-label="Cài đặt hệ thống">
+                            <span class="submenu-bullet"></span>
+                            <span class="sidebar-submenu-label">Cài đặt hệ thống</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
 
         <div class="sidebar-avatar-btn" id="sidebar-avatar-btn">
             <div class="av-circle">
@@ -95,17 +171,16 @@
             @csrf
         </form>
 
-        <button class="sidebar-toggle" id="sidebar-toggle" type="button">
+        <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Mở rộng thanh bên">
             <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
         </button>
-
     </aside>
 
     <div class="hrm-main">
         @yield('content')
     </div>
 </div>
-
+<div class="sidebar-tooltip" id="sidebar-tooltip"></div>
 @yield('scripts')
 </body>
 </html>
