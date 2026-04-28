@@ -35,7 +35,11 @@
         </div>
         <div class="topbar-tabs">
             <div class="topbar-tab active">NHÂN VIÊN</div>
-            <div class="topbar-tab">SƠ ĐỒ TỔ CHỨC</div>
+            <div class="topbar-tabs">
+                <div class="topbar-tab active">NHÂN VIÊN</div>
+                <a href="{{ route('org-chart.index') }}" class="topbar-tab">SƠ ĐỒ TỔ CHỨC</a>
+                <div class="topbar-tab">ỨNG DỤNG HRM</div>
+            </div>
             <div class="topbar-tab">ỨNG DỤNG HRM</div>
         </div>
     </header>

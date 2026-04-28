@@ -1,0 +1,1351 @@
+/* ── Topbar ── */
+.orgchart-topbar {
+    background: #fff;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 16px 24px 0;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.orgchart-topbar-row1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 14px;
+}
+
+.orgchart-breadcrumb {
+    font-size: 11.5px;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 8px;
+}
+
+.orgchart-breadcrumb a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.15s;
+}
+
+.orgchart-breadcrumb a:hover { color: #475569; }
+
+.orgchart-breadcrumb svg {
+    width: 12px;
+    height: 12px;
+    stroke: #cbd5e1;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.orgchart-breadcrumb span {
+    color: #475569;
+    font-weight: 600;
+}
+
+.orgchart-page-title {
+    font-size: 19px;
+    font-weight: 900;
+    color: #0f172a;
+    letter-spacing: -0.4px;
+    line-height: 1.15;
+}
+
+.orgchart-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ── Topbar tabs ── */
+.orgchart-topbar-tabs {
+    display: flex;
+    gap: 0;
+    align-items: center;
+}
+
+.orgchart-tab {
+    padding: 0 18px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 0.05em;
+    border-bottom: 2.5px solid transparent;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.15s;
+    white-space: nowrap;
+}
+
+.orgchart-tab:hover {
+    color: #475569;
+    background: #f8fafc;
+}
+
+.orgchart-tab.active {
+    color: #1d4ed8;
+    border-bottom-color: #1d4ed8;
+}
+
+/* ── Toolbar (bộ lọc + search + view toggle) ── */
+.orgchart-toolbar {
+    background: #fff;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.orgchart-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+    padding: 6px 13px;
+    min-width: 220px;
+    transition: border-color 0.15s;
+}
+
+.orgchart-search:focus-within {
+    border-color: #93c5fd;
+    background: #fff;
+}
+
+.orgchart-search svg {
+    width: 14px;
+    height: 14px;
+    stroke: #94a3b8;
+    fill: none;
+    stroke-width: 2;
+    flex-shrink: 0;
+}
+
+.orgchart-search input {
+    border: none;
+    background: none;
+    font-size: 12.5px;
+    color: #475569;
+    outline: none;
+    width: 100%;
+    font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+.orgchart-search input::placeholder { color: #94a3b8; }
+
+.orgchart-select {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+    padding: 7px 32px 7px 12px;
+    font-size: 12.5px;
+    color: #475569;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 14px;
+    transition: border-color 0.15s;
+}
+
+.orgchart-select:focus {
+    border-color: #93c5fd;
+    background-color: #fff;
+}
+
+.orgchart-toolbar-sep {
+    width: 1px;
+    height: 24px;
+    background: #e2e8f0;
+    flex-shrink: 0;
+}
+
+.orgchart-toolbar-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* View toggle (tree / compact / horizontal) */
+.orgchart-view-toggle {
+    display: flex;
+    align-items: center;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+    overflow: hidden;
+}
+
+.orgchart-view-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #94a3b8;
+    transition: all 0.15s;
+}
+
+.orgchart-view-btn:hover { background: #f1f5f9; color: #475569; }
+
+.orgchart-view-btn.active {
+    background: #eff6ff;
+    color: #1d4ed8;
+}
+
+.orgchart-view-btn svg {
+    width: 15px;
+    height: 15px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* ── Canvas wrapper ── */
+.orgchart-body {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    background: #f8fafc;
+    background-image:
+        radial-gradient(circle, #cbd5e1 1px, transparent 1px);
+    background-size: 24px 24px;
+}
+
+.orgchart-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-origin: top left;
+    cursor: grab;
+    user-select: none;
+    padding: 60px;
+}
+
+.orgchart-canvas.grabbing { cursor: grabbing; }
+
+/* Zoom controls */
+.orgchart-zoom-controls {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 50;
+}
+
+.orgchart-zoom-btn {
+    width: 34px;
+    height: 34px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #64748b;
+    font-size: 16px;
+    font-weight: 700;
+    transition: all 0.15s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.orgchart-zoom-btn:hover {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+    color: #1d4ed8;
+}
+
+.orgchart-zoom-label {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    min-width: 34px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+/* ── Node: Department ── */
+.orgchart-dept-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.orgchart-dept-card {
+    background: #fff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    width: 220px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+    cursor: pointer;
+    position: relative;
+}
+
+.orgchart-dept-card:hover {
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+    border-color: #93c5fd;
+}
+
+.orgchart-dept-card.highlighted {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+}
+
+/* Thanh màu trên cùng của dept card */
+.orgchart-dept-accent {
+    height: 4px;
+    background: #1d4ed8;
+    border-radius: 14px 14px 0 0;
+}
+
+.orgchart-dept-body {
+    padding: 12px 14px 10px;
+}
+
+.orgchart-dept-name {
+    font-size: 13px;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.2px;
+    margin-bottom: 2px;
+}
+
+.orgchart-dept-code {
+    font-size: 10px;
+    font-weight: 700;
+    color: #3b82f6;
+    font-family: 'Courier New', monospace;
+    margin-bottom: 8px;
+}
+
+.orgchart-dept-manager {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 10px;
+    background: #f8fafc;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.orgchart-dept-manager-av {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.orgchart-dept-manager-info {
+    min-width: 0;
+}
+
+.orgchart-dept-manager-name {
+    font-size: 11px;
+    font-weight: 700;
+    color: #0f172a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.orgchart-dept-manager-title {
+    font-size: 10px;
+    color: #94a3b8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.orgchart-dept-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.orgchart-dept-count {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.orgchart-dept-count svg {
+    width: 12px;
+    height: 12px;
+    stroke: #94a3b8;
+    fill: none;
+    stroke-width: 2;
+}
+
+.orgchart-dept-collapse {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    flex-shrink: 0;
+}
+
+.orgchart-dept-collapse:hover {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+}
+
+.orgchart-dept-collapse svg {
+    width: 12px;
+    height: 12px;
+    stroke: #64748b;
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.2s;
+}
+
+.orgchart-dept-collapse.collapsed svg {
+    transform: rotate(-90deg);
+}
+
+/* ── Node: Employee ── */
+.orgchart-emp-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.orgchart-emp-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    width: 160px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.orgchart-emp-card:hover {
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+    border-color: #93c5fd;
+}
+
+.orgchart-emp-card.highlighted {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+}
+
+.orgchart-emp-av {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e2e8f0;
+}
+
+.orgchart-emp-name {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.3;
+}
+
+.orgchart-emp-title {
+    font-size: 10px;
+    color: #94a3b8;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.orgchart-emp-status {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+    border: 1.5px solid #fff;
+}
+
+.status-active   { background: #22c55e; }
+.status-inactive { background: #94a3b8; }
+
+/* ── Connector lines ── */
+.orgchart-connector {
+    stroke: #cbd5e1;
+    stroke-width: 1.5;
+    fill: none;
+}
+
+/* ── Drawer chi tiết ── */
+.orgchart-drawer-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.3);
+    z-index: 400;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.orgchart-drawer-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.orgchart-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 360px;
+    background: #fff;
+    border-left: 1px solid #e2e8f0;
+    z-index: 500;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -8px 0 32px rgba(2,6,23,0.1);
+}
+
+.orgchart-drawer.open {
+    transform: translateX(0);
+}
+
+.orgchart-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid #f1f5f9;
+    flex-shrink: 0;
+}
+
+.orgchart-drawer-title {
+    font-size: 13px;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.orgchart-drawer-close {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #64748b;
+    transition: all 0.15s;
+}
+
+.orgchart-drawer-close:hover {
+    background: #fef2f2;
+    border-color: #fca5a5;
+    color: #ef4444;
+}
+
+.orgchart-drawer-close svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+}
+
+.orgchart-drawer-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Profile block trong drawer */
+.orgchart-drawer-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 16px;
+    background: #f8fafc;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.orgchart-drawer-av {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px #e2e8f0;
+}
+
+.orgchart-drawer-name {
+    font-size: 15px;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.3px;
+}
+
+.orgchart-drawer-job {
+    font-size: 11.5px;
+    color: #2563eb;
+    font-weight: 600;
+}
+
+/* Info rows trong drawer */
+.orgchart-drawer-section-title {
+    font-size: 10px;
+    font-weight: 800;
+    color: #94a3b8;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.orgchart-drawer-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.orgchart-drawer-row:last-child { border-bottom: none; }
+
+.orgchart-drawer-row svg {
+    width: 14px;
+    height: 14px;
+    stroke: #94a3b8;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    flex-shrink: 0;
+}
+
+.orgchart-drawer-row-label {
+    font-size: 10px;
+    color: #94a3b8;
+    font-weight: 600;
+    min-width: 90px;
+}
+
+.orgchart-drawer-row-val {
+    font-size: 12px;
+    color: #334155;
+    font-weight: 600;
+}
+
+/* Chain báo cáo trong drawer */
+.orgchart-chain {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.orgchart-chain-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    position: relative;
+}
+
+.orgchart-chain-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 14px;
+    top: 38px;
+    width: 1px;
+    height: calc(100% - 14px);
+    background: #e2e8f0;
+}
+
+.orgchart-chain-av {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e2e8f0;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.orgchart-chain-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.orgchart-chain-title {
+    font-size: 10.5px;
+    color: #94a3b8;
+}
+
+/* Drawer footer actions */
+.orgchart-drawer-footer {
+    padding: 14px 20px;
+    border-top: 1px solid #f1f5f9;
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+/* ── Buttons── */
+.btn-orgchart-primary {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 15px;
+    background: #1d4ed8;
+    color: #fff;
+    border: none;
+    border-radius: 9px;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    transition: all 0.15s;
+    white-space: nowrap;
+}
+
+.btn-orgchart-primary:hover {
+    background: #1e40af;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(29,78,216,0.3);
+}
+
+.btn-orgchart-primary svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.5;
+}
+
+.btn-orgchart-secondary {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 13px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #64748b;
+    cursor: pointer;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    transition: all 0.15s;
+    white-space: nowrap;
+}
+
+.btn-orgchart-secondary:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #334155;
+}
+
+.btn-orgchart-secondary svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+}
+
+.btn-orgchart-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    cursor: pointer;
+    color: #64748b;
+    transition: all 0.15s;
+}
+
+.btn-orgchart-icon:hover {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+    color: #1d4ed8;
+}
+
+.btn-orgchart-icon svg {
+    width: 15px;
+    height: 15px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+}
+
+/* ── Badge ── */
+.orgchart-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 9px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.orgchart-badge-blue   { background: #eff6ff; color: #1d4ed8; }
+.orgchart-badge-green  { background: #f0fdf4; color: #15803d; }
+.orgchart-badge-amber  { background: #fffbeb; color: #b45309; }
+.orgchart-badge-red    { background: #fef2f2; color: #b91c1c; }
+.orgchart-badge-gray   { background: #f8fafc; color: #475569; border: 1px solid #e2e8f0; }
+
+/* ── Loading state ── */
+.orgchart-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: #f8fafc;
+    z-index: 10;
+}
+
+.orgchart-spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid #e2e8f0;
+    border-top-color: #1d4ed8;
+    border-radius: 50%;
+    animation: orgchart-spin 0.7s linear infinite;
+}
+
+@keyframes orgchart-spin {
+    to { transform: rotate(360deg); }
+}
+
+.orgchart-loading-text {
+    font-size: 12.5px;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+/* ── Empty state ── */
+.orgchart-empty {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.orgchart-empty-icon {
+    width: 48px;
+    height: 48px;
+    background: #f1f5f9;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.orgchart-empty-icon svg {
+    width: 22px;
+    height: 22px;
+    stroke: #94a3b8;
+    fill: none;
+    stroke-width: 1.8;
+}
+
+.orgchart-empty-text {
+    font-size: 13px;
+    font-weight: 700;
+    color: #64748b;
+}
+
+.orgchart-empty-sub {
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .orgchart-toolbar {
+        padding: 10px 16px;
+        flex-wrap: wrap;
+    }
+
+    .orgchart-search { min-width: 0; flex: 1; }
+
+    .orgchart-drawer { width: 100%; }
+}
+
+/* ── List tab ── */
+.orgchart-list-wrap {
+    padding: 24px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.orgchart-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;  
+}
+
+.orgchart-table thead th {
+    text-align: left;
+    padding: 9px 14px;
+    font-size: 10.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: #94a3b8;
+    border-bottom: 1.5px solid #e2e8f0;
+    background: #f8fafc;
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.orgchart-table-row td {
+    padding: 11px 14px;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+    text-align: left;
+}
+
+.orgchart-table-row:hover td {
+    background: #f8faff;
+}
+
+.orgchart-table-row:last-child td {
+    border-bottom: none;
+}
+
+.orgchart-list-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 80px 0;
+}
+
+.orgchart-list-empty .orgchart-empty-icon {
+    width: 48px;
+    height: 48px;
+    background: #f1f5f9;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.orgchart-list-empty .orgchart-empty-icon svg {
+    width: 22px;
+    height: 22px;
+    stroke: #94a3b8;
+    fill: none;
+    stroke-width: 1.8;
+}
+
+/* ── Modal create ── */
+.orgchart-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15,23,42,0.4);
+    z-index: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.orgchart-modal {
+    background: #fff;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+}
+
+.orgchart-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.orgchart-modal-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.orgchart-modal-body {
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.orgchart-modal-footer {
+    padding: 14px 20px;
+    border-top: 1px solid #f1f5f9;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.orgchart-form-row {
+    display: flex;
+    gap: 12px;
+}
+
+.orgchart-form-row .orgchart-form-group {
+    flex: 1;
+}
+
+.orgchart-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.orgchart-form-label {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #475569;
+}
+
+.orgchart-form-input {
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: #0f172a;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    outline: none;
+    transition: border-color 0.15s;
+    width: 100%;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
+.orgchart-form-input:focus {
+    border-color: #93c5fd;
+    box-shadow: 0 0 0 3px rgba(147,197,253,0.2);
+}
+
+.orgchart-form-select {
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: #0f172a;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    background: #fff;
+    cursor: pointer;
+}
+
+.orgchart-form-select:focus {
+    border-color: #93c5fd;
+}
+
+.orgchart-form-error {
+    font-size: 11px;
+    color: #ef4444;
+    font-weight: 600;
+    min-height: 14px;
+}
+
+.btn-orgchart-danger {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 16px;
+    height: 36px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1.5px solid #fca5a5;
+    background: #fff1f2;
+    color: #dc2626;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.btn-orgchart-danger:hover {
+    background: #fee2e2;
+    border-color: #f87171;
+}
+
+.btn-orgchart-danger svg {
+    width: 15px;
+    height: 15px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* ── Connector SVG overlay ── */
+.orgchart-connector-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: visible;
+    z-index: 0;
+}
+
+.orgchart-dept-node,
+.orgchart-dept-card,
+.orgchart-emp-card {
+    position: relative;
+    z-index: 1;
+}
+
+/* ── Connector line styles ── */
+.oc-edge {
+    fill: none;
+    stroke: #cbd5e1;
+    stroke-width: 2px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.oc-edge-flow {
+    fill: none;
+    stroke: #3b82f6;
+    stroke-width: 2px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 6 14;
+    animation: oc-flow 1.8s linear infinite;
+    opacity: 0.7;
+}
+
+@keyframes oc-flow {
+    from { stroke-dashoffset: 0; }
+    to   { stroke-dashoffset: -20; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .oc-edge-flow { animation: none; opacity: 0; }
+}
+
+/* ── Drag & Drop ── */
+.orgchart-dept-card.dragging {
+    opacity: 0.4;
+    transform: scale(0.97);
+    cursor: grabbing !important;
+    box-shadow: none;
+    border-color: #93c5fd;
+}
+
+.orgchart-dept-card.drag-over {
+    border-color: #3b82f6;
+    background: #eff6ff;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.25), 0 6px 20px rgba(59,130,246,0.15);
+    transform: translateY(-2px) scale(1.02);
+}
+
+.orgchart-dept-card.drag-over .orgchart-dept-name {
+    color: #1d4ed8;
+}
+
+/* Drag handle — hiện khi hover vào card */
+.orgchart-dept-drag-handle {
+    position: absolute;
+    top: 8px;
+    right: 38px; /* tránh nút collapse */
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    cursor: grab;
+    color: #94a3b8;
+    transition: opacity 0.15s, background 0.15s;
+    z-index: 10;
+}
+
+.orgchart-dept-card:hover .orgchart-dept-drag-handle {
+    opacity: 1;
+}
+
+.orgchart-dept-drag-handle:hover {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.orgchart-dept-drag-handle svg {
+    width: 13px;
+    height: 13px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+}
+
+/* Toast thông báo */
+.orgchart-toast {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #0f172a;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 12.5px;
+    font-weight: 600;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+}
+
+.orgchart-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.orgchart-toast.success { background: #15803d; }
+.orgchart-toast.error   { background: #b91c1c; }
+
+.orgchart-toast svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+}
+
+/* Drop vào root (thoát khỏi parent) */
+.orgchart-drop-root {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.9);
+    background: #fff;
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 10px 24px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 800;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s, border-color 0.15s;
+    white-space: nowrap;
+}
+
+.orgchart-drop-root.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) scale(1);
+}
+
+.orgchart-drop-root.drag-over-root {
+    border-color: #3b82f6;
+    color: #1d4ed8;
+    background: #eff6ff;
+}
+
+.orgchart-drop-root svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+}

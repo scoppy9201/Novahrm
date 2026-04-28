@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\Models\Department;
+use App\packages\Nova\OrgChart\src\Models\Department;
 use Filament\Notifications\Notification;
 use Filament\Actions\Action;
 use App\Filament\Resources\Departments\DepartmentResource;

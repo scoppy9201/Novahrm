@@ -57,7 +57,7 @@
                             <span class="submenu-bullet"></span>
                             <span class="sidebar-submenu-label">Nhân viên</span>
                         </a>
-                        <a href="#" class="sidebar-submenu-item" data-sidebar-search-item data-search-label="Sơ đồ tổ chức">
+                        <a href="{{ route('org-chart.index') }}" class="sidebar-submenu-item" data-sidebar-search-item data-search-label="Sơ đồ tổ chức">
                             <span class="submenu-bullet"></span>
                             <span class="sidebar-submenu-label">Sơ đồ tổ chức</span>
                         </a>

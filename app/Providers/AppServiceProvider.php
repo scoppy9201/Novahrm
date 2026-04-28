@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Department;
+use App\packages\Nova\OrgChart\src\Models\Department;
 use App\Observers\DepartmentObserver;
 use App\Observers\EmployeeObserver;
 use App\Observers\MessageObserver;

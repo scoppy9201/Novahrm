@@ -1,11 +1,15 @@
 <?php
 
-namespace Nova\Auth\Models; 
+namespace Nova\Auth\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\packages\Nova\OrgChart\src\Models\Department; 
 
 class Employee extends Authenticatable
 {
@@ -61,11 +65,35 @@ class Employee extends Authenticatable
 
     protected $rememberTokenName = 'remember_token';
 
+    // Accessors 
+
     public function getNameAttribute(): string
     {
         return trim("{$this->first_name} {$this->last_name}");
     }
 
+    public function getAvatarUrlAttribute(): string
+    {
+        if ($this->avatar && str_starts_with($this->avatar, 'http')) {
+            return $this->avatar;
+        }
+
+        return $this->avatar
+            ? asset('storage/' . $this->avatar)
+            : $this->defaultAvatar();
+    }
+
+    private function defaultAvatar(): string
+    {
+        $initials = strtoupper(
+            substr($this->first_name, 0, 1) .
+            substr($this->last_name,  0, 1)
+        );
+
+        return 'https://ui-avatars.com/api/?name=' . urlencode($initials) . '&background=1d4ed8&color=fff&size=128';
+    }
+
+    // Casts 
     protected function casts(): array
     {
         return [
@@ -77,16 +105,51 @@ class Employee extends Authenticatable
             'password'          => 'hashed',
             'office_id'         => 'integer',
             'manager_id'        => 'integer',
+            'department_id'     => 'integer',
+            'position_id'       => 'integer',
         ];
     }
 
-    public function manager(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    // Relationships 
+    public function department(): BelongsTo
+    {
+        return $this->belongsTo(Department::class, 'department_id');
+    }
+
+    public function manager(): BelongsTo
     {
         return $this->belongsTo(Employee::class, 'manager_id');
     }
 
-    public function notificationPreference(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function subordinates(): HasMany
     {
-        return $this->hasOne(\App\packages\Nova\Profile\src\Models\NotificationPreference::class, 'employee_id');
+        return $this->hasMany(Employee::class, 'manager_id');
+    }
+
+    /**
+     * Chuỗi báo cáo đệ quy xuống các cấp dưới
+     */
+    public function subordinatesRecursive(): HasMany
+    {
+        return $this->subordinates()->with('subordinatesRecursive');
+    }
+
+    public function notificationPreference(): HasOne
+    {
+        return $this->hasOne(
+            \App\packages\Nova\Profile\src\Models\NotificationPreference::class,
+            'employee_id'
+        );
+    }
+
+    // Scopes 
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
+
+    public function scopeInDepartment($query, int $departmentId)
+    {
+        return $query->where('department_id', $departmentId);
     }
 }

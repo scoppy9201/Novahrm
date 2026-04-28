@@ -7,4 +7,5 @@ return [
     Spatie\Permission\PermissionServiceProvider::class,
     App\packages\Nova\Dashboard\src\Providers\DashboardServiceProvider::class,
     App\packages\Nova\Profile\src\Providers\ProfileServiceProvider::class,
+    App\packages\Nova\OrgChart\src\Providers\OrgChartServiceProvider::class, 
 ];
