@@ -3,6 +3,7 @@
 namespace App\packages\Nova\document\src\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 class DocumentCategory extends Model
@@ -35,17 +36,17 @@ class DocumentCategory extends Model
     }
 
     // Scope
-    public function scopeActive($query)
+    public function scopeActive(Builder $query) : Builder
     {
         return $query->where('is_active', true)->orderBy('order');
     }
 
-    public function scopePersonal($query)
+    public function scopePersonal(Builder $query) : Builder
     {
         return $query->where('access_level', 'personal');
     }
 
-    public function scopeCompany($query)
+    public function scopeCompany(Builder $query) : Builder
     {
         return $query->where('access_level', 'company');
     }
