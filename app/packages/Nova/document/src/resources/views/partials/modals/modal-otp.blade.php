@@ -149,35 +149,71 @@
     const otpHidden  = document.getElementById('hidden-otp-value');
 
     digits.forEach((input, idx) => {
-        input.addEventListener('input', e => {
-            const val = e.target.value.replace(/\D/g, '');
-            e.target.value = val;
-            if (val && idx < digits.length - 1) digits[idx + 1].focus();
-            digits.forEach(d => d.classList.toggle('filled', d.value !== ''));
-            const otp = [...digits].map(d => d.value).join('');
-            if (otpHidden)  otpHidden.value    = otp;
-            if (confirmBtn) confirmBtn.disabled = otp.length < 6;
+        input.addEventListener('keydown', e => {
+            if (e.key === 'Backspace') {
+                e.preventDefault();
+                if (input.value) {
+                    input.value = '';
+                    input.classList.remove('filled');
+                } else if (idx > 0) {
+                    digits[idx - 1].focus();
+                    digits[idx - 1].value = '';
+                    digits[idx - 1].classList.remove('filled');
+                }
+                updateOtp();
+                return;
+            }
+
+            if (!/^\d$/.test(e.key)) {
+                e.preventDefault();
+                return;
+            }
+
+            e.preventDefault();
+            input.value = e.key;  // ghi đè, không append
+            input.classList.add('filled');
+            updateOtp();
+
+            if (idx < digits.length - 1) {
+                digits[idx + 1].focus();
+            }
         });
 
-        input.addEventListener('keydown', e => {
-            if (e.key === 'Backspace' && !input.value && idx > 0) {
-                digits[idx - 1].focus();
-                digits[idx - 1].value = '';
-                digits[idx - 1].classList.remove('filled');
+        // Chặn HOÀN TOÀN input event — không cho browser tự xử lý
+        input.addEventListener('input', e => {
+            input.value = input.value.slice(-1).replace(/\D/g, '');
+            if (input.value) {
+                input.classList.add('filled');
+                updateOtp();
+                if (idx < digits.length - 1) digits[idx + 1].focus();
+            } else {
+                input.classList.remove('filled');
+                updateOtp();
             }
         });
 
         input.addEventListener('paste', e => {
             e.preventDefault();
-            const pasted = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '').slice(0, 6);
-            pasted.split('').forEach((ch, i) => {
-                if (digits[i]) { digits[i].value = ch; digits[i].classList.add('filled'); }
+            const pasted = (e.clipboardData || window.clipboardData)
+                .getData('text')
+                .replace(/\D/g, '')
+                .slice(0, 6);
+
+            digits.forEach((d, i) => {
+                d.value = pasted[i] || '';
+                d.classList.toggle('filled', !!pasted[i]);
             });
-            if (otpHidden)  otpHidden.value    = pasted;
-            if (confirmBtn) confirmBtn.disabled = pasted.length < 6;
-            if (digits[Math.min(pasted.length, 5)]) digits[Math.min(pasted.length, 5)].focus();
+
+            updateOtp();
+            digits[Math.min(pasted.length, 5)].focus();
         });
     });
+
+    function updateOtp() {
+        const otp = [...digits].map(d => d.value).join('');
+        if (otpHidden)  otpHidden.value    = otp;
+        if (confirmBtn) confirmBtn.disabled = otp.length < 6;
+    }
 
     // Submit 
     document.getElementById('form-otp-sign')?.addEventListener('submit', function(e) {

@@ -13,11 +13,11 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->web(append: [
             \App\Http\Middleware\SetSessionUserId::class,
-            \App\packages\Nova\Auth\src\Http\Middleware\CheckEmployeeActive::class, 
+            \App\packages\Nova\Auth\src\Http\Middleware\CheckEmployeeActive::class,
         ]);
 
         $middleware->alias([
-            'role'               => \Spatie\Permission\Middleware\RoleMiddleware::class,
+            'role'               => \App\packages\Nova\Auth\src\Http\Middleware\CheckRole::class,
             'permission'         => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
         ]);

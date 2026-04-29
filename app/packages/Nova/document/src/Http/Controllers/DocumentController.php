@@ -4,18 +4,20 @@ namespace App\packages\Nova\document\src\Http\Controllers;
 
 use App\packages\Nova\document\src\Models\Document;
 use App\packages\Nova\document\src\Models\DocumentApproval;
+use App\packages\Nova\document\src\Models\DocumentCategory;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Nova\Auth\Models\Employee;
 
 class DocumentController extends Controller
 {
-     use AuthorizesRequests;
+    use AuthorizesRequests;
 
     public function index(Request $request)
     {
-        /** @var \Nova\Auth\Models\Employee $user */
+        /** @var Employee $user */
         $user = $request->user();
 
         $documents = Document::with('category')
@@ -54,9 +56,9 @@ class DocumentController extends Controller
             ->when(!$request->sort || $request->sort === 'newest', fn($q) => $q->latest())
 
             ->paginate(15)
-            ->withQueryString(); // giữ query string khi phân trang
+            ->withQueryString();
 
-        $categories = \App\packages\Nova\document\src\Models\DocumentCategory::active()
+        $categories = DocumentCategory::active()
             ->orderBy('order')
             ->get();
 
@@ -65,7 +67,7 @@ class DocumentController extends Controller
 
     public function create()
     {
-        $categories = \App\packages\Nova\document\src\Models\DocumentCategory::active()
+        $categories = DocumentCategory::active()
             ->orderBy('order')
             ->get();
 
@@ -75,7 +77,7 @@ class DocumentController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'title'           => 'required|string|max:255',  
+            'title'           => 'required|string|max:255',
             'file'            => 'required|file|mimes:pdf|max:20480',
             'category_id'     => 'required|exists:document_categories,id',
             'employee_id'     => 'nullable|exists:employees,id',
@@ -92,7 +94,7 @@ class DocumentController extends Controller
             'title'           => $data['title'],
             'category_id'     => $data['category_id'],
             'employee_id'     => $data['employee_id'] ?? null,
-            'uploaded_by'     => $request->user()->id, 
+            'uploaded_by'     => $request->user()->id,
             'file_name'       => $file->getClientOriginalName(),
             'tags'            => $data['tags'] ?? null,
             'is_confidential' => $data['is_confidential'] ?? false,
@@ -122,11 +124,11 @@ class DocumentController extends Controller
     {
         $this->authorize('update', $document);
 
-        $categories = \App\packages\Nova\document\src\Models\DocumentCategory::active()
+        $categories = DocumentCategory::active()
             ->orderBy('order')
             ->get();
 
-        $employees = \Nova\Auth\Models\Employee::orderBy('first_name')->get();
+        $employees = Employee::orderBy('first_name')->get();
 
         return view('documents::edit', compact('document', 'categories', 'employees'));
     }
@@ -141,7 +143,6 @@ class DocumentController extends Controller
                 ->with('error', 'Chỉ sửa được tài liệu ở trạng thái nháp.');
         }
 
-        // Parse tags từ JSON string thành array
         if ($request->has('tags') && is_string($request->tags)) {
             $request->merge([
                 'tags' => json_decode($request->tags, true) ?? []
@@ -187,9 +188,11 @@ class DocumentController extends Controller
             ->with('success', 'Đã xóa tài liệu.');
     }
 
-    public function download(Document $document, string $type = 'original')
+    public function download(Document $document, Request $request)
     {
         $this->authorize('view', $document);
+
+        $type = $request->query('type', 'original');
 
         $path = ($type === 'signed' && $document->signed_file_path)
             ? $document->signed_file_path
@@ -201,7 +204,7 @@ class DocumentController extends Controller
                 ->with('error', 'File không tồn tại trên hệ thống.');
         }
 
-        return response()->download(Storage::disk('local')->path($path),$document->file_name);
+        return response()->download(Storage::disk('local')->path($path), $document->file_name);
     }
 
     public function submitForApproval(Document $document)
@@ -214,7 +217,7 @@ class DocumentController extends Controller
                 ->with('error', 'Không thể gửi duyệt ở trạng thái này.');
         }
 
-        /** @var \Nova\Auth\Models\Employee $employee */
+        /** @var Employee $employee */
         $employee = request()->user();
 
         $document->update(['status' => 'pending']);

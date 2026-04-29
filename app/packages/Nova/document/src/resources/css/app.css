@@ -1066,6 +1066,7 @@
 .doc-btn {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 7px;
     padding: 7px 16px;
     border-radius: 9px;
@@ -1325,4 +1326,53 @@
     .doc-pagination { flex-direction: column; gap: 8px; }
     .doc-detail-layout { grid-template-columns: 1fr; }
     .doc-modal { margin: 16px; }
+}
+
+.sig-steps {
+    display: grid;
+    grid-template-columns: auto 1fr auto 1fr auto;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.sig-step {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    opacity: 0.4;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+}
+.sig-step.active { opacity: 1; }
+.sig-step.done   { opacity: 0.7; }
+
+.sig-step-num {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--doc-border);
+    color: var(--doc-text-faint);
+    font-size: 11px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+}
+.sig-step.active .sig-step-num { background: var(--doc-primary); color: #fff; }
+.sig-step.done   .sig-step-num { background: #22c55e; color: #fff; }
+
+.sig-step-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--doc-text-muted);
+}
+
+.sig-step-line {
+    height: 1.5px;
+    background: var(--doc-border);
+    width: 100%;
+    margin: 0 6px;
 }

@@ -92,7 +92,6 @@ class DocumentSignatureController extends Controller
         }
 
         $otpRecord->update(['is_used' => true, 'otp_verified_at' => now()]);
-
         // Nhúng chữ ký vào PDF
         $signedPath = app(PdfSignatureService::class)->embedSignature(
             filePath:        $document->file_path,

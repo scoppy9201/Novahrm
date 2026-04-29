@@ -14,8 +14,10 @@
             <div class="doc-modal-body">
                 <div class="doc-alert doc-alert-success">
                     <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                    Bạn đang phê duyệt tài liệu <strong>{{ $document->file_name }}</strong>.
-                    Hành động này sẽ được ghi lại vào lịch sử.
+                    <div>
+                        Bạn đang phê duyệt tài liệu <strong>{{ $document->file_name }}</strong>.
+                        Hành động này sẽ được ghi lại vào lịch sử.
+                    </div>
                 </div>
 
                 <div class="doc-form-group">

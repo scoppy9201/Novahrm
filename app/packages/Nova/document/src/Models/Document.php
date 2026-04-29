@@ -120,8 +120,8 @@ class Document extends Model
 
     public function canBeSigned(): bool
     {
-        return $this->status === 'signing'
-            && $this->category->requires_signature;
+        return in_array($this->status, ['signing', 'approved'])
+            && $this->category?->requires_signature;
     }
 
     public function fileSizeHuman(): string

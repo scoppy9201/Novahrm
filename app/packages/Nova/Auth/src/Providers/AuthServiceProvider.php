@@ -3,8 +3,13 @@
 namespace App\packages\Nova\Auth\src\Providers;
 
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+
+use App\packages\Nova\document\src\Models\Document;
+use App\packages\Nova\document\src\Policies\DocumentPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -15,12 +20,17 @@ class AuthServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        $this->app['router']
-            ->middleware(['web'])
+        // Đăng ký policies
+        Gate::policy(Document::class, DocumentPolicy::class);
+
+        // Đăng ký routes
+        Route::middleware(['web'])
             ->group(__DIR__ . '/../routes/web.php');
 
+        // Đăng ký views
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'nova-auth');
 
+        // Đăng ký rate limiters
         $this->registerRateLimiters();
     }
 

@@ -14,7 +14,9 @@
             <div class="doc-modal-body">
                 <div class="doc-alert doc-alert-error">
                     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                    Tài liệu sẽ bị trả về trạng thái <strong>Từ chối</strong>. Nhân viên sẽ cần chỉnh sửa và gửi lại.
+                    <div>
+                        Tài liệu sẽ bị trả về trạng thái <strong>Từ chối</strong>. Nhân viên sẽ cần chỉnh sửa và gửi lại.
+                    </div>
                 </div>
 
                 <div class="doc-form-group">
