@@ -65,7 +65,7 @@
                             <span class="submenu-bullet"></span>
                             <span class="sidebar-submenu-label">Vị trí &amp; Phòng ban</span>
                         </a>
-                        <a href="#" class="sidebar-submenu-item" data-sidebar-search-item data-search-label="Tài liệu">
+                        <a href="{{ route('documents.index') }}" class="sidebar-submenu-item {{ request()->routeIs('documents.*') ? 'active' : '' }}" data-sidebar-search-item data-search-label="Tài liệu">
                             <span class="submenu-bullet"></span>
                             <span class="sidebar-submenu-label">Tài liệu</span>
                         </a>

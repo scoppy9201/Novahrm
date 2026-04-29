@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\packages\Nova\OrgChart\src\Models\Department; 
+use App\packages\Nova\OrgChart\src\Models\Department;
 
 class Employee extends Authenticatable
 {
