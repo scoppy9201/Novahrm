@@ -242,8 +242,8 @@
                                 <div class="dept-emp-name">{{ $emp->name }}</div>
                                 <div class="dept-emp-pos">{{ $emp->position?->title ?? 'Chưa có vị trí' }}</div>
                             </div>
-                            <span class="dept-badge {{ $emp->status === 'active' ? 'dept-badge-active' : 'dept-badge-gray' }}" style="font-size:10px">
-                                {{ $emp->status === 'active' ? 'Đang làm' : 'Nghỉ' }}
+                            <span class="dept-badge {{ $emp->is_active ? 'dept-badge-active' : 'dept-badge-gray' }}" style="font-size:10px">
+                                {{ $emp->is_active ? 'Đang làm' : 'Nghỉ' }}
                             </span>
                         </div>
                     @endforeach
@@ -352,9 +352,9 @@
                                     {{ $emp->hire_date ? \Carbon\Carbon::parse($emp->hire_date)->format('d/m/Y') : '—' }}
                                 </td>
                                 <td>
-                                    <span class="dept-badge {{ $emp->status === 'active' ? 'dept-badge-active' : 'dept-badge-inactive' }}">
-                                        <span class="dept-status-dot {{ $emp->status }}"></span>
-                                        {{ $emp->status === 'active' ? 'Đang làm' : 'Đã nghỉ' }}
+                                    <span class="dept-badge {{ $emp->is_active ? 'dept-badge-active' : 'dept-badge-inactive' }}">
+                                        <span class="dept-status-dot {{ $emp->is_active ? 'active' : 'inactive' }}"></span>
+                                        {{ $emp->is_active ? 'Đang làm' : 'Đã nghỉ' }}
                                     </span>
                                 </td>
                             </tr>

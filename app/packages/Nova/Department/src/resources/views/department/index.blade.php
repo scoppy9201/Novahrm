@@ -40,6 +40,8 @@
                 <div class="dept-breadcrumb">
                     <a href="{{ route('dashboard') }}">Dashboard</a>
                     <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+                    <a href="#">Nova HRM+</a>
+                    <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
                     <span>Vị trí &amp; Phòng ban</span>
                 </div>
                 <div class="dept-page-title">Phòng ban</div>

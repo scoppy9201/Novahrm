@@ -19,7 +19,7 @@ class PositionController extends Controller
         $positions = Position::with('department')
             ->when($request->search, fn($q, $s) =>
                 $q->where('title', 'like', "%{$s}%")
-                  ->orWhere('code', 'like', "%{$s}%")
+                ->orWhere('code', 'like', "%{$s}%")
             )
             ->when($request->department_id, fn($q, $id) =>
                 $q->where('department_id', $id)
@@ -37,7 +37,34 @@ class PositionController extends Controller
 
         $departments = Department::active()->orderBy('name')->get();
 
-        return view('nova-department::position.index', compact('positions', 'departments'));
+        // Trend 7 tháng gần nhất
+        $months = collect(range(6, 0))->map(fn($i) => now()->subMonths($i)->startOfMonth());
+
+        $trendTotal = $months->map(fn($m) =>
+            Position::whereYear('created_at', $m->year)
+                    ->whereMonth('created_at', $m->month)
+                    ->count()
+        )->values();
+
+        $trendActive = $months->map(fn($m) =>
+            Position::where('status', 'active')
+                    ->whereYear('created_at', $m->year)
+                    ->whereMonth('created_at', $m->month)
+                    ->count()
+        )->values();
+
+        $trendDept = $months->map(fn($m) =>
+            Department::whereYear('created_at', $m->year)
+                    ->whereMonth('created_at', $m->month)
+                    ->count()
+        )->values();
+
+        $monthLabels = $months->map(fn($m) => $m->format('T/n'))->values();
+
+        return view('nova-department::position.index', compact(
+            'positions', 'departments',
+            'trendTotal', 'trendActive', 'trendDept', 'monthLabels'
+        ));
     }
 
     /**
@@ -77,8 +104,8 @@ class PositionController extends Controller
 
         // Nếu tạo từ trang phòng ban thì quay lại đó
         $redirect = $request->from_department
-            ? route('departments.show', $request->department_id)
-            : route('positions.index');
+            ? route('hr.departments.show', $request->department_id)
+            : route('hr.positions.index');
 
         return redirect($redirect)->with('success', 'Tạo vị trí thành công.');
     }
@@ -88,7 +115,10 @@ class PositionController extends Controller
      */
     public function show(Position $position): View
     {
-        $position->load(['department', 'employees']);
+        $position->load([
+            'department',
+            'employees' => fn($q) => $q->with('department'),
+        ]);
 
         return view('nova-department::position.show', compact('position'));
     }
@@ -124,7 +154,7 @@ class PositionController extends Controller
         $position->update($data);
 
         return redirect()
-            ->route('positions.index')
+            ->route('hr.positions.index')
             ->with('success', 'Cập nhật vị trí thành công.');
     }
 

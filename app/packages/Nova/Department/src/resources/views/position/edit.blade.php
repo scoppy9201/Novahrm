@@ -305,11 +305,9 @@
                 @if($position->employees()->exists())
                     <div class="dept-alert dept-alert-error" style="padding:10px 12px;font-size:11.5px;margin-bottom:10px">
                         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                        Không thể xóa — vị trí đang có
-                        <strong>{{ $position->employees()->count() }} nhân viên</strong>
+                        <span>Không thể xóa — vị trí đang có <strong>{{ $position->employees()->count() }} nhân viên</strong></span>
                     </div>
-                    <button type="button" class="btn-dept-danger" disabled
-                            style="width:100%;justify-content:center;opacity:0.5;cursor:not-allowed">
+                    <button type="button" class="btn-dept-danger" disabled style="width:100%;justify-content:center;opacity:0.5;cursor:not-allowed">
                         <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round">
                             <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
                         </svg>

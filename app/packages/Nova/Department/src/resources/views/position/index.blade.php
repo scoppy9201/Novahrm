@@ -17,6 +17,8 @@
                 <div class="dept-breadcrumb">
                     <a href="{{ route('dashboard') }}">Dashboard</a>
                     <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+                    <a href="#">Nova HRM+</a>
+                    <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
                     <span>Vị trí &amp; Phòng ban</span>
                 </div>
                 <div class="dept-page-title">Vị trí công việc</div>
@@ -52,27 +54,44 @@
 
         {{-- Stat cards --}}
         <div class="dept-stats-grid">
-            <div class="dept-stat-card">
-                <div class="dept-stat-icon purple">
-                    <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            <div class="dept-stat-card" style="flex-direction:row;align-items:center;justify-content:space-between;gap:12px">
+                <div>
+                    <div class="dept-stat-icon purple" style="margin-bottom:8px">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                    </div>
+                    <div class="dept-stat-label">Tổng vị trí</div>
+                    <div class="dept-stat-value">{{ $positions->total() }}</div>
                 </div>
-                <div class="dept-stat-label">Tổng vị trí</div>
-                <div class="dept-stat-value">{{ $positions->total() }}</div>
+                <div style="position:relative;width:90px;height:48px;flex-shrink:0">
+                    <canvas id="chart-total" role="img" aria-label="Biểu đồ tổng vị trí"></canvas>
+                </div>
             </div>
-            <div class="dept-stat-card">
-                <div class="dept-stat-icon green">
-                    <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+
+            <div class="dept-stat-card" style="flex-direction:row;align-items:center;justify-content:space-between;gap:12px">
+                <div>
+                    <div class="dept-stat-icon green" style="margin-bottom:8px">
+                        <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    </div>
+                    <div class="dept-stat-label">Đang hoạt động</div>
+                    <div class="dept-stat-value">{{ $positions->getCollection()->where('status','active')->count() }}</div>
+                    <div class="dept-stat-sub">trên trang này</div>
                 </div>
-                <div class="dept-stat-label">Đang hoạt động</div>
-                <div class="dept-stat-value">{{ $positions->getCollection()->where('status','active')->count() }}</div>
-                <div class="dept-stat-sub">trên trang này</div>
+                <div style="position:relative;width:90px;height:48px;flex-shrink:0">
+                    <canvas id="chart-active" role="img" aria-label="Biểu đồ vị trí hoạt động"></canvas>
+                </div>
             </div>
-            <div class="dept-stat-card">
-                <div class="dept-stat-icon blue">
-                    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+
+            <div class="dept-stat-card" style="flex-direction:row;align-items:center;justify-content:space-between;gap:12px">
+                <div>
+                    <div class="dept-stat-icon blue" style="margin-bottom:8px">
+                        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <div class="dept-stat-label">Phòng ban</div>
+                    <div class="dept-stat-value">{{ $departments->count() }}</div>
                 </div>
-                <div class="dept-stat-label">Phòng ban</div>
-                <div class="dept-stat-value">{{ $departments->count() }}</div>
+                <div style="position:relative;width:90px;height:48px;flex-shrink:0">
+                    <canvas id="chart-dept" role="img" aria-label="Biểu đồ phòng ban"></canvas>
+                </div>
             </div>
         </div>
 
@@ -298,4 +317,71 @@
 
 @section('scripts')
     @vite(['app/packages/Nova/Department/src/resources/js/app.js'])
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const labels      = @json($monthLabels);
+            const trendTotal  = @json($trendTotal);
+            const trendActive = @json($trendActive);
+            const trendDept   = @json($trendDept);
+
+            const sparkLine = (id, data, color, fill) => {
+                new Chart(document.getElementById(id), {
+                    type: 'line',
+                    data: {
+                        labels,
+                        datasets: [{
+                            data,
+                            borderColor: color,
+                            backgroundColor: fill,
+                            fill: true,
+                            tension: 0.4,
+                            borderWidth: 2,
+                            pointRadius: 0,
+                            pointHoverRadius: 0,
+                        }],
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        animation: { duration: 800, easing: 'easeOutQuart' },
+                        plugins: { legend: { display: false }, tooltip: { enabled: false } },
+                        scales: {
+                            x: { display: false },
+                            y: { display: false, min: 0 },
+                        },
+                    },
+                });
+            };
+
+            sparkLine('chart-total',  trendTotal,  '#7c3aed', 'rgba(124,58,237,0.1)');
+            sparkLine('chart-active', trendActive, '#16a34a', 'rgba(22,163,74,0.1)');
+
+            // Bar chart cho phòng ban
+            new Chart(document.getElementById('chart-dept'), {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [{
+                        data: trendDept,
+                        backgroundColor: trendDept.map((_, i) =>
+                            `rgba(29,78,216,${0.15 + (i / trendDept.length) * 0.75})`
+                        ),
+                        borderRadius: 3,
+                        borderSkipped: false,
+                    }],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: { duration: 800, easing: 'easeOutQuart' },
+                    plugins: { legend: { display: false }, tooltip: { enabled: false } },
+                    scales: {
+                        x: { display: false },
+                        y: { display: false, min: 0 },
+                    },
+                },
+            });
+        });
+    </script>
 @endsection
