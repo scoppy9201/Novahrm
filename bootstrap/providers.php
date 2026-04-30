@@ -10,4 +10,5 @@ return [
     App\packages\Nova\OrgChart\src\Providers\OrgChartServiceProvider::class,
     App\packages\Nova\document\src\Providers\DocumentServiceProvider::class,
     App\packages\Nova\Department\src\Providers\DepartmentServiceProvider::class, 
+    App\packages\Nova\Employee\src\Providers\EmployeeServiceProvider::class,
 ];

@@ -53,7 +53,7 @@
                             <span class="submenu-bullet"></span>
                             <span class="sidebar-submenu-label">Bảng điều khiển</span>
                         </a>
-                        <a href="#" class="sidebar-submenu-item" data-sidebar-search-item data-search-label="Nhân viên">
+                        <a href="{{ route('hr.employees.index') }}" class="sidebar-submenu-item" data-sidebar-search-item data-search-label="Nhân viên">
                             <span class="submenu-bullet"></span>
                             <span class="sidebar-submenu-label">Nhân viên</span>
                         </a>
