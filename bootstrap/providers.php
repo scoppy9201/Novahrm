@@ -9,4 +9,5 @@ return [
     App\packages\Nova\Profile\src\Providers\ProfileServiceProvider::class,
     App\packages\Nova\OrgChart\src\Providers\OrgChartServiceProvider::class,
     App\packages\Nova\document\src\Providers\DocumentServiceProvider::class,
+    App\packages\Nova\Department\src\Providers\DepartmentServiceProvider::class, 
 ];

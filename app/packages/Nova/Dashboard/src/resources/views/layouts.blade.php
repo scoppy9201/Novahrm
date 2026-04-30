@@ -61,7 +61,7 @@
                             <span class="submenu-bullet"></span>
                             <span class="sidebar-submenu-label">Sơ đồ tổ chức</span>
                         </a>
-                        <a href="#" class="sidebar-submenu-item" data-sidebar-search-item data-search-label="Vị trí và phòng ban">
+                        <a href="{{ route('hr.departments.index') }}" class="sidebar-submenu-item" data-sidebar-search-item data-search-label="Vị trí và phòng ban">
                             <span class="submenu-bullet"></span>
                             <span class="sidebar-submenu-label">Vị trí &amp; Phòng ban</span>
                         </a>

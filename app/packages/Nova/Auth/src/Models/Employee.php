@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\packages\Nova\OrgChart\src\Models\Department;
+use App\packages\Nova\Department\src\Models\Position;
+use Illuminate\Database\Eloquent\Builder;
 
 class Employee extends Authenticatable
 {
@@ -143,13 +145,18 @@ class Employee extends Authenticatable
     }
 
     // Scopes 
-    public function scopeActive($query)
+    public function scopeActive(Builder $query) : Builder
     {
         return $query->where('is_active', true);
     }
 
-    public function scopeInDepartment($query, int $departmentId)
+    public function scopeInDepartment(Builder $query, int $departmentId) : Builder
     {
         return $query->where('department_id', $departmentId);
+    }
+
+    public function position(): BelongsTo
+    {
+        return $this->belongsTo(Position::class, 'position_id');
     }
 }
