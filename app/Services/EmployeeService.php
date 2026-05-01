@@ -220,7 +220,10 @@ class EmployeeService
             'by_department'      => $this->getStatsByDepartment(),
             'by_employment_type' => $this->getStatsByEmploymentType(),
             'by_status'          => $this->getStatsByStatus(),
-            'sparkline_hired'    => $this->getHiredSparkline(),
+            'sparkline_total'    => $this->normalizeSparkline($this->getTotalSparkline()),
+            'sparkline_active'   => $this->normalizeSparkline($this->getActiveSparkline()),
+            'sparkline_hired'    => $this->normalizeSparkline($this->getHiredSparkline()),
+            'sparkline_expiring' => $this->normalizeSparkline($this->getExpiringSparkline()),
         ];
     }
 
@@ -369,5 +372,86 @@ class EmployeeService
             )
             ->orderBy('employee_code')
             ->get();
+    }
+
+    public function getCounts(): array
+    {
+        return [
+            'all'     => Employee::count(),
+            'active'  => Employee::where('is_active', true)->count(),
+            'resigned' => Employee::where('status', 'resigned')->count(),
+            'trash'   => Employee::onlyTrashed()->count(),
+        ];
+    }
+
+    public function getActiveSparkline(int $months = 7): array
+    {
+        $raw = Employee::selectRaw('YEAR(hire_date) as year, MONTH(hire_date) as month, COUNT(*) as total')
+            ->where('is_active', true)
+            ->where('hire_date', '>=', now()->subMonths($months - 1)->startOfMonth())
+            ->groupByRaw('YEAR(hire_date), MONTH(hire_date)')
+            ->get()
+            ->keyBy(fn($r) => $r->year . '-' . $r->month);
+
+        return collect(range(0, $months - 1))->map(function ($i) use ($raw, $months) {
+            $date = now()->subMonths(($months - 1) - $i);
+            return (int) ($raw->get($date->year . '-' . $date->month)->total ?? 0);
+        })->toArray();
+    }
+
+    public function getTotalSparkline(int $months = 7): array
+    {
+        $raw = Employee::selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, COUNT(*) as total')
+            ->where('created_at', '>=', now()->subMonths($months - 1)->startOfMonth())
+            ->groupByRaw('YEAR(created_at), MONTH(created_at)')
+            ->get()
+            ->keyBy(fn($r) => $r->year . '-' . $r->month);
+
+        return collect(range(0, $months - 1))->map(function ($i) use ($raw, $months) {
+            $date = now()->subMonths(($months - 1) - $i);
+            return (int) ($raw->get($date->year . '-' . $date->month)->total ?? 0);
+        })->toArray();
+    }
+
+    public function getExpiringSparkline(int $months = 7): array
+    {
+        $raw = Employee::selectRaw('YEAR(contract_end_date) as year, MONTH(contract_end_date) as month, COUNT(*) as total')
+            ->whereNotNull('contract_end_date')
+            ->where('contract_end_date', '>=', now()->subMonths($months - 1)->startOfMonth())
+            ->where('contract_end_date', '<=', now()->addMonths(1)->endOfMonth())
+            ->groupByRaw('YEAR(contract_end_date), MONTH(contract_end_date)')
+            ->get()
+            ->keyBy(fn($r) => $r->year . '-' . $r->month);
+
+        return collect(range(0, $months - 1))->map(function ($i) use ($raw, $months) {
+            $date = now()->subMonths(($months - 1) - $i);
+            return (int) ($raw->get($date->year . '-' . $date->month)->total ?? 0);
+        })->toArray();
+    }
+
+    // PRIVATE HELPERS
+    private function normalizeSparkline(array $data): array
+    {
+        $max = max($data) ?: 1;
+        $min = min($data);
+        $range = $max - $min ?: 1;
+
+        return array_map(fn($v) => (int) round((($v - $min) / $range) * 70 + 15), $data);
+    }
+
+    public function getTrashList(array $filters = [], int $perPage = 15): LengthAwarePaginator
+    {
+        return Employee::onlyTrashed()
+            ->with(['department', 'position'])
+            ->when($filters['search'] ?? null, function ($q, $s) {
+                $q->where(fn($q) => $q
+                    ->where('first_name', 'like', "%{$s}%")
+                    ->orWhere('last_name',  'like', "%{$s}%")
+                    ->orWhere('employee_code', 'like', "%{$s}%")
+                );
+            })
+            ->orderBy('deleted_at', 'desc')
+            ->paginate($perPage)
+            ->withQueryString();
     }
 }

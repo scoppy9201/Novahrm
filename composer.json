@@ -18,7 +18,8 @@
         "setasign/fpdi": "*",
         "spatie/laravel-permission": "^6.23",
         "symfony/console": "7.3",
-        "tecnickcom/tcpdf": "^6.11"
+        "tecnickcom/tcpdf": "^6.11",
+        "umpirsky/country-list": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

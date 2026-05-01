@@ -560,7 +560,7 @@
 /* Show layout */
 .emp-show-body {
     flex: 1;
-    overflow: auto;
+    overflow: visible;
     padding: 22px 24px;
     display: grid;
     grid-template-columns: 260px 1fr;
@@ -586,7 +586,7 @@
 /* Form layout */
 .emp-form-body {
     flex: 1;
-    overflow: auto;
+    overflow: visible; 
     padding: 20px 24px;
     display: grid;
     grid-template-columns: 1fr 280px;

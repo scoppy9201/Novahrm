@@ -90,7 +90,7 @@ class Employee extends Authenticatable
         'next_of_kin_name', 'next_of_kin_relationship', 'next_of_kin_phone', 'next_of_kin_email',
         'avatar', 'language', 'address',
         'job_title', 'occupation', 'office', 'office_id',
-        'email_personal', 'bio', 'role',
+        'note',
 
         // Thông tin cá nhân bổ sung
         'place_of_birth', 'nationality', 'ethnicity', 'religion',

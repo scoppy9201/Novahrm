@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
+use Illuminate\Http\Response;
 
 class EmployeeController extends Controller
 {
@@ -19,8 +20,10 @@ class EmployeeController extends Controller
     ) {}
 
     // INDEX
-    public function index(Request $request): View
+    public function index(Request $request)
     {
+        $tab = $request->get('tab', 'all');
+        
         $filters = $request->only([
             'search', 'department_id', 'position_id',
             'status', 'employment_type', 'is_active',
@@ -28,39 +31,49 @@ class EmployeeController extends Controller
             'sort', 'direction',
         ]);
 
-        $employees   = $this->service->getList($filters, 15);
+        // Lọc theo tab
+        $employees = match($tab) {
+            'active'  => $this->service->getList(array_merge($filters, ['is_active' => true]), 15),
+            'resigned' => $this->service->getList(array_merge($filters, ['status' => 'resigned']), 15),
+            'trash'   => $this->service->getTrashList($filters, 15),
+            default   => $this->service->getList($filters, 15),
+        };
+
         $stats       = $this->service->getStats();
         $alerts      = $this->service->getAlerts();
+        $counts      = $this->service->getCounts();
         $departments = Department::active()->orderBy('name')->get();
         $positions   = Position::where('status', 'active')->orderBy('title')->get();
 
-        return view('nova-employee::employee.index', compact(
-            'employees',
-            'stats',
-            'alerts',
-            'departments',
-            'positions',
-            'filters',
-        ));
+        $data = compact('employees', 'stats', 'alerts', 'counts', 'departments', 'positions', 'filters');
+
+        if ($request->header('X-SPA-Request')) {
+            return response(view('nova-employee::employee.partials.content', $data));
+        }
+
+        return view('nova-employee::employee.index', $data);
     }
 
     // CREATE
     public function create(Request $request): View
     {
-        $departments    = Department::active()->orderBy('name')->get();
-        $positions      = Position::where('status', 'active')->orderBy('title')->get();
-        $managers       = Employee::active()->with('position')->orderBy('first_name')->get();
+        $departments     = Department::active()->orderBy('name')->get();
+        $positions       = Position::where('status', 'active')->orderBy('title')->get();
+        $managers        = Employee::active()->with('position')->orderBy('first_name')->get();
         $employmentTypes = Employee::EMPLOYMENT_TYPES;
-        $contractTypes  = Employee::CONTRACT_TYPES;
-        $statuses       = Employee::STATUSES;
+        $contractTypes   = Employee::CONTRACT_TYPES;
+        $statuses        = Employee::STATUSES;
         $educationLevels = Employee::EDUCATION_LEVELS;
-        $genders        = Employee::GENDERS;
+        $genders         = Employee::GENDERS;
+        $countries       = $this->getCountries(); 
 
-        // Pre-select department nếu có query param
         $preselectedDepartment = null;
         if ($request->has('department_id')) {
             $preselectedDepartment = Department::find($request->department_id);
         }
+
+        $provincesNew = json_decode(file_get_contents(app_path('Data/provinces_new.json')), true);
+        $provincesOld = json_decode(file_get_contents(app_path('Data/provinces_old.json')), true);
 
         return view('nova-employee::employee.create', compact(
             'departments',
@@ -71,13 +84,22 @@ class EmployeeController extends Controller
             'statuses',
             'educationLevels',
             'genders',
+            'countries',            
             'preselectedDepartment',
+            'provincesNew',
+            'provincesOld',
         ));
     }
 
     // STORE
     public function store(Request $request): RedirectResponse
     {
+        $request->merge(
+            collect($request->all())
+                ->map(fn($v) => $v === '' ? null : $v)
+                ->toArray()
+        );
+
         $data = $request->validate([
             // Thông tin cá nhân
             'first_name'                => 'required|string|max:100',
@@ -88,19 +110,25 @@ class EmployeeController extends Controller
             'nationality'               => 'nullable|string|max:100',
             'ethnicity'                 => 'nullable|string|max:100',
             'religion'                  => 'nullable|string|max:100',
-            'national_id'               => 'nullable|string|max:20|unique:employees,national_id',
+
+            // CCCD — đúng 12 số
+            'national_id'               => 'nullable|digits:12|unique:employees,national_id',
             'national_id_issued_date'   => 'nullable|date',
             'national_id_issued_place'  => 'nullable|string|max:255',
-            'passport_number'           => 'nullable|string|max:30',
+
+            // Hộ chiếu — 6-20 ký tự chữ + số
+            'passport_number'           => 'nullable|string|min:6|max:20|regex:/^[A-Z0-9]+$/i',
             'passport_expiry_date'      => 'nullable|date',
 
-            // Liên hệ
-            'email'                     => 'nullable|email|unique:employees,email',
-            'work_email'                => 'nullable|email|unique:employees,work_email',
-            'phone'                     => 'nullable|string|max:20',
-            'phone_alt'                 => 'nullable|string|max:20',
+            // Liên hệ — email chỉ @gmail.com
+            'email'                     => 'nullable|email|regex:/^[a-zA-Z0-9._]+@gmail\.com$/|unique:employees,email',
+            'work_email'                => 'nullable|email|regex:/^[a-zA-Z0-9._]+@gmail\.com$/|unique:employees,work_email',
+
+            // SĐT — bắt đầu 0, đủ 10 số
+            'phone'                     => 'nullable|regex:/^0[0-9]{9}$/',
+            'phone_alt'                 => 'nullable|regex:/^0[0-9]{9}$/',
             'emergency_contact_name'    => 'nullable|string|max:255',
-            'emergency_contact_phone'   => 'nullable|string|max:20',
+            'emergency_contact_phone'   => 'nullable|regex:/^0[0-9]{9}$/',
             'emergency_contact_relation'=> 'nullable|string|max:100',
 
             // Địa chỉ
@@ -158,6 +186,41 @@ class EmployeeController extends Controller
             // Misc
             'notes'                     => 'nullable|string',
             'bio'                       => 'nullable|string',
+        ], [
+            'first_name.required'               => 'Vui lòng nhập họ của nhân viên.',
+            'last_name.required'                => 'Vui lòng nhập tên của nhân viên.',
+            'employment_type.required'          => 'Vui lòng chọn loại nhân viên.',
+
+            'national_id.digits'                => 'Số CCCD phải đúng 12 chữ số.',
+            'national_id.unique'                => 'Số CCCD này đã tồn tại trong hệ thống.',
+
+            'passport_number.min'               => 'Số hộ chiếu tối thiểu 6 ký tự.',
+            'passport_number.max'               => 'Số hộ chiếu tối đa 20 ký tự.',
+            'passport_number.regex'             => 'Số hộ chiếu chỉ được chứa chữ cái và chữ số.',
+
+            'email.email'                       => 'Email cá nhân không đúng định dạng.',
+            'email.regex'                       => 'Email cá nhân phải có đuôi @gmail.com.',
+            'email.unique'                      => 'Email cá nhân này đã được sử dụng.',
+
+            'work_email.email'                  => 'Email công ty không đúng định dạng.',
+            'work_email.regex'                  => 'Email công ty phải có đuôi @gmail.com.',
+            'work_email.unique'                 => 'Email công ty này đã được sử dụng.',
+
+            'phone.regex'                       => 'Số điện thoại phải bắt đầu bằng 0 và đủ 10 chữ số.',
+            'phone_alt.regex'                   => 'SĐT phụ phải bắt đầu bằng 0 và đủ 10 chữ số.',
+            'emergency_contact_phone.regex'     => 'SĐT liên hệ khẩn cấp phải bắt đầu bằng 0 và đủ 10 chữ số.',
+
+            'date_of_birth.before'              => 'Ngày sinh không hợp lệ.',
+            'probation_end_date.after_or_equal' => 'Ngày kết thúc thử việc phải sau ngày bắt đầu.',
+            'contract_end_date.after_or_equal'  => 'Ngày kết thúc hợp đồng phải sau ngày bắt đầu.',
+
+            'tax_code.unique'                   => 'Mã số thuế này đã tồn tại trong hệ thống.',
+            'social_insurance_code.unique'      => 'Mã BHXH này đã tồn tại trong hệ thống.',
+
+            'avatar.max'                        => 'Ảnh đại diện không được vượt quá 2MB.',
+            'avatar.mimes'                      => 'Ảnh đại diện phải là JPG, PNG hoặc WEBP.',
+            'cv_path.max'                       => 'File CV không được vượt quá 5MB.',
+            'cv_path.mimes'                     => 'File CV phải là PDF, DOC hoặc DOCX.',
         ]);
 
         try {
@@ -165,13 +228,37 @@ class EmployeeController extends Controller
             $data['cv_path'] = $request->file('cv_path');
 
             $employee = $this->service->create($data);
-        } catch (\Exception $e) {
-            return back()->withErrors(['error' => $e->getMessage()])->withInput();
-        }
 
-        return redirect()
-            ->route('hr.employees.show', $employee)
-            ->with('success', "Đã thêm nhân viên {$employee->name} thành công.");
+            return redirect()
+                ->route('hr.employees.show', $employee)
+                ->with('success', "Đã thêm nhân viên {$employee->name} thành công.");
+
+        } catch (\Illuminate\Database\QueryException $e) {
+
+            $msg = match(true) {
+                str_contains($e->getMessage(), "'email'")
+                    => 'Email cá nhân này đã được sử dụng bởi nhân viên khác.',
+                str_contains($e->getMessage(), "'work_email'")
+                    => 'Email công ty này đã được sử dụng bởi nhân viên khác.',
+                str_contains($e->getMessage(), "'national_id'")
+                    => 'Số CCCD này đã tồn tại trong hệ thống.',
+                str_contains($e->getMessage(), "'tax_code'")
+                    => 'Mã số thuế này đã tồn tại trong hệ thống.',
+                str_contains($e->getMessage(), "'social_insurance_code'")
+                    => 'Mã BHXH này đã tồn tại trong hệ thống.',
+                str_contains($e->getMessage(), 'cannot be null')
+                    => 'Vui lòng điền đầy đủ các trường bắt buộc trước khi lưu.',
+                default
+                    => 'Đã có lỗi xảy ra khi lưu dữ liệu. Vui lòng thử lại hoặc liên hệ quản trị viên.',
+            };
+
+            return back()->withInput()->withErrors(['error' => $msg]);
+
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors([
+                'error' => 'Đã có lỗi xảy ra: ' . $e->getMessage(),
+            ]);
+        }
     }
 
     // SHOW
@@ -464,5 +551,18 @@ class EmployeeController extends Controller
         return redirect()
             ->route('hr.employees.index', ['tab' => 'trash'])
             ->with('success', "Đã xoá vĩnh viễn nhân viên {$name}.");
+    }
+
+    private function getCountries(): array
+    {
+        return collect(json_decode(
+            file_get_contents(base_path('app/Data/countries.json')),
+            true
+        ))
+        ->map(fn($c) => $c['translations']['vie']['common'] ?? $c['name']['common'])
+        ->filter()
+        ->sort()
+        ->values()
+        ->toArray();
     }
 }

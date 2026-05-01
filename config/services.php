@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'vietqr' => [
+        'client_id' => env('VIETQR_CLIENT_ID'),
+        'api_key'   => env('VIETQR_API_KEY'),
+    ],
+
 ];
