@@ -74,6 +74,8 @@ class EmployeeController extends Controller
 
         $provincesNew = json_decode(file_get_contents(app_path('Data/provinces_new.json')), true);
         $provincesOld = json_decode(file_get_contents(app_path('Data/provinces_old.json')), true);
+        $educationMajors = json_decode(file_get_contents(app_path('Data/education_industries.json')), true);
+        $universities    = json_decode(file_get_contents(app_path('Data/vietnam_universities.json')), true);
 
         return view('nova-employee::employee.create', compact(
             'departments',
@@ -88,6 +90,8 @@ class EmployeeController extends Controller
             'preselectedDepartment',
             'provincesNew',
             'provincesOld',
+            'educationMajors',
+            'universities',
         ));
     }
 

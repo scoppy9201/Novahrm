@@ -6,6 +6,8 @@
     @vite([
         'app/packages/Nova/Dashboard/src/resources/css/app.css',
         'app/packages/Nova/Employee/src/resources/css/app.css',
+        'app/packages/Nova/Employee/src/resources/js/app.js',
+        "app/packages/Nova/Employee/src/resources/js/ce_app.js",
     ])
 @endsection
 
@@ -900,7 +902,6 @@
 @endsection
 
 @section('scripts')
-    @vite(['app/packages/Nova/Employee/src/resources/js/app.js'])
     <script>
     document.addEventListener('DOMContentLoaded', function () {
 
