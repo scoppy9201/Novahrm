@@ -287,7 +287,7 @@ class EmployeeController extends Controller
         $departments     = Department::active()->orderBy('name')->get();
         $positions       = Position::where('status', 'active')->orderBy('title')->get();
         $managers        = Employee::active()
-            ->where('id', '!=', $employee->id) // không tự quản lý mình
+            ->where('id', '!=', $employee->id)
             ->with('position')
             ->orderBy('first_name')
             ->get();
@@ -296,6 +296,12 @@ class EmployeeController extends Controller
         $statuses        = Employee::STATUSES;
         $educationLevels = Employee::EDUCATION_LEVELS;
         $genders         = Employee::GENDERS;
+        $countries       = $this->getCountries();
+
+        $provincesNew    = json_decode(file_get_contents(app_path('Data/provinces_new.json')), true);
+        $provincesOld    = json_decode(file_get_contents(app_path('Data/provinces_old.json')), true);
+        $educationMajors = json_decode(file_get_contents(app_path('Data/education_industries.json')), true);
+        $universities    = json_decode(file_get_contents(app_path('Data/vietnam_universities.json')), true);
 
         return view('nova-employee::employee.edit', compact(
             'employee',
@@ -307,6 +313,11 @@ class EmployeeController extends Controller
             'statuses',
             'educationLevels',
             'genders',
+            'countries',
+            'provincesNew',
+            'provincesOld',
+            'educationMajors',
+            'universities',
         ));
     }
 

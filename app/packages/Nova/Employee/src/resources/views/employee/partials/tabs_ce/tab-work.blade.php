@@ -11,7 +11,7 @@
                     <option value="">— Chọn phòng ban —</option>
                     @foreach($departments as $dept)
                         <option value="{{ $dept->id }}"
-                                {{ old('department_id', $preselectedDepartment?->id) == $dept->id ? 'selected' : '' }}>
+                                {{ old('department_id', $employee->department_id ?? $preselectedDepartment?->id) == $dept->id ? 'selected' : '' }}>
                             {{ $dept->name }}
                         </option>
                     @endforeach
@@ -25,7 +25,8 @@
                         id="pos-select">
                     <option value="">— Chọn vị trí —</option>
                     @foreach($positions as $pos)
-                        <option value="{{ $pos->id }}" {{ old('position_id') == $pos->id ? 'selected' : '' }}>
+                        <option value="{{ $pos->id }}"
+                                {{ old('position_id', $employee->position_id ?? '') == $pos->id ? 'selected' : '' }}>
                             {{ $pos->title }}
                         </option>
                     @endforeach
@@ -38,9 +39,10 @@
                 <label class="emp-form-label">Quản lý trực tiếp</label>
                 <div class="emp-autocomplete">
                     <input type="text" id="manager-search" class="emp-input"
-                            placeholder="Tìm tên quản lý..."
-                            autocomplete="off"/>
-                    <input type="hidden" name="manager_id" id="manager-id-input" value="{{ old('manager_id') }}"/>
+                           value="{{ $employee->manager?->name ?? '' }}"
+                           placeholder="Tìm tên quản lý..." autocomplete="off"/>
+                    <input type="hidden" name="manager_id" id="manager-id-input"
+                           value="{{ old('manager_id', $employee->manager_id ?? '') }}"/>
                     <div class="emp-autocomplete-dropdown" id="manager-dropdown"></div>
                 </div>
                 <span class="emp-field-hint">Nhập tên để tìm kiếm quản lý trực tiếp</span>
@@ -50,7 +52,8 @@
                 <label class="emp-form-label">Loại nhân viên <span class="required">*</span></label>
                 <select name="employment_type" class="emp-select {{ $errors->has('employment_type') ? 'error' : '' }}">
                     @foreach($employmentTypes as $key => $label)
-                        <option value="{{ $key }}" {{ old('employment_type', 'full_time') === $key ? 'selected' : '' }}>
+                        <option value="{{ $key }}"
+                                {{ old('employment_type', $employee->employment_type ?? 'full_time') === $key ? 'selected' : '' }}>
                             {{ $label }}
                         </option>
                     @endforeach
@@ -62,7 +65,8 @@
                 <label class="emp-form-label">Email công ty</label>
                 <input type="email" name="work_email" id="field-work-email-2"
                     class="emp-input"
-                    value="{{ old('work_email') }}" placeholder="example@gmail.com"/>
+                    value="{{ old('work_email', $employee->work_email ?? '') }}"
+                    placeholder="example@gmail.com"/>
                 <span class="emp-field-error" id="err-work-email-2" style="display:none"></span>
                 <span class="emp-field-hint">Chỉ chấp nhận đuôi @gmail.com</span>
             </div>
@@ -76,26 +80,26 @@
             <div class="emp-form-group">
                 <label class="emp-form-label">Ngày vào làm</label>
                 <input type="date" name="hire_date" class="emp-input {{ $errors->has('hire_date') ? 'error' : '' }}"
-                        value="{{ old('hire_date') }}"/>
+                       value="{{ old('hire_date', $employee->hire_date?->format('Y-m-d') ?? '') }}"/>
                 @error('hire_date') <span class="emp-field-error">{{ $message }}</span> @enderror
             </div>
 
             <div class="emp-form-group">
                 <label class="emp-form-label">Ngày chính thức</label>
                 <input type="date" name="official_start_date" class="emp-input"
-                        value="{{ old('official_start_date') }}"/>
+                       value="{{ old('official_start_date', $employee->official_start_date?->format('Y-m-d') ?? '') }}"/>
             </div>
 
             <div class="emp-form-group">
                 <label class="emp-form-label">Bắt đầu thử việc</label>
                 <input type="date" name="probation_start_date" class="emp-input"
-                        value="{{ old('probation_start_date') }}"/>
+                       value="{{ old('probation_start_date', $employee->probation_start_date?->format('Y-m-d') ?? '') }}"/>
             </div>
 
             <div class="emp-form-group">
                 <label class="emp-form-label">Kết thúc thử việc</label>
                 <input type="date" name="probation_end_date" class="emp-input {{ $errors->has('probation_end_date') ? 'error' : '' }}"
-                        value="{{ old('probation_end_date') }}"/>
+                       value="{{ old('probation_end_date', $employee->probation_end_date?->format('Y-m-d') ?? '') }}"/>
                 @error('probation_end_date') <span class="emp-field-error">{{ $message }}</span> @enderror
             </div>
         </div>
@@ -107,12 +111,12 @@
             <div class="emp-form-group">
                 <label class="emp-form-label">Bio / Giới thiệu</label>
                 <textarea name="bio" class="emp-textarea" rows="3"
-                            placeholder="Giới thiệu ngắn về nhân viên...">{{ old('bio') }}</textarea>
+                          placeholder="Giới thiệu ngắn về nhân viên...">{{ old('bio', $employee->bio ?? '') }}</textarea>
             </div>
             <div class="emp-form-group">
                 <label class="emp-form-label">Ghi chú nội bộ</label>
                 <textarea name="notes" class="emp-textarea" rows="3"
-                            placeholder="Ghi chú nội bộ (không hiển thị với nhân viên)...">{{ old('notes') }}</textarea>
+                          placeholder="Ghi chú nội bộ (không hiển thị với nhân viên)...">{{ old('notes', $employee->notes ?? '') }}</textarea>
             </div>
         </div>
     </div>

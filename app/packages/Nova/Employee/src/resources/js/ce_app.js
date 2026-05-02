@@ -149,6 +149,21 @@ document.addEventListener('DOMContentLoaded', function () {
             managerDropdown.classList.remove('open');
         }
     });
+
+    // Terminate modal (chỉ có ở edit)
+    const modal        = document.getElementById('terminate-modal');
+    const btnTerminate = document.getElementById('btn-terminate');
+    const btnClose     = document.getElementById('close-terminate');
+    const btnCancel    = document.getElementById('cancel-terminate');
+
+    if (modal) {
+        btnTerminate?.addEventListener('click', () => modal.classList.add('open'));
+        btnClose?.addEventListener('click',     () => modal.classList.remove('open'));
+        btnCancel?.addEventListener('click',    () => modal.classList.remove('open'));
+        modal.addEventListener('click', e => {
+            if (e.target === modal) modal.classList.remove('open');
+        });
+    }
 });
 
 const addrDataNew  = window.EMP_DATA.provincesNew;

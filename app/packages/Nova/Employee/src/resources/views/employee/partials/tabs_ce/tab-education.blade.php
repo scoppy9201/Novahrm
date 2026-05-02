@@ -2,20 +2,21 @@
 <div id="tab-education" class="emp-tab-panel" style="display:none;flex-direction:column;gap:14px">
     <div class="emp-form-card">
         <div class="emp-form-card-title">Trình độ học vấn</div>
-            <div class="emp-form-grid emp-grid-3">
+        <div class="emp-form-grid emp-grid-3">
+
             {{-- TRÌNH ĐỘ --}}
             <div class="emp-form-group">
                 <label class="emp-form-label">
                     Trình độ
                     <span id="level-badge" style="display:none;font-size:9.5px;font-weight:700;background:#dcfce7;color:#16a34a;padding:1px 7px;border-radius:4px;margin-left:6px">✓ Đã chọn</span>
                 </label>
-                <input type="hidden" name="education_level" id="level-val" value="{{ old('education_level') }}"/>
+                <input type="hidden" name="education_level" id="level-val" value="{{ old('education_level', $employee->education_level ?? '') }}"/>
                 <div class="emp-autocomplete">
                     <input type="text" id="level-search" class="emp-input emp-select"
-                        placeholder="— Chọn trình độ —"
-                        autocomplete="off" readonly
-                        style="cursor:pointer"
-                        onclick="toggleLevelDropdown()"/>
+                           placeholder="— Chọn trình độ —"
+                           autocomplete="off" readonly
+                           style="cursor:pointer"
+                           onclick="toggleLevelDropdown()"/>
                     <div class="emp-autocomplete-dropdown" id="level-dropdown"></div>
                 </div>
                 <div id="level-selected-preview" style="display:none;margin-top:6px">
@@ -37,11 +38,11 @@
                     Chuyên ngành
                     <span id="major-badge" style="display:none;font-size:9.5px;font-weight:700;background:#dcfce7;color:#16a34a;padding:1px 7px;border-radius:4px;margin-left:6px">✓ Đã chọn</span>
                 </label>
-                <input type="hidden" name="education_major" id="major-val" value="{{ old('education_major') }}"/>
+                <input type="hidden" name="education_major" id="major-val" value="{{ old('education_major', $employee->education_major ?? '') }}"/>
                 <div class="emp-autocomplete">
                     <input type="text" id="major-search" class="emp-input"
-                        placeholder="Tìm chuyên ngành... VD: Kế toán, CNTT"
-                        autocomplete="off"/>
+                           placeholder="Tìm chuyên ngành... VD: Kế toán, CNTT"
+                           autocomplete="off"/>
                     <div class="emp-autocomplete-dropdown" id="major-dropdown"></div>
                 </div>
                 <div id="major-selected-preview" style="display:none;margin-top:6px">
@@ -66,11 +67,11 @@
                     Trường
                     <span id="univ-badge" style="display:none;font-size:9.5px;font-weight:700;background:#dcfce7;color:#16a34a;padding:1px 7px;border-radius:4px;margin-left:6px">✓ Đã chọn</span>
                 </label>
-                <input type="hidden" name="education_school" id="univ-val" value="{{ old('education_school') }}"/>
+                <input type="hidden" name="education_school" id="univ-val" value="{{ old('education_school', $employee->education_school ?? '') }}"/>
                 <div class="emp-autocomplete">
                     <input type="text" id="univ-search" class="emp-input"
-                        placeholder="Tìm trường... VD: Bách Khoa, FPT"
-                        autocomplete="off"/>
+                           placeholder="Tìm trường... VD: Bách Khoa, FPT"
+                           autocomplete="off"/>
                     <div class="emp-autocomplete-dropdown" id="univ-dropdown"></div>
                 </div>
                 <div id="univ-selected-preview" style="display:none;margin-top:6px">
