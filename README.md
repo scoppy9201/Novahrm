@@ -1,18 +1,38 @@
+# NovaHRM
+
 <p align="center">
   <strong>Modern Human Resource Management System</strong>
 </p>
 
 <p align="center">
-  <img src="logo.png" alt="HRM System Preview"
-       style="max-width: 100%; border-radius: 8px;
-       box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-       0 10px 10px -5px rgba(0, 0, 0, 0.04);" />
+  <a href="https://novahrm.io.vn">🌐 Website</a>
+</p>
+
+---
+
+## Preview
+
+<p align="center">
+  <img src="public/images/preview-dashboard.png" width="100%" alt="NovaHRM Dashboard Preview" />
 </p>
 
 <p align="center">
-<a href="#"><img src="https://img.shields.io/badge/Laravel-12.x-FF2D20?style=flat&logo=laravel" alt="Laravel Version"></a>
+  <img src="public/images/preview-employees.png" width="48%" alt="Employee Management" />
+  <img src="public/images/preview-attendance.png" width="48%" alt="Attendance System" />
+</p>
+
+<p align="center">
+  <img src="public/images/preview-tasks.png" width="48%" alt="Task Management" />
+  <img src="public/images/preview-calendar.png" width="48%" alt="Calendar System" />
+</p>
+
+---
+
+<p align="center">
+<a href="#"><img src="https://img.shields.io/badge/Laravel-11.x-FF2D20?style=flat&logo=laravel" alt="Laravel Version"></a>
 <a href="#"><img src="https://img.shields.io/badge/PHP-8.2+-777BB4?style=flat&logo=php" alt="PHP Version"></a>
-<a href="#"><img src="https://img.shields.io/badge/Filament-3.x-F59E0B?style=flat" alt="Filament"></a>
+<a href="#"><img src="https://img.shields.io/badge/Blade-Template-0EA5E9?style=flat" alt="Blade"></a>
+<a href="#"><img src="https://img.shields.io/badge/TailwindCSS-3.x-38BDF8?style=flat&logo=tailwindcss" alt="Tailwind CSS"></a>
 <a href="#"><img src="https://img.shields.io/badge/License-MIT-green" alt="License"></a>
 </p>
 
@@ -20,26 +40,35 @@
 
 ## About NovaHRM
 
-**NovaHRM** is a modern, open-source **Human Resource Management (HRM)** system built with **Laravel** and **FilamentPHP**.
+**NovaHRM** is a modern open-source **Human Resource Management (HRM)** platform built with **Laravel 11** and **Blade Template Engine**.
 
-It is designed with a clean architecture, scalable structure, and developer-friendly approach to help teams build and customize HR systems quickly.
+The project is designed with a modular architecture, clean UI, and scalable structure to help developers and businesses build HR systems faster and easier.
+
+NovaHRM focuses on simplicity, performance, and developer experience while still providing a modern user interface.
 
 ---
 
 ## Overview
 
-NovaHRM provides a solid foundation for building full-featured HRM or ERP systems, suitable for startups, internal tools, or academic projects.
+NovaHRM provides a solid foundation for building:
+
+* Human Resource Management Systems
+* Internal Management Platforms
+* ERP Systems
+* Startup MVP Products
+* Graduation / Academic Projects
 
 ---
 
 ## Tech Stack
 
-* **Laravel 12+**
-* **FilamentPHP 3.x**
+* **Laravel 11**
 * **PHP 8.2+**
-* **MySQL / MariaDB**
+* **Blade Template Engine**
 * **Tailwind CSS**
 * **Alpine.js**
+* **MySQL / MariaDB**
+* **Vite**
 
 ---
 
@@ -48,61 +77,115 @@ NovaHRM provides a solid foundation for building full-featured HRM or ERP system
 ### Employee Management
 
 * Employee profiles
-* Departments & roles
-* Status tracking
+* Department management
+* Position & role management
+* Employee status tracking
+* Avatar & personal information management
 
 ### Attendance System
 
 * Check-in / check-out
-* Attendance logs
-* Basic reporting
+* Attendance history
+* Daily attendance tracking
+* Basic attendance reports
 
 ### Leave Management
 
 * Leave requests
 * Approval workflows
-* Leave tracking
+* Leave balance tracking
 
-### Payroll (Basic)
+### Payroll Management
 
 * Salary structure
-* Payment tracking
+* Payroll overview
+* Payment history
 
 ### Task Management
 
-* Kanban board
+* Kanban task board
 * Task assignment
 * Progress tracking
+* Team collaboration
 
-### Internal Communication
+### Calendar & Events
 
-* Messaging system
-* Notifications
-
-### Calendar
-
-* Event tracking
+* Company events
 * Schedule overview
+* Personal calendar
+
+### Notifications
+
+* Real-time notifications
+* Internal alerts
+* System announcements
 
 ### Employee Portal
 
-* Self-service dashboard
-* Personal data access
+* Personal dashboard
+* Profile management
+* Self-service features
+
+---
+
+## Demo Screenshots
+
+### Dashboard
+
+<p align="center">
+  <img src="docs/images/dashboard.png" width="100%" alt="Dashboard" />
+</p>
+
+### Employee Management
+
+<p align="center">
+  <img src="docs/images/employees.png" width="100%" alt="Employees" />
+</p>
+
+### Attendance System
+
+<p align="center">
+  <img src="docs/images/attendance.png" width="100%" alt="Attendance" />
+</p>
+
+### Task Board
+
+<p align="center">
+  <img src="docs/images/tasks.png" width="100%" alt="Task Board" />
+</p>
+
+### Calendar
+
+<p align="center">
+  <img src="docs/images/calendar.png" width="100%" alt="Calendar" />
+</p>
 
 ---
 
 ## Installation
 
-```bash
-git clone https://github.com/scoppy9201/Novahrm
-cd novahrm
+### Clone Repository
 
+```bash
+git clone https://github.com/scoppy9201/Novahrm.git
+cd Novahrm
+```
+
+### Install Dependencies
+
+```bash
 composer install
+npm install
+```
+
+### Environment Setup
+
+```bash
 cp .env.example .env
 php artisan key:generate
 ```
 
-### Configure database
+### Configure Database
 
 Update your `.env` file:
 
@@ -112,80 +195,99 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-### Run migrations & seeders
+### Run Migration & Seeder
 
 ```bash
 php artisan migrate --seed
 ```
 
-### Start development server
+### Start Development Server
 
 ```bash
-composer run dev
+php artisan serve
+npm run dev
 ```
 
 ---
 
 ## Authentication & Authorization
 
-* Built-in authentication using **Filament Auth**
-* Custom authentication pages supported
-* Role & permission system ready for extension (e.g. RBAC)
+* Authentication system included
+* Custom login UI
+* Role & permission ready
+* Easy to extend for RBAC systems
 
 ---
 
-## Architecture
+## Project Structure
 
-NovaHRM follows a modern modular structure:
+NovaHRM uses a modular and maintainable architecture:
 
-* Filament Resources (Admin UI)
-* Filament Pages (Custom logic)
-* Service-based architecture
-* Clean separation of:
+* Service-based structure
+* Reusable Blade components
+* Modular packages
+* Clean separation between:
 
-  * Models
   * Business logic
-  * UI components
-
-No traditional Blade-based admin UI is used.
+  * Controllers
+  * Services
+  * Views
+  * Components
 
 ---
 
 ## Use Cases
 
-* HRM systems for companies
-* Internal management tools
-* Startup MVPs
-* Graduation projects
+NovaHRM can be used for:
+
+* Company HR systems
+* Startup internal tools
+* ERP platforms
+* Team management systems
+* Educational projects
 
 ---
 
 ## Roadmap
 
-* Recruitment module
-* Performance review
-* Training management
-* Asset management
-* Advanced payroll
+Planned upcoming modules:
+
+* Recruitment Management
+* Performance Reviews
+* Training Management
+* Asset Management
+* Advanced Payroll System
+* AI Assistant Integration
+* Real-time Chat
 
 ---
 
 ## Contributing
 
-Contributions are welcome!
+Contributions are welcome.
 
-* Fork the repository
-* Create a new branch
-* Submit a pull request
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
 
 ---
 
 ## License
 
-MIT License
+This project is licensed under the MIT License.
+
+---
+
+## Links
+
+* Website: [https://novahrm.io.vn](https://novahrm.io.vn)
+* GitHub: [https://github.com/scoppy9201/Novahrm](https://github.com/scoppy9201/Novahrm)
 
 ---
 
 <div align="center">
-  Built with ❤️ using Laravel & Filament
+  Built with ❤️ using Laravel 11 & Blade
 </div>
+
