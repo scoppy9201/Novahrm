@@ -29,6 +29,7 @@ class AuthServiceProvider extends ServiceProvider
 
         // Đăng ký views
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'nova-auth');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang','nova-auth');
 
         // Đăng ký rate limiters
         $this->registerRateLimiters();

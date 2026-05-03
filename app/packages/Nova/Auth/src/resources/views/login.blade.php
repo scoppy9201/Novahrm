@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Đăng nhập — NovaHRM</title>
+    <title>@lang('nova-auth::app.auth.login_title') — NovaHRM</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=be-vietnam-pro:300,400,500,600,700,800,900" rel="stylesheet"/>
     <script>
@@ -32,22 +32,22 @@
         </a>
 
         <div class="login-form-wrap">
-            <h1 class="login-heading">Đăng nhập</h1>
-            <p class="login-subheading">Chào mừng trở lại. Đăng nhập để bắt đầu làm việc.</p>
+            <h1 class="login-heading">@lang('nova-auth::app.auth.login_title')</h1>
+            <p class="login-subheading">@lang('nova-auth::app.auth.login_subtitle', ['platform' => __('nova-auth::app.auth.platform')])</p>
 
             <form method="POST" action="{{ route('login.store') }}" id="loginForm">
                 @csrf
 
                 {{-- Email --}}
                 <div class="form-group">
-                    <label class="form-label" for="email">Email</label>
+                    <label class="form-label" for="email">@lang('nova-auth::app.auth.email')</label>
                     <div class="form-input-wrap">
                         <input
                             id="email"
                             type="email"
                             name="email"
                             class="form-input"
-                            placeholder="Email của bạn"
+                            placeholder="@lang('nova-auth::app.auth.email_placeholder')"
                             value="{{ old('email') }}"
                             autocomplete="email"
                             required
@@ -62,9 +62,11 @@
                 {{-- Password --}}
                 <div class="form-group">
                     <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:7px;">
-                        <label class="form-label" style="margin:0;" for="password">Mật khẩu</label>
+                        <label class="form-label" style="margin:0;" for="password">@lang('nova-auth::app.auth.password')</label>
                         @if (Route::has('password.request'))
-                            <a href="{{ route('password.request') }}" style="font-size:12px; color:var(--accent); text-decoration:underline; font-weight:600;">Quên mật khẩu?</a>
+                            <a href="{{ route('password.request') }}" style="font-size:12px; color:var(--accent); text-decoration:underline; font-weight:600;">
+                                @lang('nova-auth::app.auth.forgot_password')
+                            </a>
                         @endif
                     </div>
                     <div class="form-input-wrap">
@@ -73,7 +75,7 @@
                             type="password"
                             name="password"
                             class="form-input"
-                            placeholder="Mật khẩu của bạn"
+                            placeholder="@lang('nova-auth::app.auth.password_placeholder')"
                             autocomplete="current-password"
                             required
                         >
@@ -90,33 +92,33 @@
                     </div>
                 </div>
 
-                {{-- Remember + Forgot --}}
+                {{-- Remember --}}
                 <div class="form-row-between">
                     <label class="form-checkbox-wrap">
                         <input type="checkbox" name="remember" class="form-checkbox" {{ old('remember') ? 'checked' : '' }}>
-                        <span class="form-checkbox-label">Giữ tôi luôn đăng nhập</span>
+                        <span class="form-checkbox-label">@lang('nova-auth::app.auth.remember_me')</span>
                     </label>
                 </div>
 
                 {{-- Submit --}}
                 <button type="submit" class="btn-login" id="loginBtn">
-                    <span class="btn-text">Đăng nhập</span>
+                    <span class="btn-text">@lang('nova-auth::app.auth.login_button')</span>
                     <div class="spinner"></div>
                 </button>
-                
             </form>
 
+            {{-- Nova ID --}}
             <a href="#" class="btn-nova-sso" onclick="event.preventDefault(); nidOpen()">
                 <div class="login-logo-icon">
                     <svg viewBox="0 0 16 16"><path d="M8 1L14 4V8C14 11.3 11.3 13.8 8 15C4.7 13.8 2 11.3 2 8V4L8 1Z"/></svg>
                 </div>
-                Đăng nhập bằng Nova ID
+                @lang('nova-auth::app.auth.login_with_nova_id')
             </a>
 
             {{-- Divider --}}
             <div class="login-divider">
                 <div class="login-divider-line"></div>
-                <span class="login-divider-text">Hoặc đăng nhập thông qua SSO</span>
+                <span class="login-divider-text">@lang('nova-auth::app.sso.divider')</span>
                 <div class="login-divider-line"></div>
             </div>
 
@@ -129,7 +131,7 @@
                         <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
                         <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
                     </svg>
-                    Đăng nhập bằng Google
+                    @lang('nova-auth::app.sso.google')
                 </a>
                 <a href="#" class="btn-sso">
                     <svg viewBox="0 0 24 24" fill="none">
@@ -138,135 +140,132 @@
                         <path d="M11.4 12.6H0V24h11.4V12.6z" fill="#00A4EF"/>
                         <path d="M24 12.6H12.6V24H24V12.6z" fill="#FFB900"/>
                     </svg>
-                    Đăng nhập bằng Microsoft
+                    @lang('nova-auth::app.sso.microsoft')
                 </a>
                 <a href="#" class="btn-sso">
                     <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12.017 24c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641 0 12.017 0z"/>
+                        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
                     </svg>
-                    Đăng nhập bằng Apple
+                    @lang('nova-auth::app.sso.apple')
                 </a>
                 <a href="#" class="btn-sso">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                     </svg>
-                    Đăng nhập bằng SAML
+                    @lang('nova-auth::app.sso.saml')
                 </a>
             </div>
 
             <div class="login-bottom-note">
-                Cần hỗ trợ? <a href="#">Liên hệ quản trị viên</a>
+                @lang('nova-auth::app.support.need_help')
+                <a href="#">@lang('nova-auth::app.support.contact_admin')</a>
             </div>
-
         </div>
     </div>
 
     {{-- ── RIGHT: Visual ── --}}
     <div class="login-right">
 
-        {{-- Canvas vẽ đường nối --}}
         <canvas id="connectorCanvas"></canvas>
 
         {{-- Floating cards --}}
         <div class="float-card float-card-1" id="fc1">
-            <div class="fc-label">Nhân viên hoạt động</div>
+            <div class="fc-label">@lang('nova-auth::app.dashboard.employees_active')</div>
             <div class="fc-val">1,284</div>
-            <div class="fc-tag">↑ +12 hôm nay</div>
+            <div class="fc-tag">@lang('nova-auth::app.dashboard.today_up')</div>
         </div>
 
         <div class="float-card float-card-2" id="fc2">
-            <div class="fc-label">Trạng thái hệ thống</div>
+            <div class="fc-label">@lang('nova-auth::app.dashboard.system_status')</div>
             <div style="display:flex;align-items:center;gap:6px;margin-top:4px">
                 <div style="width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 6px #22c55e"></div>
-                <span style="font-size:12px;font-weight:700;color:#22c55e">Hoạt động ổn định</span>
+                <span style="font-size:12px;font-weight:700;color:#22c55e">@lang('nova-auth::app.dashboard.system_online')</span>
             </div>
         </div>
 
         <div class="float-card float-card-3" id="fc3">
-            <div class="fc-label">Phê duyệt hôm nay</div>
+            <div class="fc-label">@lang('nova-auth::app.dashboard.today_approval')</div>
             <div style="display:flex;gap:5px;margin-top:5px;flex-wrap:wrap">
-                <span class="fc-badge fc-badge-green">✓ 24 đã duyệt</span>
-                <span class="fc-badge fc-badge-blue">⏳ 6 chờ</span>
+                <span class="fc-badge fc-badge-green">@lang('nova-auth::app.dashboard.approved')</span>
+                <span class="fc-badge fc-badge-blue">@lang('nova-auth::app.dashboard.pending')</span>
             </div>
         </div>
 
         <div class="float-card float-card-4" id="fc4">
-            <div class="fc-label">Lương tháng này</div>
+            <div class="fc-label">@lang('nova-auth::app.dashboard.salary_this_month')</div>
             <div class="fc-val">2.4 tỷ</div>
-            <div class="fc-tag" style="color:#FBBF24">↑ Đã xử lý</div>
+            <div class="fc-tag" style="color:#FBBF24">@lang('nova-auth::app.dashboard.salary_processed')</div>
         </div>
 
         <div class="float-card float-card-5" id="fc5">
-            <div class="fc-label">Tuyển dụng</div>
+            <div class="fc-label">@lang('nova-auth::app.dashboard.recruitment')</div>
             <div style="display:flex;gap:5px;margin-top:5px;flex-wrap:wrap">
-                <span class="fc-badge fc-badge-purple">12 ứng viên</span>
-                <span class="fc-badge fc-badge-green">3 offer</span>
+                <span class="fc-badge fc-badge-purple">@lang('nova-auth::app.dashboard.candidates')</span>
+                <span class="fc-badge fc-badge-green">@lang('nova-auth::app.dashboard.offers')</span>
             </div>
         </div>
 
         <div class="float-card float-card-6" id="fc6">
-            <div class="fc-label">Chấm công hôm nay</div>
+            <div class="fc-label">@lang('nova-auth::app.dashboard.attendance_today')</div>
             <div class="fc-val">96.4%</div>
-            <div class="fc-tag" style="color:#34D399">● Đúng giờ</div>
+            <div class="fc-tag" style="color:#34D399">@lang('nova-auth::app.dashboard.attendance_ontime')</div>
         </div>
 
         <div class="float-card float-card-7" id="fc7">
-            <div class="fc-label">Đào tạo</div>
-            <div class="fc-val">8 khóa</div>
-            <div class="fc-tag" style="color:#A78BFA">Đang diễn ra</div>
+            <div class="fc-label">@lang('nova-auth::app.dashboard.training')</div>
+            <div class="fc-val">@lang('nova-auth::app.dashboard.courses')</div>
+            <div class="fc-tag" style="color:#A78BFA">@lang('nova-auth::app.dashboard.training_running')</div>
         </div>
 
-        {{-- Center content giữ nguyên --}}
         <div class="login-right-content">
             <div class="login-right-logo" id="centerLogo">
                 <svg viewBox="0 0 16 16"><path d="M8 1L14 4V8C14 11.3 11.3 13.8 8 15C4.7 13.8 2 11.3 2 8V4L8 1Z"/></svg>
             </div>
 
             <h2 class="login-right-title">
-                Nền tảng quản lý<br>nhân sự <span>toàn diện</span>
+                @lang('nova-auth::app.hero.title_line_1')<br>
+                @lang('nova-auth::app.hero.title_line_2') <span>@lang('nova-auth::app.hero.title_highlight')</span>
             </h2>
             <p class="login-right-desc">
-                Tự động hoá quy trình HR, tính lương chính xác,<br>
-                và phát triển nhân tài cùng NovaHRM.
+                @lang('nova-auth::app.hero.description')
             </p>
 
             <div class="login-stats">
                 <div class="login-stat">
                     <div class="login-stat-val">10K+</div>
-                    <div class="login-stat-label">Doanh nghiệp</div>
+                    <div class="login-stat-label">@lang('nova-auth::app.hero.businesses')</div>
                 </div>
                 <div class="login-stat">
                     <div class="login-stat-val">99.9%</div>
-                    <div class="login-stat-label">Uptime</div>
+                    <div class="login-stat-label">@lang('nova-auth::app.hero.uptime')</div>
                 </div>
                 <div class="login-stat">
                     <div class="login-stat-val">500K+</div>
-                    <div class="login-stat-label">Nhân viên</div>
+                    <div class="login-stat-label">@lang('nova-auth::app.hero.employees')</div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-    {{-- Flash flags --}}
-    @if(session('login_success'))
-        <script>window.__loginSuccess = true;</script>
-    @endif
 
-    @if(session('logout_success'))
-        <script>window.__logoutSuccess = true;</script>
-    @endif
+@if(session('login_success'))
+    <script>window.__loginSuccess = true;</script>
+@endif
 
-    {{-- Form logout ẩn --}}
-    @if ($errors->any())
-        <script>window.__loginError = @json($errors->first());</script>
-    @elseif (session('error'))
-        <script>window.__loginError = @json(session('error'));</script>
-    @endif
+@if(session('logout_success'))
+    <script>window.__logoutSuccess = true;</script>
+@endif
 
-    <form id="logoutForm" method="POST" action="{{ route('logout') }}" style="display:none;">
-        @csrf
-    </form>
+@if ($errors->any())
+    <script>window.__loginError = @json($errors->first());</script>
+@elseif (session('error'))
+    <script>window.__loginError = @json(session('error'));</script>
+@endif
 
-    @include('nova-auth::nova-id-modal')
+<form id="logoutForm" method="POST" action="{{ route('logout') }}" style="display:none;">
+    @csrf
+</form>
+
+@include('nova-auth::nova-id-modal')
 </body>
 </html>
