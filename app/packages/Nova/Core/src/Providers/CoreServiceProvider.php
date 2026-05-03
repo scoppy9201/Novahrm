@@ -8,13 +8,10 @@ class CoreServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        $this->loadViewsFrom(
-            __DIR__.'/../resources/views', 
-            'core'
-        );
+        $this->loadViewsFrom(__DIR__.'/../resources/views','core');
 
-        $this->loadRoutesFrom(
-            __DIR__.'/../routes/web.php'
-        );
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang','nova-core');
     }
 }

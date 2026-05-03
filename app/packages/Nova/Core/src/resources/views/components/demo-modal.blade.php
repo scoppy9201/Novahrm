@@ -7,36 +7,38 @@
         <div class="demo-modal-left">
             <div class="demo-left-badge">
                 <span class="demo-left-badge-dot"></span>
-                Miễn phí — Không ràng buộc
+                @lang('nova-core::app.badge.free')
             </div>
             <div class="demo-left-title">
-                Nhận <span>tư vấn & demo</span><br>miễn phí từ<br>chuyên gia của Nova
+                {!! __('nova-core::app.left.title') !!}
             </div>
             <div class="demo-left-desc">
-                NovaHRM cung cấp nền tảng tùy biến sâu, dễ dàng triển khai, và đáp ứng nhu cầu đặc thù của từng lĩnh vực.
+                @lang('nova-core::app.left.description')
             </div>
             <div class="demo-left-checks">
                 <div class="demo-left-check">
                     <div class="demo-left-check-icon">
                         <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
                     </div>
-                    Trải nghiệm ứng dụng thiết kế theo đúng nhu cầu doanh nghiệp
+                    @lang('nova-core::app.left.checks.customized')
                 </div>
                 <div class="demo-left-check">
                     <div class="demo-left-check-icon">
                         <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
                     </div>
-                    Tư vấn giải pháp quản trị theo ngành &amp; quy mô
+                    @lang('nova-core::app.left.checks.consulting')
                 </div>
                 <div class="demo-left-check">
                     <div class="demo-left-check-icon">
                         <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
                     </div>
-                    Giải đáp mọi thắc mắc về triển khai và sử dụng
+                    @lang('nova-core::app.left.checks.support')
                 </div>
             </div>
             <div class="demo-left-partners">
-                <div class="demo-left-partners-label">10,000+ Doanh nghiệp đối tác</div>
+                <div class="demo-left-partners-label">
+                    @lang('nova-core::app.left.partners.label')
+                </div>
                 <div class="demo-left-logos">
                     <div class="demo-left-logo">AUTOTECH</div>
                     <div class="demo-left-logo">NEX</div>
@@ -47,101 +49,135 @@
 
         <!-- RIGHT: Form -->
         <div class="demo-modal-right">
-            <div class="demo-form-title">Đăng ký tư vấn miễn phí</div>
-            <div class="demo-form-sub">Điền thông tin để chuyên gia liên hệ trong vòng 24 giờ</div>
+            <div class="demo-form-title">@lang('nova-core::app.form.title')</div>
+            <div class="demo-form-sub">@lang('nova-core::app.form.subtitle')</div>
 
             <form id="demoForm">
                 @csrf
 
+                {{-- Họ và tên --}}
                 <div class="demo-form-group">
-                    <label class="demo-form-label">Họ và tên <span>*</span></label>
-                    <input id="df_name" class="demo-input" type="text" placeholder="Nhập tên của bạn">
+                    <label class="demo-form-label">
+                        @lang('nova-core::app.form.fields.name.label') <span>*</span>
+                    </label>
+                    <input id="df_name" class="demo-input" type="text"
+                           placeholder="@lang('nova-core::app.form.fields.name.placeholder')">
                 </div>
 
+                {{-- Sản phẩm --}}
                 <div class="demo-form-group">
-                    <label class="demo-form-label">Sản phẩm bạn quan tâm <span>*</span></label>
+                    <label class="demo-form-label">
+                        @lang('nova-core::app.form.fields.product.label') <span>*</span>
+                    </label>
                     <div class="demo-select-wrap">
                         <select id="df_product" class="demo-select">
-                            <option value="" disabled selected>Lựa chọn sản phẩm</option>
-                            <option>Nova E-Hiring</option>
-                            <option>Nova HRM</option>
-                            <option>Nova Payroll</option>
-                            <option>Nova Schedule</option>
-                            <option>Nova Checkin</option>
-                            <option>Nova Timeoff</option>
-                            <option>Toàn bộ nền tảng</option>
+                            <option value="" disabled selected>
+                                @lang('nova-core::app.form.fields.product.placeholder')
+                            </option>
+                            <option>@lang('nova-core::app.form.fields.product.options.e_hiring')</option>
+                            <option>@lang('nova-core::app.form.fields.product.options.hrm')</option>
+                            <option>@lang('nova-core::app.form.fields.product.options.payroll')</option>
+                            <option>@lang('nova-core::app.form.fields.product.options.schedule')</option>
+                            <option>@lang('nova-core::app.form.fields.product.options.checkin')</option>
+                            <option>@lang('nova-core::app.form.fields.product.options.timeoff')</option>
+                            <option>@lang('nova-core::app.form.fields.product.options.all')</option>
                         </select>
                     </div>
                 </div>
 
+                {{-- Email + Phone --}}
                 <div class="demo-form-row">
                     <div class="demo-form-group">
-                        <label class="demo-form-label">Email <span>*</span></label>
-                        <input id="df_email" class="demo-input" type="email" placeholder="Nhập email của bạn">
+                        <label class="demo-form-label">
+                            @lang('nova-core::app.form.fields.email.label') <span>*</span>
+                        </label>
+                        <input id="df_email" class="demo-input" type="email"
+                               placeholder="@lang('nova-core::app.form.fields.email.placeholder')">
                     </div>
                     <div class="demo-form-group">
-                        <label class="demo-form-label">Số điện thoại <span>*</span></label>
-                        <input id="df_phone" class="demo-input" type="tel" placeholder="Nhập số điện thoại">
+                        <label class="demo-form-label">
+                            @lang('nova-core::app.form.fields.phone.label') <span>*</span>
+                        </label>
+                        <input id="df_phone" class="demo-input" type="tel"
+                               placeholder="@lang('nova-core::app.form.fields.phone.placeholder')">
                     </div>
                 </div>
 
+                {{-- Position + Company --}}
                 <div class="demo-form-row">
                     <div class="demo-form-group">
-                        <label class="demo-form-label">Vị trí công việc <span>*</span></label>
+                        <label class="demo-form-label">
+                            @lang('nova-core::app.form.fields.position.label') <span>*</span>
+                        </label>
                         <div class="demo-select-wrap">
                             <select id="df_position" class="demo-select">
-                                <option value="" disabled selected>Lựa chọn vị trí</option>
-                                <option>Giám đốc / CEO</option>
-                                <option>Trưởng phòng HR</option>
-                                <option>Nhân viên HR</option>
-                                <option>Kế toán / Tài chính</option>
-                                <option>IT / Kỹ thuật</option>
-                                <option>Khác</option>
+                                <option value="" disabled selected>
+                                    @lang('nova-core::app.form.fields.position.placeholder')
+                                </option>
+                                <option>@lang('nova-core::app.form.fields.position.options.ceo')</option>
+                                <option>@lang('nova-core::app.form.fields.position.options.hr_manager')</option>
+                                <option>@lang('nova-core::app.form.fields.position.options.hr_staff')</option>
+                                <option>@lang('nova-core::app.form.fields.position.options.finance')</option>
+                                <option>@lang('nova-core::app.form.fields.position.options.it')</option>
+                                <option>@lang('nova-core::app.form.fields.position.options.other')</option>
                             </select>
                         </div>
                     </div>
                     <div class="demo-form-group">
-                        <label class="demo-form-label">Tên công ty <span>*</span></label>
-                        <input id="df_company" class="demo-input" type="text" placeholder="Nhập tên công ty của bạn">
+                        <label class="demo-form-label">
+                            @lang('nova-core::app.form.fields.company.label') <span>*</span>
+                        </label>
+                        <input id="df_company" class="demo-input" type="text"
+                               placeholder="@lang('nova-core::app.form.fields.company.placeholder')">
                     </div>
                 </div>
 
+                {{-- City + Size --}}
                 <div class="demo-form-row">
                     <div class="demo-form-group">
-                        <label class="demo-form-label">Tỉnh/Thành phố <span>*</span></label>
+                        <label class="demo-form-label">
+                            @lang('nova-core::app.form.fields.city.label') <span>*</span>
+                        </label>
                         <div class="demo-select-wrap">
                             <select id="df_city" class="demo-select">
-                                <option value="" disabled selected>Lựa chọn khu vực</option>
-                                <option>Hà Nội</option>
-                                <option>TP. Hồ Chí Minh</option>
-                                <option>Đà Nẵng</option>
-                                <option>Cần Thơ</option>
-                                <option>Khác</option>
+                                <option value="" disabled selected>
+                                    @lang('nova-core::app.form.fields.city.placeholder')
+                                </option>
+                                <option>@lang('nova-core::app.form.fields.city.options.hn')</option>
+                                <option>@lang('nova-core::app.form.fields.city.options.hcm')</option>
+                                <option>@lang('nova-core::app.form.fields.city.options.dn')</option>
+                                <option>@lang('nova-core::app.form.fields.city.options.ct')</option>
+                                <option>@lang('nova-core::app.form.fields.city.options.other')</option>
                             </select>
                         </div>
                     </div>
                     <div class="demo-form-group">
-                        <label class="demo-form-label">Quy mô nhân sự <span>*</span></label>
+                        <label class="demo-form-label">
+                            @lang('nova-core::app.form.fields.size.label') <span>*</span>
+                        </label>
                         <div class="demo-select-wrap">
                             <select id="df_size" class="demo-select">
-                                <option value="" disabled selected>Lựa chọn quy mô</option>
-                                <option>Dưới 50 người</option>
-                                <option>50 - 200 người</option>
-                                <option>200 - 500 người</option>
-                                <option>500 - 1000 người</option>
-                                <option>Trên 1000 người</option>
+                                <option value="" disabled selected>
+                                    @lang('nova-core::app.form.fields.size.placeholder')
+                                </option>
+                                <option>@lang('nova-core::app.form.fields.size.options.under_50')</option>
+                                <option>@lang('nova-core::app.form.fields.size.options.50_200')</option>
+                                <option>@lang('nova-core::app.form.fields.size.options.200_500')</option>
+                                <option>@lang('nova-core::app.form.fields.size.options.500_1000')</option>
+                                <option>@lang('nova-core::app.form.fields.size.options.over_1000')</option>
                             </select>
                         </div>
                     </div>
                 </div>
 
                 <button type="submit" id="demoSubmitBtn" class="demo-submit-btn">
-                    Nhận tư vấn giải pháp
+                    @lang('nova-core::app.form.submit')
                 </button>
 
                 <div class="demo-form-note">
-                    Bằng cách nhấn "nhận tư vấn giải pháp", tôi xác nhận rằng tôi đã đọc và đồng ý với
-                    <a href="#">Chính sách quyền riêng tư</a> của NovaHRM
+                    @lang('nova-core::app.form.note')
+                    <a href="#">@lang('nova-core::app.form.privacy_policy')</a>
+                    @lang('nova-core::app.form.note_suffix')
                 </div>
             </form>
         </div>

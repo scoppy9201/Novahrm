@@ -3,7 +3,7 @@ import './nova-ui.js';
 import provinces from '../../../../../../Data/provinces.json';
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ── NAVBAR SCROLL ──
+    // NAVBAR SCROLL 
     const navbar = document.getElementById('navbar');
     if (navbar) {
         window.addEventListener('scroll', () => {
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ── SCROLL REVEAL (dùng chung cho .reveal và .prod-item) ──
+    // SCROLL REVEAL (dùng chung cho .reveal và .prod-item) 
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry, i) => {
             if (entry.isIntersecting) {
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         revealObserver.observe(el);
     });
 
-    // ── SPOTLIGHT DASHBOARD ──
+    // SPOTLIGHT DASHBOARD 
     const spotCards = [
         ...document.querySelectorAll('.dash-stat'),
         ...document.querySelectorAll('.dash-card')
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     setTimeout(runSpotlight, 1000);
 
-    // ── FEATURE SLIDER ──
+    // FEATURE SLIDER 
     let featIdx = 0;
     const featSlides = document.querySelectorAll('.feat-slide');
     const featDots   = document.querySelectorAll('.feat-dot');
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
         featTitle.addEventListener('mouseleave', () => light.style.opacity = '0');
     }
 
-    // ── AI SECTION ──
+    // AI SECTION 
     const aiResults = [
         {
             title: "Đề xuất cần phê duyệt",
@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
         aiHeroTitle.addEventListener('mouseleave', () => aiTitleLight.style.opacity = '0');
     }
 
-    // ── JOURNEY SECTION ──
+    // JOURNEY SECTION 
     let journeyIdx = 0;
     const journeyBarWidths = ['25%', '50%', '75%', '100%'];
 
@@ -330,7 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMega(); });
 
-    // ── DEMO MODAL ──
+    // DEMO MODAL
     const demoOverlay = document.getElementById('demoModalOverlay');
     const demoClose   = document.getElementById('demoModalClose');
 
