@@ -40,16 +40,10 @@
     <div class="dept-body">
         {{-- Flash alerts --}}
         @if(session('success'))
-            <div class="dept-alert dept-alert-success" data-auto-close>
-                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                {{ session('success') }}
-            </div>
+            <div hidden data-nova-toast-message="{{ session('success') }}" data-nova-toast-type="success"></div>
         @endif
         @if(session('error'))
-            <div class="dept-alert dept-alert-error" data-auto-close>
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                {{ session('error') }}
-            </div>
+            <div hidden data-nova-toast-message="{{ session('error') }}" data-nova-toast-type="error"></div>
         @endif
 
         {{-- Stat cards --}}

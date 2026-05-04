@@ -33,10 +33,15 @@
                 JPG, PNG, WEBP<br>Tối đa 2MB
             </div>
             @if($employee->avatar ?? false)
-                <form method="POST" action="{{ route('hr.employees.avatar.delete', $employee) }}">
+                <form method="POST"
+                      action="{{ route('hr.employees.avatar.delete', $employee) }}"
+                      data-nova-confirm-message="Xoá ảnh đại diện hiện tại?"
+                      data-nova-confirm-title="Xác nhận xoá ảnh"
+                      data-nova-confirm-text="Xoá ảnh"
+                      data-nova-confirm-cancel="Huỷ"
+                      data-nova-confirm-type="danger">
                     @csrf @method('DELETE')
-                    <button type="submit" class="btn-emp-danger" style="font-size:10.5px;padding:4px 10px"
-                            onclick="return confirm('Xoá ảnh đại diện?')">
+                    <button type="submit" class="btn-emp-danger" style="font-size:10.5px;padding:4px 10px">
                         Xoá ảnh
                     </button>
                 </form>
@@ -170,10 +175,16 @@
                 <div class="emp-danger-row-label">Xoá nhân viên</div>
                 <div class="emp-danger-row-desc">Chuyển vào thùng rác, có thể khôi phục</div>
             </div>
-            <form method="POST" action="{{ route('hr.employees.destroy', $employee) }}" id="delete-form">
+            <form method="POST"
+                  action="{{ route('hr.employees.destroy', $employee) }}"
+                  id="delete-form"
+                  data-nova-confirm-message="Xoá nhân viên {{ addslashes($employee->name) }}?"
+                  data-nova-confirm-title="Xác nhận xoá nhân viên"
+                  data-nova-confirm-text="Xoá nhân viên"
+                  data-nova-confirm-cancel="Huỷ"
+                  data-nova-confirm-type="danger">
                 @csrf @method('DELETE')
-                <button type="submit" class="btn-emp-danger" style="font-size:11px;padding:5px 12px"
-                        onclick="return confirm('Xoá nhân viên {{ addslashes($employee->name) }}?')">
+                <button type="submit" class="btn-emp-danger" style="font-size:11px;padding:5px 12px">
                     Xoá
                 </button>
             </form>

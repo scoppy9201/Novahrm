@@ -344,49 +344,16 @@
 
 {{-- Flash messages --}}
 @if(session('success'))
-<div id="toast-success" style="
-    position:fixed;bottom:24px;right:24px;z-index:9999;
-    display:flex;align-items:center;gap:10px;
-    padding:12px 18px;
-    background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;
-    font-size:13px;font-weight:600;color:#15803d;
-    font-family:var(--doc-font);
-    box-shadow:0 4px 16px rgba(0,0,0,0.1);
-    animation: slideInToast .3s ease;
-">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="20 6 9 17 4 12"/>
-    </svg>
-    {{ session('success') }}
-</div>
+<div hidden data-nova-toast-message="{{ session('success') }}" data-nova-toast-type="success"></div>
 @endif
 
 @if(session('error'))
-<div id="toast-error" style="
-    position:fixed;bottom:24px;right:24px;z-index:9999;
-    display:flex;align-items:center;gap:10px;
-    padding:12px 18px;
-    background:#fef2f2;border:1px solid #fecaca;border-radius:10px;
-    font-size:13px;font-weight:600;color:#b91c1c;
-    font-family:var(--doc-font);
-    box-shadow:0 4px 16px rgba(0,0,0,0.1);
-">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#b91c1c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-    </svg>
-    {{ session('error') }}
-</div>
+<div hidden data-nova-toast-message="{{ session('error') }}" data-nova-toast-type="error"></div>
 @endif
-
-<style>
-@keyframes slideInToast {
-    from { transform: translateY(12px); opacity: 0; }
-    to   { transform: translateY(0);    opacity: 1; }
-}
-</style>
 @endsection
 
 @section('scripts')
+    @vite(['app/packages/Nova/document/src/resources/js/app.js'])
 <script>
 // Toggle table / grid view
 const viewTable = document.getElementById('view-table');
@@ -435,16 +402,5 @@ function applyFilters() {
     window.location.href = '{{ route('documents.index') }}' + (newParams.toString() ? '?' + newParams.toString() : '');
 }
 
-// Auto-dismiss toast
-setTimeout(() => {
-    ['toast-success','toast-error'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-            el.style.transition = 'opacity .4s';
-            el.style.opacity = '0';
-            setTimeout(() => el?.remove(), 400);
-        }
-    });
-}, 3500);
 </script>
 @endsection

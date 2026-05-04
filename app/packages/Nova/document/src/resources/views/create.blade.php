@@ -299,8 +299,9 @@
 @endsection
 
 @section('scripts')
+    @vite(['app/packages/Nova/document/src/resources/js/app.js'])
 <script>
-// ─── File Upload ────────────────────────────────────
+// File Upload 
 const fileInput   = document.getElementById('file-input');
 const uploadZone  = document.getElementById('upload-zone');
 const filePreview = document.getElementById('file-preview');
@@ -319,11 +320,11 @@ fileInput.addEventListener('change', () => {
 
 function setFile(file) {
     if (file.type !== 'application/pdf') {
-        alert('Chỉ hỗ trợ file PDF!');
+        novaToast('Chỉ hỗ trợ file PDF!', 'error');
         return;
     }
     if (file.size > 20 * 1024 * 1024) {
-        alert('File không được vượt quá 20MB!');
+        novaToast('File không được vượt quá 20MB!', 'warning');
         return;
     }
 
@@ -399,7 +400,7 @@ function onCategoryChange(sel) {
     infoBox.style.display = 'flex';
 }
 
-// ─── Toggle confidential ─────────────────────────────
+// Toggle confidential 
 const toggleEl    = document.getElementById('toggle-confidential');
 const hiddenField = document.getElementById('is_confidential');
 let isConfidential = hiddenField.value === '1';
@@ -414,7 +415,7 @@ toggleEl.addEventListener('click', () => {
     syncToggle();
 });
 
-// ─── Tags ────────────────────────────────────────────
+// Tags 
 let tags = [];
 const tagsInput  = document.getElementById('tags-input');
 const tagsHidden = document.getElementById('tags');

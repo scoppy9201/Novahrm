@@ -105,12 +105,7 @@
 
 {{-- Flash --}}
 @if(session('success'))
-<div style="padding:14px 24px 0">
-    <div class="emp-alert emp-alert-success" data-auto-close>
-        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-        {{ session('success') }}
-    </div>
-</div>
+<div hidden data-nova-toast-message="{{ session('success') }}" data-nova-toast-type="success"></div>
 @endif
 
 @if($errors->any())

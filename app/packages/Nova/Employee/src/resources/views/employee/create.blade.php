@@ -72,25 +72,12 @@
 
 {{-- Flash errors --}}
 @if(session('error'))
-<div style="padding:14px 24px 0">
-    <div class="emp-alert emp-alert-danger" data-auto-close>
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        <div>
-            <div style="font-weight:700;margin-bottom:2px">Không thể lưu nhân viên</div>
-            <div style="font-size:12px">{{ session('error') }}</div>
-        </div>
-    </div>
-</div>
+<div hidden data-nova-toast-message="{{ session('error') }}" data-nova-toast-type="error"></div>
 @endif
 
 {{-- Flash success --}}
 @if(session('success'))
-<div style="padding:14px 24px 0">
-    <div class="emp-alert" style="background:#f0fdf4;border:0.5px solid #86efac;color:#15803d;display:flex;align-items:flex-start;gap:10px;padding:12px 16px;border-radius:8px">
-        <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"/></svg>
-        <div style="font-size:13px;font-weight:600">{{ session('success') }}</div>
-    </div>
-</div>
+<div hidden data-nova-toast-message="{{ session('success') }}" data-nova-toast-type="success"></div>
 @endif
 
 {{-- Validation errors từ Laravel Request --}}

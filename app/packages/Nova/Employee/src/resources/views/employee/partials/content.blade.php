@@ -346,19 +346,31 @@
                         <div style="display:flex;align-items:center;gap:4px;justify-content:flex-end">
                             @if(request('tab') === 'trash')
                                 {{-- Restore --}}
-                                <form method="POST" action="{{ route('hr.employees.restore', $employee->id) }}" style="display:inline">
+                                <form method="POST"
+                                      action="{{ route('hr.employees.restore', $employee->id) }}"
+                                      style="display:inline"
+                                      data-nova-confirm-message="Khôi phục nhân viên này?"
+                                      data-nova-confirm-title="Khôi phục nhân viên"
+                                      data-nova-confirm-text="Khôi phục"
+                                      data-nova-confirm-cancel="Huỷ"
+                                      data-nova-confirm-type="info">
                                     @csrf @method('PATCH')
-                                    <button type="submit" class="btn-emp-icon" title="Khôi phục"
-                                            onclick="return confirm('Khôi phục nhân viên này?')">
+                                    <button type="submit" class="btn-emp-icon" title="Khôi phục">
                                         <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.41"/></svg>
                                     </button>
                                 </form>
                                 {{-- Force Delete --}}
-                                <form method="POST" action="{{ route('hr.employees.force-delete', $employee->id) }}" style="display:inline">
+                                <form method="POST"
+                                      action="{{ route('hr.employees.force-delete', $employee->id) }}"
+                                      style="display:inline"
+                                      data-nova-confirm-message="XOÁ VĨNH VIỄN nhân viên này? Không thể hoàn tác!"
+                                      data-nova-confirm-title="Xoá vĩnh viễn"
+                                      data-nova-confirm-text="Xoá vĩnh viễn"
+                                      data-nova-confirm-cancel="Huỷ"
+                                      data-nova-confirm-type="danger">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="btn-emp-icon" title="Xoá vĩnh viễn"
-                                            style="border-color:#fecaca"
-                                            onclick="return confirm('XOÁ VĨNH VIỄN nhân viên này? Không thể hoàn tác!')">
+                                            style="border-color:#fecaca">
                                         <svg viewBox="0 0 24 24" style="stroke:#dc2626"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
                                     </button>
                                 </form>
@@ -372,10 +384,16 @@
                                     <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                                 </a>
                                 {{-- Soft Delete --}}
-                                <form method="POST" action="{{ route('hr.employees.destroy', $employee) }}" style="display:inline">
+                                <form method="POST"
+                                      action="{{ route('hr.employees.destroy', $employee) }}"
+                                      style="display:inline"
+                                      data-nova-confirm-message="Xoá nhân viên {{ addslashes($employee->name) }}?"
+                                      data-nova-confirm-title="Xác nhận xoá nhân viên"
+                                      data-nova-confirm-text="Xoá"
+                                      data-nova-confirm-cancel="Huỷ"
+                                      data-nova-confirm-type="danger">
                                     @csrf @method('DELETE')
-                                    <button type="submit" class="btn-emp-icon" title="Xoá"
-                                        onclick="return confirm('Xoá nhân viên {{ addslashes($employee->name) }}?')">
+                                    <button type="submit" class="btn-emp-icon" title="Xoá">
                                         <svg viewBox="0 0 24 24" style="stroke:#dc2626"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
                                     </button>
                                 </form>

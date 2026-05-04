@@ -1,25 +1,15 @@
+import '../../../../Core/src/resources/js/nova-ui.js';
+
 document.addEventListener('DOMContentLoaded', () => {
-    initFlashAlerts();
     initDeleteConfirm();
     initColorPicker();
     initFilterForm();
 });
 
-/* Flash alerts tự động đóng sau 4s */
-function initFlashAlerts() {
-    document.querySelectorAll('.dept-alert[data-auto-close]').forEach(el => {
-        setTimeout(() => {
-            el.style.transition = 'opacity 0.4s';
-            el.style.opacity = '0';
-            setTimeout(() => el.remove(), 400);
-        }, 4000);
-    });
-}
-
 /* Confirm trước khi xóa */
 function initDeleteConfirm() {
     document.querySelectorAll('[data-delete-form]').forEach(btn => {
-        btn.addEventListener('click', e => {
+        btn.addEventListener('click', async (e) => {
             e.preventDefault();
             const name   = btn.dataset.name ?? 'mục này';
             const formId = btn.dataset.deleteForm;
@@ -27,7 +17,15 @@ function initDeleteConfirm() {
 
             if (!form) return;
 
-            if (confirm(`Bạn có chắc muốn xóa "${name}" không?\nHành động này không thể hoàn tác.`)) {
+            const confirmed = await novaConfirm({
+                title: 'Xác nhận xóa',
+                message: `Bạn có chắc muốn xóa "${name}" không?<br>Hành động này không thể hoàn tác.`,
+                confirmText: 'Xóa',
+                cancelText: 'Huỷ',
+                type: 'danger',
+            });
+
+            if (confirmed) {
                 form.submit();
             }
         });

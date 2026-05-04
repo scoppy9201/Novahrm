@@ -16,5 +16,7 @@ class ProfileServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
 
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'profile');
+
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang','nova-profile');
     }
 }

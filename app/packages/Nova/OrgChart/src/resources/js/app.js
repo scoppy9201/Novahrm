@@ -1,3 +1,5 @@
+import '../../../../Core/src/resources/js/nova-ui.js';
+
 // State 
 const state = {
     tree:        [],
@@ -1157,10 +1159,13 @@ window.openEditModal = openEditModal;
 
 // Delete department
 async function deleteDept(node) {
-    // Confirm trước khi xóa
-    const confirmed = window.confirm(
-        `Bạn có chắc muốn xóa phòng ban "${node.name}" không?\n\nHành động này không thể hoàn tác.`
-    );
+    const confirmed = await novaConfirm({
+        title: 'Xác nhận xóa phòng ban',
+        message: `Bạn có chắc muốn xóa phòng ban "${node.name}" không?<br>Hành động này không thể hoàn tác.`,
+        confirmText: 'Xóa phòng ban',
+        cancelText: 'Huỷ',
+        type: 'danger',
+    });
     if (!confirmed) return;
 
     const url = cfg.deleteUrl.replace('__ID__', node.id);
@@ -1178,25 +1183,21 @@ async function deleteDept(node) {
         const data = await res.json();
 
         if (!res.ok) {
-            alert(data.message || 'Xóa thất bại. Vui lòng thử lại.');
+            novaToast(data.message || 'Xóa thất bại. Vui lòng thử lại.', 'error');
             return;
         }
 
         closeDrawer();
         await fetchTree();
+        novaToast(`Đã xóa phòng ban "${node.name}"`, 'success');
 
     } catch (e) {
         console.error('Lỗi xóa phòng ban:', e);
-        alert('Đã xảy ra lỗi. Vui lòng thử lại.');
+        novaToast('Đã xảy ra lỗi. Vui lòng thử lại.', 'error');
     }
 }   
 
 // DRAG & DROP — reorder departments
-
-// Tạo toast element một lần
-const toast = document.createElement('div');
-toast.className = 'orgchart-toast';
-document.body.appendChild(toast);
 
 // Tạo drop-root zone
 const dropRootZone = document.createElement('div');
@@ -1212,24 +1213,6 @@ let dragState = {
     nodeName: null,
     ghostEl:  null,
 };
-
-function showToast(message, type = 'default') {
-    const icons = {
-        success: `<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>`,
-        error:   `<svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,
-        default: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
-    };
-
-    toast.className = `orgchart-toast ${type}`;
-    toast.innerHTML = (icons[type] || icons.default) + message;
-
-    // Show
-    requestAnimationFrame(() => toast.classList.add('show'));
-
-    // Auto hide sau 2.5s
-    clearTimeout(toast._hideTimer);
-    toast._hideTimer = setTimeout(() => toast.classList.remove('show'), 2500);
-}
 
 // Tạo ghost element khi bắt đầu drag
 function createGhost(cardEl, name) {
@@ -1363,7 +1346,7 @@ async function moveDept(fromId, toId) {
 
     // Kiểm tra client-side: không thể thả vào con cháu của chính nó
     if (toId && isDescendant(state.tree, fromId, toId)) {
-        showToast('Không thể di chuyển vào phòng ban con của chính nó', 'error');
+        novaToast('Không thể di chuyển vào phòng ban con của chính nó', 'error');
         return;
     }
 
@@ -1388,19 +1371,19 @@ async function moveDept(fromId, toId) {
         const data = await res.json();
 
         if (!res.ok) {
-            showToast(data.message || 'Di chuyển thất bại', 'error');
+            novaToast(data.message || 'Di chuyển thất bại', 'error');
             return;
         }
 
         const toNode = toId ? findNodeById(state.tree, toId) : null;
         const toName = toNode?.name || 'cấp cao nhất';
-        showToast(`Đã di chuyển "${fromName}" vào "${toName}"`, 'success');
+        novaToast(`Đã di chuyển "${fromName}" vào "${toName}"`, 'success');
 
         await fetchTree();
 
     } catch (err) {
         console.error('Lỗi di chuyển phòng ban:', err);
-        showToast('Đã xảy ra lỗi, vui lòng thử lại', 'error');
+        novaToast('Đã xảy ra lỗi, vui lòng thử lại', 'error');
     }
 }
 
@@ -1577,11 +1560,11 @@ async function exportPDF() {
         const filename = `so-do-to-chuc-${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}.pdf`;
         pdf.save(filename);
 
-        showToast('Xuất PDF thành công!', 'success');
+        novaToast('Xuất PDF thành công!', 'success');
 
     } catch (err) {
         console.error('Lỗi xuất PDF:', err);
-        showToast('Xuất PDF thất bại, vui lòng thử lại', 'error');
+        novaToast('Xuất PDF thất bại, vui lòng thử lại', 'error');
     } finally {
         btn.disabled  = false;
         btn.title     = originalTitle;

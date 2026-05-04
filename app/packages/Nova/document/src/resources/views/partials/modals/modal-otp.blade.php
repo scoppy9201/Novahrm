@@ -110,12 +110,13 @@
                 document.getElementById('otp-footer').style.display      = 'flex';
                 startCountdown(600);
                 document.querySelector('.doc-otp-digit')?.focus();
+                novaToast('OTP đã được gửi qua email.', 'success');
             } else {
-                alert(data.message || 'Không thể gửi OTP, thử lại sau.');
+                novaToast(data.message || 'Không thể gửi OTP, thử lại sau.', 'error');
                 if (btn) { btn.disabled = false; btn.textContent = 'Gửi OTP qua email'; }
             }
         } catch(e) {
-            alert('Lỗi kết nối, thử lại sau.');
+            novaToast('Lỗi kết nối, thử lại sau.', 'error');
             if (btn) { btn.disabled = false; btn.textContent = 'Gửi OTP qua email'; }
         }
     }

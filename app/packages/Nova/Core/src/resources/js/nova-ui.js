@@ -74,6 +74,87 @@ window.novaToast = function(msg, type = 'success', duration = 3500) {
     toast.addEventListener('click', () => { clearTimeout(timer); remove(); });
 };
 
+function processNovaToastNodes(root = document) {
+    root.querySelectorAll('[data-nova-toast-message]:not([data-nova-toast-bound])').forEach((node) => {
+        node.dataset.novaToastBound = '1';
+
+        const message = node.dataset.novaToastMessage || node.textContent?.trim();
+        if (!message) {
+            return;
+        }
+
+        const type = node.dataset.novaToastType || 'info';
+        const duration = Number(node.dataset.novaToastDuration || 3500);
+        window.novaToast(message, type, Number.isFinite(duration) ? duration : 3500);
+        node.remove();
+    });
+}
+
+function getNovaConfirmConfig(form) {
+    return {
+        title: form.dataset.novaConfirmTitle || 'XÃ¡c nháº­n',
+        message: form.dataset.novaConfirmMessage || 'Báº¡n cÃ³ cháº¯c cháº¯n khÃ´ng?',
+        confirmText: form.dataset.novaConfirmText || 'XÃ¡c nháº­n',
+        cancelText: form.dataset.novaConfirmCancel || 'Huá»·',
+        type: form.dataset.novaConfirmType || 'warning',
+    };
+}
+
+function bindNovaConfirmForms() {
+    if (document.__novaConfirmFormsBound) {
+        return;
+    }
+
+    document.__novaConfirmFormsBound = true;
+
+    document.addEventListener('submit', async (event) => {
+        const form = event.target;
+
+        if (!(form instanceof HTMLFormElement)) {
+            return;
+        }
+
+        if (!form.dataset.novaConfirmMessage) {
+            return;
+        }
+
+        if (form.dataset.novaConfirmApproved === '1') {
+            delete form.dataset.novaConfirmApproved;
+            return;
+        }
+
+        event.preventDefault();
+
+        const confirmed = await window.novaConfirm(getNovaConfirmConfig(form));
+        if (!confirmed) {
+            return;
+        }
+
+        form.dataset.novaConfirmApproved = '1';
+
+        if (typeof form.requestSubmit === 'function') {
+            form.requestSubmit(event.submitter || undefined);
+            return;
+        }
+
+        HTMLFormElement.prototype.submit.call(form);
+    }, true);
+}
+
+function initNovaUi() {
+    bindNovaConfirmForms();
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => processNovaToastNodes(), { once: true });
+        return;
+    }
+
+    processNovaToastNodes();
+}
+
+window.novaProcessToastNodes = processNovaToastNodes;
+window.novaBindConfirmForms = bindNovaConfirmForms;
+
 // CONFIRM DIALOG 
 window.novaConfirm = function({ 
     title = 'Xác nhận', 
@@ -191,3 +272,5 @@ window.novaConfirm = function({
         });
     });
 };
+
+initNovaUi();

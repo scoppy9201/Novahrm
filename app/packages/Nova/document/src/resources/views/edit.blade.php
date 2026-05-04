@@ -246,6 +246,7 @@
 @endsection
 
 @section('scripts')
+    @vite(['app/packages/Nova/document/src/resources/js/app.js'])
 <script>
 // File mới
 const fileNew = document.getElementById('file-new');
@@ -261,8 +262,8 @@ zone.addEventListener('drop', e => {
 fileNew.addEventListener('change', () => { if (fileNew.files[0]) setNewFile(fileNew.files[0]); });
 
 function setNewFile(file) {
-    if (file.type !== 'application/pdf') { alert('Chỉ hỗ trợ PDF!'); return; }
-    if (file.size > 20*1024*1024) { alert('File tối đa 20MB!'); return; }
+    if (file.type !== 'application/pdf') { novaToast('Chỉ hỗ trợ PDF!', 'error'); return; }
+    if (file.size > 20*1024*1024) { novaToast('File tối đa 20MB!', 'warning'); return; }
     document.getElementById('new-file-name').textContent = file.name;
     document.getElementById('new-file-size').textContent = formatBytes(file.size);
     document.getElementById('new-file-preview').style.display = 'flex';
