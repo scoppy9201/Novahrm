@@ -18,9 +18,9 @@
         <div class="doc-topbar-row1">
             <div>
                 <div class="doc-breadcrumb">
-                    <a href="{{ route('dashboard') }}">Dashboard</a>
+                    <a href="{{ route('dashboard') }}">@lang('documents::app.common.dashboard')</a>
                     <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-                    <a href="{{ route('documents.index') }}">Tài liệu</a>
+                    <a href="{{ route('documents.index') }}">@lang('documents::app.common.documents')</a>
                     <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
                     <span>{{ Str::limit($document->file_name, 40) }}</span>
                 </div>
@@ -31,7 +31,7 @@
                         <span style="font-size:11px;color:#b45309;font-weight:700;
                             background:#fffbeb;border:1px solid #fde68a;
                             padding:2px 8px;border-radius:20px">
-                            🔒 Mật
+                            🔒 @lang('documents::app.common.confidential')
                         </span>
                     @endif
                 </div>
@@ -44,7 +44,7 @@
                         @csrf
                         <button type="submit" class="doc-btn doc-btn-secondary">
                             <svg viewBox="0 0 24 24" stroke="currentColor"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                            Gửi duyệt
+                            @lang('documents::app.show.submit')
                         </button>
                     </form>
                 @endif
@@ -54,11 +54,11 @@
                     @can('approve', $document)
                     <button class="doc-btn doc-btn-success" onclick="openModal('modal-approve')">
                         <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                        Duyệt
+                        @lang('documents::app.show.approve')
                     </button>
                     <button class="doc-btn doc-btn-danger" onclick="openModal('modal-reject')">
                         <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                        Từ chối
+                        @lang('documents::app.show.reject')
                     </button>
                     @endcan
                 @endif
@@ -68,7 +68,7 @@
                 <button class="doc-btn doc-btn-primary" 
                     onclick="document.getElementById('signature-pad-card').scrollIntoView({behavior:'smooth'});document.getElementById('signature-pad-card').style.boxShadow='0 0 0 2px var(--doc-primary)';">
                     <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                    Ký tài liệu
+                    @lang('documents::app.show.sign')
                 </button>
                 @endif
 
@@ -76,14 +76,14 @@
                 <a href="{{ route('documents.download', ['document' => $document, 'type' => $document->signed_file_path ? 'signed' : 'original']) }}" 
                 class="doc-btn doc-btn-secondary">
                     <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    Tải xuống
+                    @lang('documents::app.show.download')
                 </a>
 
                 {{-- Edit --}}
                 @can('update', $document)
                 <a href="{{ route('documents.edit', $document) }}" class="doc-btn doc-btn-secondary">
                     <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                    Chỉnh sửa
+                    @lang('documents::app.show.edit')
                 </a>
                 @endcan
 
@@ -116,7 +116,7 @@
                 {{-- PDF Preview --}}
                 <div class="doc-detail-card">
                     <div class="doc-detail-card-head">
-                        <div class="doc-detail-card-title">Xem trước</div>
+                        <div class="doc-detail-card-title">@lang('documents::app.show.preview')</div>
                         <div style="display:flex;gap:8px;align-items:center">
                             <span style="font-size:11px;color:var(--doc-text-faint)">
                                 {{ $document->fileSizeHuman() }}
@@ -124,7 +124,7 @@
                             <a href="{{ route('documents.download', ['document' => $document, 'type' => $document->signed_file_path ? 'signed' : 'original']) }}" 
                             class="doc-btn doc-btn-secondary">
                                 <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                                Tải xuống
+                                @lang('documents::app.show.download')
                             </a>
                         </div>
                     </div>
@@ -142,7 +142,7 @@
                             <a href="{{ route('documents.preview', ['document' => $document, 'type' => 'original']) }}"
                             target="_blank"
                             style="font-size:11.5px;color:var(--doc-primary);font-weight:600;text-decoration:none">
-                                Xem file gốc (chưa ký)
+                                @lang('documents::app.show.original_file')
                             </a>
                         </div>
                         @endif
@@ -166,48 +166,48 @@
                 @if($signature)
                 <div class="doc-detail-card">
                     <div class="doc-detail-card-head">
-                        <div class="doc-detail-card-title">Chữ ký số</div>
-                        <span class="doc-badge doc-badge-signed">Đã ký</span>
+                        <div class="doc-detail-card-title">@lang('documents::app.show.signature_title')</div>
+                        <span class="doc-badge doc-badge-signed">@lang('documents::app.show.signed')</span>
                     </div>
                     <div class="doc-detail-card-body">
                         @if($signature->signature_image)
                         <div style="background:var(--doc-surface);border:1px solid var(--doc-border);
                                     border-radius:var(--doc-radius-md);padding:12px;text-align:center;margin-bottom:12px">
                             <img src="{{ $signature->signature_image }}"
-                                 alt="Chữ ký"
+                                 alt="@lang('documents::app.show.signature_title')"
                                  style="max-width:100%;max-height:80px;object-fit:contain"/>
                         </div>
                         @endif
                         <div class="doc-meta-row">
                             <svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/></svg>
                             <div>
-                                <div class="doc-meta-label">Người ký</div>
-                                <div class="doc-meta-val">{{ $signature->employee->name ?? '—' }}</div>
+                                <div class="doc-meta-label">@lang('documents::app.show.signer')</div>
+                                <div class="doc-meta-val">{{ $signature->employee->name ?? __('documents::app.common.none') }}</div>
                             </div>
                         </div>
                         <div class="doc-meta-row">
                             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                             <div>
-                                <div class="doc-meta-label">Thời gian ký</div>
+                                <div class="doc-meta-label">@lang('documents::app.show.signed_at')</div>
                                 <div class="doc-meta-val">
-                                    {{ $signature->signed_at?->format('H:i · d/m/Y') ?? '—' }}
+                                    {{ $signature->signed_at?->format('H:i · d/m/Y') ?? __('documents::app.common.none') }}
                                 </div>
                             </div>
                         </div>
                         <div class="doc-meta-row">
                             <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
                             <div>
-                                <div class="doc-meta-label">Thiết bị</div>
+                                <div class="doc-meta-label">@lang('documents::app.show.device')</div>
                                 <div class="doc-meta-val" style="font-size:11px;word-break:break-word">
-                                    {{ Str::limit($signature->user_agent ?? '—', 60) }}
+                                    {{ Str::limit($signature->user_agent ?? __('documents::app.common.none'), 60) }}
                                 </div>
                             </div>
                         </div>
                         <div class="doc-meta-row">
                             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                             <div>
-                                <div class="doc-meta-label">Địa chỉ IP</div>
-                                <div class="doc-meta-val">{{ $signature->ip_address ?? '—' }}</div>
+                                <div class="doc-meta-label">@lang('documents::app.show.ip_address')</div>
+                                <div class="doc-meta-val">{{ $signature->ip_address ?? __('documents::app.common.none') }}</div>
                             </div>
                         </div>
                     </div>

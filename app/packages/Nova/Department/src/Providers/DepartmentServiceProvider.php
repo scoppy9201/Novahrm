@@ -16,6 +16,7 @@ class DepartmentServiceProvider extends ServiceProvider
     {
         $this->loadRoutes();
         $this->loadViews();
+        $this->loadTranslations();
     }
 
     private function loadRoutes(): void
@@ -29,6 +30,13 @@ class DepartmentServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(
             __DIR__ . '/../resources/views', 'nova-department'
+        );
+    }
+
+    private function loadTranslations(): void
+    {
+        $this->loadTranslationsFrom(
+            __DIR__ . '/../resources/lang', 'nova-department'
         );
     }
 }

@@ -15,5 +15,6 @@ class OrgChartServiceProvider extends ServiceProvider
     {
         $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'org-chart');
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'org-chart');
     }
 }

@@ -2,8 +2,8 @@
 
 <div class="doc-detail-card" id="signature-pad-card">
     <div class="doc-detail-card-head">
-        <div class="doc-detail-card-title">Ký tài liệu</div>
-        <span class="doc-badge doc-badge-signing">Chờ ký</span>
+        <div class="doc-detail-card-title">@lang('documents::app.signature.card_title')</div>
+        <span class="doc-badge doc-badge-signing">@lang('documents::app.signature.waiting')</span>
     </div>
     <div class="doc-detail-card-body">
 
@@ -11,23 +11,23 @@
         <div class="sig-steps" style="display:flex;align-items:center;margin-bottom:16px">
             <div class="sig-step active" id="step-indicator-1">
                 <div class="sig-step-num">1</div>
-                <div class="sig-step-label">Vẽ chữ ký</div>
+                <div class="sig-step-label">@lang('documents::app.signature.step_draw')</div>
             </div>
             <div class="sig-step-line"></div>
             <div class="sig-step" id="step-indicator-2">
                 <div class="sig-step-num">2</div>
-                <div class="sig-step-label">Chọn vị trí</div>
+                <div class="sig-step-label">@lang('documents::app.signature.step_place')</div>
             </div>
             <div class="sig-step-line"></div>
             <div class="sig-step" id="step-indicator-3">
                 <div class="sig-step-num">3</div>
-                <div class="sig-step-label">Xác nhận OTP</div>
+                <div class="sig-step-label">@lang('documents::app.signature.step_otp')</div>
             </div>
         </div>
         <div class="doc-alert doc-alert-info" style="margin-bottom:14px">
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
             <div style="font-size:11.5px;line-height:1.6">
-                Vẽ chữ ký bên dưới, sau đó chọn <strong>vị trí đặt chữ ký</strong> trên tài liệu PDF.
+                @lang('documents::app.signature.info')
             </div>
         </div>
 
@@ -35,15 +35,15 @@
             <div class="doc-sig-canvas-wrap" id="sig-wrap" style="height:140px">
                 <canvas id="sig-canvas" class="doc-sig-canvas" height="140"></canvas>
                 <div class="doc-sig-placeholder">
-                    <span class="doc-sig-placeholder-text">Vẽ chữ ký của bạn tại đây</span>
+                    <span class="doc-sig-placeholder-text">@lang('documents::app.signature.placeholder')</span>
                 </div>
             </div>
 
             <div class="doc-sig-actions">
-                <span class="doc-sig-hint">Dùng chuột hoặc ngón tay để vẽ chữ ký</span>
+                <span class="doc-sig-hint">@lang('documents::app.signature.hint')</span>
                 <button type="button" class="doc-btn doc-btn-secondary doc-btn-sm" id="btn-clear-sig">
                     <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                    Xoá
+                    @lang('documents::app.signature.clear')
                 </button>
             </div>
         </div>
@@ -51,7 +51,7 @@
         <div style="margin-top:14px">
             <button type="button" class="doc-btn doc-btn-primary" style="width:100%" id="btn-pick-position" disabled>
                 <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                Tiếp theo — Chọn vị trí ký
+                @lang('documents::app.signature.next_pick')
             </button>
         </div>
 
@@ -63,9 +63,9 @@
     <div class="doc-modal doc-modal-lg" style="max-width:860px;max-height:90vh;display:flex;flex-direction:column">
         <div class="doc-modal-head" style="flex-shrink:0">
             <div>
-                <div class="doc-modal-title">Chọn vị trí đặt chữ ký</div>
+                <div class="doc-modal-title">@lang('documents::app.signature.picker_title')</div>
                 <div style="font-size:11.5px;color:var(--doc-text-faint);margin-top:2px">
-                    Click vào vị trí bạn muốn đặt chữ ký trên tài liệu
+                    @lang('documents::app.signature.picker_subtitle')
                 </div>
             </div>
             <button class="doc-btn doc-btn-ghost doc-btn-icon" onclick="closePicker()">
@@ -76,7 +76,7 @@
         {{-- Toolbar --}}
         <div style="padding:10px 22px;border-bottom:1px solid var(--doc-border);display:flex;align-items:center;gap:12px;flex-shrink:0;background:var(--doc-surface)">
             <div style="display:flex;align-items:center;gap:8px">
-                <span style="font-size:11px;font-weight:700;color:var(--doc-text-faint);text-transform:uppercase;letter-spacing:0.06em">Trang</span>
+                <span style="font-size:11px;font-weight:700;color:var(--doc-text-faint);text-transform:uppercase;letter-spacing:0.06em">@lang('documents::app.signature.page')</span>
                 <button class="doc-btn doc-btn-secondary doc-btn-sm doc-btn-icon" id="btn-prev-page" disabled>
                     <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
                 </button>
@@ -89,7 +89,7 @@
             <div style="width:1px;height:20px;background:var(--doc-border)"></div>
 
             <div style="display:flex;align-items:center;gap:8px">
-                <span style="font-size:11px;font-weight:700;color:var(--doc-text-faint);text-transform:uppercase;letter-spacing:0.06em">Zoom</span>
+                <span style="font-size:11px;font-weight:700;color:var(--doc-text-faint);text-transform:uppercase;letter-spacing:0.06em">@lang('documents::app.signature.zoom')</span>
                 <button class="doc-btn doc-btn-secondary doc-btn-sm doc-btn-icon" id="btn-zoom-out">
                     <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
                 </button>
@@ -102,7 +102,7 @@
             <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
                 <div id="position-status" style="font-size:11.5px;color:var(--doc-text-faint);display:none">
                     <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:#22c55e;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;margin-right:4px"><polyline points="20 6 9 17 4 12"/></svg>
-                    Đã chọn vị trí trang <strong id="chosen-page">1</strong>
+                    @lang('documents::app.signature.position_selected') <strong id="chosen-page">1</strong>
                 </div>
             </div>
         </div>
@@ -132,12 +132,12 @@
         {{-- Footer --}}
         <div class="doc-modal-foot" style="flex-shrink:0">
             <div style="font-size:11.5px;color:var(--doc-text-faint)">
-                💡 Click vào PDF để đặt chữ ký. Kéo để di chuyển sau khi đặt.
+                @lang('documents::app.signature.picker_hint')
             </div>
-            <button type="button" class="doc-btn doc-btn-secondary" onclick="closePicker()">Huỷ</button>
+            <button type="button" class="doc-btn doc-btn-secondary" onclick="closePicker()">@lang('documents::app.common.cancel')</button>
             <button type="button" class="doc-btn doc-btn-primary" id="btn-confirm-position" disabled>
                 <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                Xác nhận vị trí — Ký ngay
+                @lang('documents::app.signature.confirm_position')
             </button>
         </div>
     </div>

@@ -14,9 +14,9 @@
         <div class="dept-topbar-row1">
             <div>
                 <div class="dept-breadcrumb">
-                    <a href="{{ route('dashboard') }}">Dashboard</a>
+                    <a href="{{ route('dashboard') }}">@lang('nova-department::app.common.dashboard')</a>
                     <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-                    <a href="{{ route('hr.departments.index') }}">Phòng ban</a>
+                    <a href="{{ route('hr.departments.index') }}">@lang('nova-department::app.common.departments')</a>
                     <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
                     <span>{{ $department->name }}</span>
                 </div>
@@ -28,7 +28,7 @@
                     <span class="dept-table-code">{{ $department->code }}</span>
                     <span class="dept-badge {{ $department->status === 'active' ? 'dept-badge-active' : 'dept-badge-inactive' }}">
                         <span class="dept-status-dot {{ $department->status }}"></span>
-                        {{ $department->status === 'active' ? 'Hoạt động' : 'Không hoạt động' }}
+                        {{ $department->status === 'active' ? __('nova-department::app.common.active') : __('nova-department::app.common.inactive') }}
                     </span>
                 </div>
                 @if($department->description)
@@ -38,28 +38,28 @@
             <div class="dept-actions">
                 <a href="{{ route('hr.departments.index') }}" class="btn-dept-secondary">
                     <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-                    Quay lại
+                    @lang('nova-department::app.common.back')
                 </a>
                 <a href="{{ route('hr.departments.edit', $department) }}" class="btn-dept-primary">
                     <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                    Chỉnh sửa
+                    @lang('nova-department::app.common.edit')
                 </a>
             </div>
         </div>
 
         {{-- Tabs --}}
         <div class="dept-tabs">
-            <a class="dept-tab active" data-tab="tab-overview" href="#tab-overview">Tổng quan</a>
+            <a class="dept-tab active" data-tab="tab-overview" href="#tab-overview">@lang('nova-department::app.departments.tabs.overview')</a>
             <a class="dept-tab" data-tab="tab-employees" href="#tab-employees">
-                Nhân sự
+                @lang('nova-department::app.departments.tabs.employees')
                 <span class="dept-badge dept-badge-blue" style="margin-left:6px;padding:1px 7px">{{ $department->employees->count() }}</span>
             </a>
             <a class="dept-tab" data-tab="tab-positions" href="#tab-positions">
-                Vị trí
+                @lang('nova-department::app.departments.tabs.positions')
                 <span class="dept-badge dept-badge-gray" style="margin-left:6px;padding:1px 7px">{{ $department->positions->count() }}</span>
             </a>
             <a class="dept-tab" data-tab="tab-children" href="#tab-children">
-                Phòng ban con
+                @lang('nova-department::app.departments.tabs.children')
                 <span class="dept-badge dept-badge-gray" style="margin-left:6px;padding:1px 7px">{{ $department->children->count() }}</span>
             </a>
         </div>
@@ -78,13 +78,13 @@
             {{-- Thông tin chung --}}
             <div class="dept-info-card">
                 <div class="dept-info-card-head">
-                    <div class="dept-info-card-title">Thông tin chung</div>
+                    <div class="dept-info-card-title">@lang('nova-department::app.departments.general_info')</div>
                 </div>
                 <div class="dept-info-list">
                     <div class="dept-info-row">
                         <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
                         <div>
-                            <div class="dept-info-label">Phòng ban cha</div>
+                            <div class="dept-info-label">@lang('nova-department::app.departments.parent_department')</div>
                             <div class="dept-info-val">
                                 @if($department->parent)
                                     <a href="{{ route('hr.departments.show', $department->parent) }}"
@@ -92,7 +92,7 @@
                                         {{ $department->parent->name }}
                                     </a>
                                 @else
-                                    <span style="color:#94a3b8">Cấp gốc</span>
+                                    <span style="color:#94a3b8">@lang('nova-department::app.common.root_level')</span>
                                 @endif
                             </div>
                         </div>
@@ -101,7 +101,7 @@
                     <div class="dept-info-row">
                         <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                         <div>
-                            <div class="dept-info-label">Trưởng phòng</div>
+                            <div class="dept-info-label">@lang('nova-department::app.departments.manager')</div>
                             <div class="dept-info-val">
                                 @if($department->manager)
                                     <div style="display:flex;align-items:center;gap:8px;margin-top:2px">
@@ -115,7 +115,7 @@
                                         <span>{{ $department->manager->name }}</span>
                                     </div>
                                 @else
-                                    <span style="color:#94a3b8">Chưa xác định</span>
+                                    <span style="color:#94a3b8">@lang('nova-department::app.common.not_defined')</span>
                                 @endif
                             </div>
                         </div>
@@ -124,13 +124,13 @@
                     <div class="dept-info-row">
                         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
                         <div>
-                            <div class="dept-info-label">Màu nhận diện</div>
+                            <div class="dept-info-label">@lang('nova-department::app.common.color')</div>
                             <div class="dept-info-val" style="display:flex;align-items:center;gap:8px;margin-top:2px">
                                 @if($department->color)
                                     <span style="width:18px;height:18px;border-radius:5px;background:{{ $department->color }};display:inline-block;border:1px solid #e2e8f0"></span>
                                     <span style="font-family:'Courier New',monospace;font-size:12px">{{ $department->color }}</span>
                                 @else
-                                    <span style="color:#94a3b8">Chưa đặt</span>
+                                    <span style="color:#94a3b8">@lang('nova-department::app.common.not_set')</span>
                                 @endif
                             </div>
                         </div>
@@ -139,7 +139,7 @@
                     <div class="dept-info-row">
                         <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
                         <div>
-                            <div class="dept-info-label">Thứ tự hiển thị</div>
+                            <div class="dept-info-label">@lang('nova-department::app.departments.order')</div>
                             <div class="dept-info-val">{{ $department->order ?? 0 }}</div>
                         </div>
                     </div>
@@ -147,7 +147,7 @@
                     <div class="dept-info-row">
                         <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                         <div>
-                            <div class="dept-info-label">Ngày tạo</div>
+                            <div class="dept-info-label">@lang('nova-department::app.common.created_at')</div>
                             <div class="dept-info-val">{{ $department->created_at->format('d/m/Y H:i') }}</div>
                         </div>
                     </div>
@@ -155,7 +155,7 @@
                     <div class="dept-info-row">
                         <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                         <div>
-                            <div class="dept-info-label">Cập nhật lần cuối</div>
+                            <div class="dept-info-label">@lang('nova-department::app.common.updated_at')</div>
                             <div class="dept-info-val">{{ $department->updated_at->format('d/m/Y H:i') }}</div>
                         </div>
                     </div>
@@ -168,31 +168,31 @@
                     <div class="dept-stat-icon blue">
                         <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                     </div>
-                    <div class="dept-stat-label">Nhân sự</div>
+                    <div class="dept-stat-label">@lang('nova-department::app.common.employees')</div>
                     <div class="dept-stat-value">{{ $department->employees->count() }}</div>
                 </div>
                 <div class="dept-stat-card">
                     <div class="dept-stat-icon purple">
                         <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
                     </div>
-                    <div class="dept-stat-label">Vị trí</div>
+                    <div class="dept-stat-label">@lang('nova-department::app.common.positions')</div>
                     <div class="dept-stat-value">{{ $department->positions->count() }}</div>
                 </div>
                 <div class="dept-stat-card">
                     <div class="dept-stat-icon green">
                         <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
                     </div>
-                    <div class="dept-stat-label">Phòng con</div>
+                    <div class="dept-stat-label">@lang('nova-department::app.common.child_departments')</div>
                     <div class="dept-stat-value">{{ $department->children->count() }}</div>
                 </div>
                 <div class="dept-stat-card">
                     <div class="dept-stat-icon amber">
                         <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
                     </div>
-                    <div class="dept-stat-label">Trạng thái</div>
+                    <div class="dept-stat-label">@lang('nova-department::app.departments.status_card')</div>
                     <div class="dept-stat-value" style="font-size:13px;margin-top:2px">
                         <span class="dept-badge {{ $department->status === 'active' ? 'dept-badge-active' : 'dept-badge-inactive' }}">
-                            {{ $department->status === 'active' ? 'Active' : 'Inactive' }}
+                            {{ $department->status === 'active' ? __('nova-department::app.common.active') : __('nova-department::app.common.inactive') }}
                         </span>
                     </div>
                 </div>
@@ -205,10 +205,10 @@
             {{-- Nhân sự mới nhất (preview 5) --}}
             <div class="dept-info-card">
                 <div class="dept-info-card-head">
-                    <div class="dept-info-card-title">Nhân sự gần đây</div>
+                    <div class="dept-info-card-title">@lang('nova-department::app.departments.recent_employees')</div>
                     <a href="#tab-employees" class="dept-tab-link" data-goto-tab="tab-employees"
                     style="font-size:11.5px;font-weight:700;color:#1d4ed8;text-decoration:none;display:inline-flex;align-items:center;gap:4px">
-                        Xem tất cả
+                        @lang('nova-department::app.departments.view_all')
                         <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:#1d4ed8;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round">
                             <line x1="5" y1="12" x2="19" y2="12"/>
                             <polyline points="12 5 19 12 12 19"/>
@@ -220,8 +220,8 @@
                         <div class="dept-empty-icon">
                             <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                         </div>
-                        <div class="dept-empty-title">Chưa có nhân sự</div>
-                        <div class="dept-empty-desc">Phòng ban này chưa có nhân viên nào</div>
+                        <div class="dept-empty-title">@lang('nova-department::app.departments.no_employees_title')</div>
+                        <div class="dept-empty-desc">@lang('nova-department::app.departments.no_employees_description')</div>
                     </div>
                 @else
                     @foreach($department->employees->take(5) as $emp)
@@ -235,16 +235,16 @@
                             </div>
                             <div class="dept-emp-info">
                                 <div class="dept-emp-name">{{ $emp->name }}</div>
-                                <div class="dept-emp-pos">{{ $emp->position?->title ?? 'Chưa có vị trí' }}</div>
+                                <div class="dept-emp-pos">{{ $emp->position?->title ?? __('nova-department::app.departments.employee_position_fallback') }}</div>
                             </div>
                             <span class="dept-badge {{ $emp->is_active ? 'dept-badge-active' : 'dept-badge-gray' }}" style="font-size:10px">
-                                {{ $emp->is_active ? 'Đang làm' : 'Nghỉ' }}
+                                {{ $emp->is_active ? __('nova-department::app.departments.employee_active') : __('nova-department::app.departments.employee_inactive') }}
                             </span>
                         </div>
                     @endforeach
                     @if($department->employees->count() > 5)
                         <div style="padding:10px 18px;font-size:12px;color:#94a3b8;font-weight:600;border-top:1px solid #f8fafc;text-align:center">
-                            và {{ $department->employees->count() - 5 }} nhân viên khác…
+                            {{ __('nova-department::app.departments.other_employees', ['count' => $department->employees->count() - 5]) }}
                         </div>
                     @endif
                 @endif
@@ -254,7 +254,7 @@
             @if($department->children->isNotEmpty())
                 <div class="dept-info-card">
                     <div class="dept-info-card-head">
-                        <div class="dept-info-card-title">Phòng ban con trực tiếp</div>
+                        <div class="dept-info-card-title">@lang('nova-department::app.departments.direct_children')</div>
                         <span class="dept-badge dept-badge-gray">{{ $department->children->count() }}</span>
                     </div>
                     @foreach($department->children as $child)
@@ -267,12 +267,12 @@
                                 <div class="dept-emp-pos">
                                     <span class="dept-table-code" style="font-size:10px">{{ $child->code }}</span>
                                     @if($child->manager)
-                                        &nbsp;· Trưởng: {{ $child->manager->name }}
+                                        &nbsp;· @lang('nova-department::app.departments.child_manager_prefix') {{ $child->manager->name }}
                                     @endif
                                 </div>
                             </div>
                             <div style="display:flex;align-items:center;gap:6px">
-                                <span class="dept-badge dept-badge-blue" style="font-size:10px">{{ $child->employee_count }} người</span>
+                                <span class="dept-badge dept-badge-blue" style="font-size:10px">{{ __('nova-department::app.common.people_count', ['count' => $child->employee_count]) }}</span>
                                 <a href="{{ route('hr.departments.show', $child) }}" class="btn-dept-icon view">
                                     <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                                 </a>
@@ -290,12 +290,12 @@
         <div class="dept-table-card">
             <div class="dept-table-header">
                 <div>
-                    <span class="dept-table-title">Danh sách nhân sự</span>
-                    <span class="dept-table-count" style="margin-left:8px">{{ $department->employees->count() }} người</span>
+                    <span class="dept-table-title">@lang('nova-department::app.departments.employee_list')</span>
+                    <span class="dept-table-count" style="margin-left:8px">{{ __('nova-department::app.common.people_count', ['count' => $department->employees->count()]) }}</span>
                 </div>
                 <a href="#" class="btn-dept-primary" style="font-size:11.5px;padding:6px 13px">
                     <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                    Thêm nhân viên
+                    @lang('nova-department::app.departments.add_employee_button')
                 </a>
             </div>
             @if($department->employees->isEmpty())
@@ -303,18 +303,18 @@
                     <div class="dept-empty-icon">
                         <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                     </div>
-                    <div class="dept-empty-title">Chưa có nhân sự</div>
-                    <div class="dept-empty-desc">Phòng ban này chưa có nhân viên nào</div>
+                    <div class="dept-empty-title">@lang('nova-department::app.departments.no_employees_title')</div>
+                    <div class="dept-empty-desc">@lang('nova-department::app.departments.no_employees_description')</div>
                 </div>
             @else
                 <table class="dept-table">
                     <thead>
                         <tr>
-                            <th>Nhân viên</th>
-                            <th>Vị trí</th>
-                            <th>Email</th>
-                            <th>Ngày vào</th>
-                            <th>Trạng thái</th>
+                            <th>@lang('nova-department::app.common.employee')</th>
+                            <th>@lang('nova-department::app.common.position')</th>
+                            <th>@lang('nova-department::app.positions.table.email')</th>
+                            <th>@lang('nova-department::app.positions.table.hire_date')</th>
+                            <th>@lang('nova-department::app.common.status')</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -349,7 +349,7 @@
                                 <td>
                                     <span class="dept-badge {{ $emp->is_active ? 'dept-badge-active' : 'dept-badge-inactive' }}">
                                         <span class="dept-status-dot {{ $emp->is_active ? 'active' : 'inactive' }}"></span>
-                                        {{ $emp->is_active ? 'Đang làm' : 'Đã nghỉ' }}
+                                        {{ $emp->is_active ? __('nova-department::app.positions.employee_status_active') : __('nova-department::app.positions.employee_status_inactive') }}
                                     </span>
                                 </td>
                             </tr>
@@ -365,12 +365,12 @@
         <div class="dept-table-card">
             <div class="dept-table-header">
                 <div>
-                    <span class="dept-table-title">Danh sách vị trí</span>
-                    <span class="dept-table-count" style="margin-left:8px">{{ $department->positions->count() }} vị trí</span>
+                    <span class="dept-table-title">@lang('nova-department::app.departments.position_list')</span>
+                    <span class="dept-table-count" style="margin-left:8px">{{ __('nova-department::app.common.position_count', ['count' => $department->positions->count()]) }}</span>
                 </div>
                 <a href="{{ route('hr.positions.create', ['department_id' => $department->id]) }}" class="btn-dept-primary" style="font-size:11.5px;padding:6px 13px">
                     <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                    Thêm vị trí
+                    @lang('nova-department::app.positions.add_button')
                 </a>
             </div>
             @if($department->positions->isEmpty())
@@ -378,20 +378,20 @@
                     <div class="dept-empty-icon">
                         <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
                     </div>
-                    <div class="dept-empty-title">Chưa có vị trí nào</div>
-                    <div class="dept-empty-desc">Thêm vị trí công việc cho phòng ban này</div>
+                    <div class="dept-empty-title">@lang('nova-department::app.departments.no_positions_title')</div>
+                    <div class="dept-empty-desc">@lang('nova-department::app.departments.no_positions_description')</div>
                 </div>
             @else
                 <table class="dept-table">
                     <thead>
                         <tr>
-                            <th>Vị trí</th>
-                            <th>Mã</th>
-                            <th>Cấp bậc</th>
-                            <th>Lương</th>
-                            <th>Biên chế</th>
-                            <th>Trạng thái</th>
-                            <th style="text-align:right">Thao tác</th>
+                            <th>@lang('nova-department::app.positions.table.position')</th>
+                            <th>@lang('nova-department::app.positions.table.code')</th>
+                            <th>@lang('nova-department::app.positions.table.level')</th>
+                            <th>@lang('nova-department::app.positions.table.salary')</th>
+                            <th>@lang('nova-department::app.positions.table.headcount')</th>
+                            <th>@lang('nova-department::app.positions.table.status')</th>
+                            <th style="text-align:right">@lang('nova-department::app.positions.table.actions')</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -419,12 +419,12 @@
                                             {{ $pos->salary_max ? number_format($pos->salary_max) : '?' }}
                                         </div>
                                     @else
-                                        <span style="color:#cbd5e1;font-size:12px">Chưa đặt</span>
+                                        <span style="color:#cbd5e1;font-size:12px">@lang('nova-department::app.common.not_set')</span>
                                     @endif
                                 </td>
                                 <td>
                                     @if($pos->headcount_plan)
-                                        <span class="dept-badge dept-badge-gray">{{ $pos->headcount_plan }} người</span>
+                                        <span class="dept-badge dept-badge-gray">{{ __('nova-department::app.common.people_count', ['count' => $pos->headcount_plan]) }}</span>
                                     @else
                                         <span style="color:#cbd5e1;font-size:12px">—</span>
                                     @endif
@@ -432,15 +432,15 @@
                                 <td>
                                     <span class="dept-badge {{ $pos->status === 'active' ? 'dept-badge-active' : 'dept-badge-inactive' }}">
                                         <span class="dept-status-dot {{ $pos->status }}"></span>
-                                        {{ $pos->status === 'active' ? 'Hoạt động' : 'Không hoạt động' }}
+                                        {{ $pos->status === 'active' ? __('nova-department::app.common.active') : __('nova-department::app.common.inactive') }}
                                     </span>
                                 </td>
                                 <td>
                                     <div class="dept-table-actions">
-                                        <a href="{{ route('hr.positions.show', $pos) }}" class="btn-dept-icon view" title="Xem chi tiết">
+                                        <a href="{{ route('hr.positions.show', $pos) }}" class="btn-dept-icon view" title="@lang('nova-department::app.common.view_details')">
                                             <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                                         </a>
-                                        <a href="{{ route('hr.positions.edit', $pos) }}" class="btn-dept-icon edit" title="Chỉnh sửa">
+                                        <a href="{{ route('hr.positions.edit', $pos) }}" class="btn-dept-icon edit" title="@lang('nova-department::app.common.edit')">
                                             <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                                         </a>
                                     </div>
@@ -458,12 +458,12 @@
         <div class="dept-table-card">
             <div class="dept-table-header">
                 <div>
-                    <span class="dept-table-title">Phòng ban con</span>
-                    <span class="dept-table-count" style="margin-left:8px">{{ $department->children->count() }} phòng ban</span>
+                    <span class="dept-table-title">@lang('nova-department::app.departments.child_list')</span>
+                    <span class="dept-table-count" style="margin-left:8px">{{ __('nova-department::app.common.department_count', ['count' => $department->children->count()]) }}</span>
                 </div>
                 <a href="{{ route('hr.departments.create', ['parent_id' => $department->id]) }}" class="btn-dept-primary" style="font-size:11.5px;padding:6px 13px">
                     <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                    Thêm phòng ban con
+                    @lang('nova-department::app.departments.add_child_button')
                 </a>
             </div>
             @if($department->children->isEmpty())
@@ -471,19 +471,19 @@
                     <div class="dept-empty-icon">
                         <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
                     </div>
-                    <div class="dept-empty-title">Chưa có phòng ban con</div>
-                    <div class="dept-empty-desc">Phòng ban này chưa có đơn vị trực thuộc nào</div>
+                    <div class="dept-empty-title">@lang('nova-department::app.departments.no_children_title')</div>
+                    <div class="dept-empty-desc">@lang('nova-department::app.departments.no_children_description')</div>
                 </div>
             @else
                 <table class="dept-table">
                     <thead>
                         <tr>
-                            <th>Phòng ban</th>
-                            <th>Mã</th>
-                            <th>Trưởng phòng</th>
-                            <th>Nhân sự</th>
-                            <th>Trạng thái</th>
-                            <th style="text-align:right">Thao tác</th>
+                            <th>@lang('nova-department::app.departments.table.department')</th>
+                            <th>@lang('nova-department::app.departments.table.code')</th>
+                            <th>@lang('nova-department::app.departments.table.manager')</th>
+                            <th>@lang('nova-department::app.departments.table.employees')</th>
+                            <th>@lang('nova-department::app.departments.table.status')</th>
+                            <th style="text-align:right">@lang('nova-department::app.departments.table.actions')</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -511,24 +511,24 @@
                                             <span style="font-size:12px;font-weight:600;color:#334155">{{ $child->manager->name }}</span>
                                         </div>
                                     @else
-                                        <span style="color:#cbd5e1;font-size:12px">Chưa có</span>
+                                        <span style="color:#cbd5e1;font-size:12px">@lang('nova-department::app.departments.no_manager')</span>
                                     @endif
                                 </td>
                                 <td>
-                                    <span class="dept-badge dept-badge-blue">{{ $child->employee_count }} người</span>
+                                    <span class="dept-badge dept-badge-blue">{{ __('nova-department::app.common.people_count', ['count' => $child->employee_count]) }}</span>
                                 </td>
                                 <td>
                                     <span class="dept-badge {{ $child->status === 'active' ? 'dept-badge-active' : 'dept-badge-inactive' }}">
                                         <span class="dept-status-dot {{ $child->status }}"></span>
-                                        {{ $child->status === 'active' ? 'Hoạt động' : 'Không hoạt động' }}
+                                        {{ $child->status === 'active' ? __('nova-department::app.common.active') : __('nova-department::app.common.inactive') }}
                                     </span>
                                 </td>
                                 <td>
                                     <div class="dept-table-actions">
-                                        <a href="{{ route('hr.departments.show', $child) }}" class="btn-dept-icon view" title="Xem chi tiết">
+                                        <a href="{{ route('hr.departments.show', $child) }}" class="btn-dept-icon view" title="@lang('nova-department::app.common.view_details')">
                                             <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                                         </a>
-                                        <a href="{{ route('hr.departments.edit', $child) }}" class="btn-dept-icon edit" title="Chỉnh sửa">
+                                        <a href="{{ route('hr.departments.edit', $child) }}" class="btn-dept-icon edit" title="@lang('nova-department::app.common.edit')">
                                             <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                                         </a>
                                     </div>

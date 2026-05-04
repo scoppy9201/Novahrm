@@ -1,6 +1,6 @@
 @extends('nova-dashboard::layouts')
 
-@section('title', 'Vị trí — NovaHRM')
+@section('title', __('nova-department::app.positions.page_title'))
 
 @section('styles')
     @vite([
@@ -15,23 +15,23 @@
         <div class="dept-topbar-row1">
             <div>
                 <div class="dept-breadcrumb">
-                    <a href="{{ route('dashboard') }}">Dashboard</a>
+                    <a href="{{ route('dashboard') }}">@lang('nova-department::app.common.dashboard')</a>
                     <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-                    <a href="#">Nova HRM+</a>
+                    <a href="#">@lang('nova-department::app.common.suite')</a>
                     <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-                    <span>Vị trí &amp; Phòng ban</span>
+                    <span>@lang('nova-department::app.common.module')</span>
                 </div>
-                <div class="dept-page-title">Vị trí công việc</div>
-                <div class="dept-page-subtitle">Quản lý các vị trí trong tổ chức</div>
+                <div class="dept-page-title">@lang('nova-department::app.positions.heading')</div>
+                <div class="dept-page-subtitle">@lang('nova-department::app.positions.subtitle')</div>
             </div>
             <div class="dept-actions">
                 <a href="{{ route('hr.departments.index') }}" class="btn-dept-secondary">
                     <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-                    Phòng ban
+                    @lang('nova-department::app.positions.department_button')
                 </a>
                 <a href="{{ route('hr.positions.create') }}" class="btn-dept-primary">
                     <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                    Thêm vị trí
+                    @lang('nova-department::app.positions.add_button')
                 </a>
             </div>
         </div>
@@ -53,11 +53,11 @@
                     <div class="dept-stat-icon purple" style="margin-bottom:8px">
                         <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
                     </div>
-                    <div class="dept-stat-label">Tổng vị trí</div>
+                    <div class="dept-stat-label">@lang('nova-department::app.positions.stats_total')</div>
                     <div class="dept-stat-value">{{ $positions->total() }}</div>
                 </div>
                 <div style="position:relative;width:90px;height:48px;flex-shrink:0">
-                    <canvas id="chart-total" role="img" aria-label="Biểu đồ tổng vị trí"></canvas>
+                    <canvas id="chart-total" role="img" aria-label="@lang('nova-department::app.positions.stats_total')"></canvas>
                 </div>
             </div>
 
@@ -66,12 +66,12 @@
                     <div class="dept-stat-icon green" style="margin-bottom:8px">
                         <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                     </div>
-                    <div class="dept-stat-label">Đang hoạt động</div>
+                    <div class="dept-stat-label">@lang('nova-department::app.positions.stats_active')</div>
                     <div class="dept-stat-value">{{ $positions->getCollection()->where('status','active')->count() }}</div>
-                    <div class="dept-stat-sub">trên trang này</div>
+                    <div class="dept-stat-sub">@lang('nova-department::app.positions.stats_active_sub')</div>
                 </div>
                 <div style="position:relative;width:90px;height:48px;flex-shrink:0">
-                    <canvas id="chart-active" role="img" aria-label="Biểu đồ vị trí hoạt động"></canvas>
+                    <canvas id="chart-active" role="img" aria-label="@lang('nova-department::app.positions.stats_active')"></canvas>
                 </div>
             </div>
 
@@ -80,11 +80,11 @@
                     <div class="dept-stat-icon blue" style="margin-bottom:8px">
                         <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                     </div>
-                    <div class="dept-stat-label">Phòng ban</div>
+                    <div class="dept-stat-label">@lang('nova-department::app.positions.stats_departments')</div>
                     <div class="dept-stat-value">{{ $departments->count() }}</div>
                 </div>
                 <div style="position:relative;width:90px;height:48px;flex-shrink:0">
-                    <canvas id="chart-dept" role="img" aria-label="Biểu đồ phòng ban"></canvas>
+                    <canvas id="chart-dept" role="img" aria-label="@lang('nova-department::app.positions.stats_departments')"></canvas>
                 </div>
             </div>
         </div>
@@ -95,11 +95,11 @@
                 <div class="dept-search-wrap">
                     <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                     <input type="text" name="search" value="{{ request('search') }}"
-                           class="dept-search-input" placeholder="Tìm tên, mã vị trí..."/>
+                           class="dept-search-input" placeholder="@lang('nova-department::app.positions.search_placeholder')"/>
                 </div>
 
                 <select name="department_id" class="dept-filter-select" data-filter-form>
-                    <option value="">Tất cả phòng ban</option>
+                    <option value="">@lang('nova-department::app.positions.all_departments')</option>
                     @foreach($departments as $dept)
                         <option value="{{ $dept->id }}" {{ request('department_id') == $dept->id ? 'selected' : '' }}>
                             {{ $dept->name }}
@@ -108,7 +108,7 @@
                 </select>
 
                 <select name="level" class="dept-filter-select" data-filter-form>
-                    <option value="">Tất cả cấp bậc</option>
+                    <option value="">@lang('nova-department::app.positions.all_levels')</option>
                     @foreach(\App\packages\Nova\Department\src\Models\Position::LEVELS as $key => $label)
                         <option value="{{ $key }}" {{ request('level') === $key ? 'selected' : '' }}>
                             {{ $label }}
@@ -117,18 +117,18 @@
                 </select>
 
                 <select name="status" class="dept-filter-select" data-filter-form>
-                    <option value="">Tất cả trạng thái</option>
-                    <option value="active"   {{ request('status') === 'active'   ? 'selected' : '' }}>Hoạt động</option>
-                    <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>Không hoạt động</option>
+                    <option value="">@lang('nova-department::app.positions.all_statuses')</option>
+                    <option value="active"   {{ request('status') === 'active'   ? 'selected' : '' }}>@lang('nova-department::app.common.active')</option>
+                    <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>@lang('nova-department::app.common.inactive')</option>
                 </select>
 
                 @if(request()->hasAny(['search','department_id','level','status']))
-                    <a href="{{ route('hr.positions.index') }}" class="btn-dept-secondary">Xóa bộ lọc</a>
+                    <a href="{{ route('hr.positions.index') }}" class="btn-dept-secondary">@lang('nova-department::app.common.clear_filters')</a>
                 @endif
 
                 <button type="submit" class="btn-dept-secondary">
                     <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                    Tìm
+                    @lang('nova-department::app.common.search')
                 </button>
             </div>
         </form>
@@ -137,8 +137,8 @@
         <div class="dept-table-card">
             <div class="dept-table-header">
                 <div>
-                    <span class="dept-table-title">Danh sách vị trí</span>
-                    <span class="dept-table-count" style="margin-left:8px">{{ $positions->total() }} vị trí</span>
+                    <span class="dept-table-title">@lang('nova-department::app.positions.list_title')</span>
+                    <span class="dept-table-count" style="margin-left:8px">{{ __('nova-department::app.common.position_count', ['count' => $positions->total()]) }}</span>
                 </div>
             </div>
 
@@ -147,18 +147,18 @@
                     <div class="dept-empty-icon">
                         <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
                     </div>
-                    <div class="dept-empty-title">Chưa có vị trí nào</div>
+                    <div class="dept-empty-title">@lang('nova-department::app.positions.empty_title')</div>
                     <div class="dept-empty-desc">
                         @if(request()->hasAny(['search','department_id','level','status']))
-                            Không tìm thấy vị trí nào khớp với bộ lọc hiện tại
+                            @lang('nova-department::app.positions.filtered_empty_description')
                         @else
-                            Bắt đầu bằng cách thêm vị trí công việc đầu tiên
+                            @lang('nova-department::app.positions.empty_description')
                         @endif
                     </div>
                     @if(!request()->hasAny(['search','department_id','level','status']))
                         <a href="{{ route('hr.positions.create') }}" class="btn-dept-primary" style="margin-top:4px">
                             <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                            Thêm vị trí
+                            @lang('nova-department::app.positions.add_button')
                         </a>
                     @endif
                 </div>
@@ -166,14 +166,14 @@
                 <table class="dept-table">
                     <thead>
                         <tr>
-                            <th>Vị trí</th>
-                            <th>Mã</th>
-                            <th>Phòng ban</th>
-                            <th>Cấp bậc</th>
-                            <th>Lương</th>
-                            <th>Biên chế</th>
-                            <th>Trạng thái</th>
-                            <th style="text-align:right">Thao tác</th>
+                            <th>@lang('nova-department::app.positions.table.position')</th>
+                            <th>@lang('nova-department::app.positions.table.code')</th>
+                            <th>@lang('nova-department::app.positions.table.department')</th>
+                            <th>@lang('nova-department::app.positions.table.level')</th>
+                            <th>@lang('nova-department::app.positions.table.salary')</th>
+                            <th>@lang('nova-department::app.positions.table.headcount')</th>
+                            <th>@lang('nova-department::app.positions.table.status')</th>
+                            <th style="text-align:right">@lang('nova-department::app.positions.table.actions')</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -243,14 +243,14 @@
                                             {{ $pos->salary_max ? number_format($pos->salary_max) : '?' }}
                                         </div>
                                     @else
-                                        <span style="color:#cbd5e1;font-size:12px">Chưa đặt</span>
+                                        <span style="color:#cbd5e1;font-size:12px">@lang('nova-department::app.common.not_set')</span>
                                     @endif
                                 </td>
 
                                 {{-- Biên chế --}}
                                 <td>
                                     @if($pos->headcount_plan)
-                                        <span class="dept-badge dept-badge-gray">{{ $pos->headcount_plan }} người</span>
+                                        <span class="dept-badge dept-badge-gray">{{ __('nova-department::app.common.people_count', ['count' => $pos->headcount_plan]) }}</span>
                                     @else
                                         <span style="color:#cbd5e1;font-size:12px">—</span>
                                     @endif
@@ -260,7 +260,7 @@
                                 <td>
                                     <span class="dept-badge {{ $pos->status === 'active' ? 'dept-badge-active' : 'dept-badge-inactive' }}">
                                         <span class="dept-status-dot {{ $pos->status }}"></span>
-                                        {{ $pos->status === 'active' ? 'Hoạt động' : 'Không hoạt động' }}
+                                        {{ $pos->status === 'active' ? __('nova-department::app.common.active') : __('nova-department::app.common.inactive') }}
                                     </span>
                                 </td>
 
@@ -268,11 +268,11 @@
                                 <td>
                                     <div class="dept-table-actions">
                                         <a href="{{ route('hr.positions.show', $pos) }}"
-                                           class="btn-dept-icon view" title="Xem chi tiết">
+                                           class="btn-dept-icon view" title="@lang('nova-department::app.common.view_details')">
                                             <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                                         </a>
                                         <a href="{{ route('hr.positions.edit', $pos) }}"
-                                           class="btn-dept-icon edit" title="Chỉnh sửa">
+                                           class="btn-dept-icon edit" title="@lang('nova-department::app.common.edit')">
                                             <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                                         </a>
 
@@ -280,7 +280,7 @@
                                               action="{{ route('hr.positions.destroy', $pos) }}" style="display:none">
                                             @csrf @method('DELETE')
                                         </form>
-                                        <button type="button" class="btn-dept-icon delete" title="Xóa"
+                                        <button type="button" class="btn-dept-icon delete" title="@lang('nova-department::app.common.delete')"
                                                 data-delete-form="delete-pos-{{ $pos->id }}"
                                                 data-name="{{ $pos->title }}">
                                             <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
@@ -296,8 +296,8 @@
                 @if($positions->hasPages())
                     <div class="dept-pagination">
                         <div class="dept-pagination-info">
-                            Hiển thị {{ $positions->firstItem() }}–{{ $positions->lastItem() }}
-                            trong {{ $positions->total() }} vị trí
+                            {{ __('nova-department::app.common.showing_range', ['from' => $positions->firstItem(), 'to' => $positions->lastItem()]) }}
+                            {{ __('nova-department::app.common.of_total', ['total' => __('nova-department::app.common.position_count', ['count' => $positions->total()])]) }}
                         </div>
                         <div class="dept-pagination-links">
                             {{ $positions->withQueryString()->links() }}

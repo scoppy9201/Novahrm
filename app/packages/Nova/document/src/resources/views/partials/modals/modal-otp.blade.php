@@ -3,7 +3,7 @@
 <div class="doc-modal-overlay" id="modal-otp">
     <div class="doc-modal doc-modal-sm">
         <div class="doc-modal-head">
-            <div class="doc-modal-title">Xác nhận ký số</div>
+            <div class="doc-modal-title">@lang('documents::app.modals.otp_title')</div>
             <button class="doc-btn doc-btn-ghost doc-btn-icon" onclick="closeModal('modal-otp')">
                 <svg viewBox="0 0 24 24" stroke="currentColor"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </button>
@@ -28,22 +28,22 @@
 
                     {{-- Bước 1: Gửi OTP --}}
                     <div id="otp-step-send" style="width:100%">
-                        <div class="doc-otp-title" style="font-size:14px">Gửi mã xác nhận</div>
+                        <div class="doc-otp-title" style="font-size:14px">@lang('documents::app.modals.otp_send_title')</div>
                         <div class="doc-otp-desc">
-                            Mã OTP sẽ được gửi đến email<br>
+                            @lang('documents::app.modals.otp_send_desc')<br>
                             <strong>{{ Auth::user()->email }}</strong>
                         </div>
                         <button type="button" class="doc-btn doc-btn-primary" style="width:100%;margin-top:8px" id="btn-send-otp">
                             <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                            Gửi OTP qua email
+                            @lang('documents::app.modals.otp_send_button')
                         </button>
                     </div>
 
                     {{-- Bước 2: Nhập OTP --}}
                     <div id="otp-step-verify" style="display:none;width:100%">
-                        <div class="doc-otp-title" style="font-size:14px">Nhập mã OTP</div>
+                        <div class="doc-otp-title" style="font-size:14px">@lang('documents::app.modals.otp_verify_title')</div>
                         <div class="doc-otp-desc">
-                            Mã 6 số đã được gửi đến<br>
+                            @lang('documents::app.modals.otp_verify_desc')<br>
                             <strong>{{ Auth::user()->email }}</strong>
                         </div>
 
@@ -56,15 +56,15 @@
                         </div>
 
                         <div class="doc-otp-resend">
-                            <span id="otp-timer-text">Gửi lại sau <span class="doc-otp-countdown" id="otp-countdown">10:00</span></span>
+                            <span id="otp-timer-text">@lang('documents::app.modals.otp_resend_after') <span class="doc-otp-countdown" id="otp-countdown">10:00</span></span>
                             <button type="button" id="btn-resend-otp" style="display:none" onclick="sendOtp()">
-                                Gửi lại OTP
+                                @lang('documents::app.modals.otp_resend_button')
                             </button>
                         </div>
 
                         <div id="otp-error" style="display:none;margin-top:10px" class="doc-alert doc-alert-error">
                             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                            <span id="otp-error-text">OTP không chính xác hoặc đã hết hạn.</span>
+                            <span id="otp-error-text">@lang('documents::app.modals.otp_error')</span>
                         </div>
                     </div>
 
@@ -72,10 +72,10 @@
             </div>
 
             <div class="doc-modal-foot" id="otp-footer" style="display:none">
-                <button type="button" class="doc-btn doc-btn-secondary" onclick="closeModal('modal-otp')">Huỷ</button>
+                <button type="button" class="doc-btn doc-btn-secondary" onclick="closeModal('modal-otp')">@lang('documents::app.common.cancel')</button>
                 <button type="submit" class="doc-btn doc-btn-primary" id="btn-confirm-sign" disabled>
                     <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                    Xác nhận ký
+                    @lang('documents::app.modals.otp_confirm')
                 </button>
             </div>
         </form>
@@ -91,7 +91,7 @@
 
     async function sendOtp() {
         const btn = document.getElementById('btn-send-otp');
-        if (btn) { btn.disabled = true; btn.textContent = 'Đang gửi...'; }
+        if (btn) { btn.disabled = true; btn.textContent = @json(__('documents::app.modals.sending')); }
 
         try {
             const res  = await fetch('{{ route('documents.signature.send-otp', $document) }}', {
@@ -110,14 +110,14 @@
                 document.getElementById('otp-footer').style.display      = 'flex';
                 startCountdown(600);
                 document.querySelector('.doc-otp-digit')?.focus();
-                novaToast('OTP đã được gửi qua email.', 'success');
+                novaToast(@json(__('documents::app.modals.otp_sent')), 'success');
             } else {
-                novaToast(data.message || 'Không thể gửi OTP, thử lại sau.', 'error');
-                if (btn) { btn.disabled = false; btn.textContent = 'Gửi OTP qua email'; }
+                novaToast(data.message || @json(__('documents::app.modals.send_failed')), 'error');
+                if (btn) { btn.disabled = false; btn.textContent = @json(__('documents::app.modals.otp_send_button')); }
             }
         } catch(e) {
-            novaToast('Lỗi kết nối, thử lại sau.', 'error');
-            if (btn) { btn.disabled = false; btn.textContent = 'Gửi OTP qua email'; }
+            novaToast(@json(__('documents::app.modals.connection_error')), 'error');
+            if (btn) { btn.disabled = false; btn.textContent = @json(__('documents::app.modals.otp_send_button')); }
         }
     }
     window.sendOtp = sendOtp;
@@ -220,7 +220,7 @@
     document.getElementById('form-otp-sign')?.addEventListener('submit', function(e) {
         const otp = [...digits].map(d => d.value).join('');
         if (otp.length < 6) { e.preventDefault(); return; }
-        if (confirmBtn) { confirmBtn.disabled = true; confirmBtn.textContent = 'Đang ký...'; }
+        if (confirmBtn) { confirmBtn.disabled = true; confirmBtn.textContent = @json(__('documents::app.modals.signing')); }
     });
 
     //  Reset modal khi đóng 
@@ -237,7 +237,7 @@
         if (confirmBtn) confirmBtn.disabled = true;
         clearInterval(countdownTimer);
         const btn = document.getElementById('btn-send-otp');
-        if (btn) { btn.disabled = false; btn.textContent = 'Gửi OTP qua email'; }
+        if (btn) { btn.disabled = false; btn.textContent = @json(__('documents::app.modals.otp_send_button')); }
     }
 })();
 </script>

@@ -17,6 +17,7 @@ class DocumentServiceProvider extends AuthServiceProvider
         $this->registerPolicies();  
         $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'documents');
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'documents');
     }
 
     public function register(): void

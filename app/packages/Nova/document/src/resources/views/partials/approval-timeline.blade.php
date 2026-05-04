@@ -3,16 +3,16 @@
 
 <div class="doc-detail-card">
     <div class="doc-detail-card-head">
-        <div class="doc-detail-card-title">Lịch sử phê duyệt</div>
+        <div class="doc-detail-card-title">@lang('documents::app.timeline.title')</div>
         <span style="font-size:11px;color:var(--doc-text-faint);font-weight:600">
-            {{ $approvals->count() }} hành động
+            {{ __('documents::app.timeline.count', ['count' => $approvals->count()]) }}
         </span>
     </div>
     <div class="doc-detail-card-body">
 
         @if($approvals->isEmpty())
         <div style="text-align:center;padding:20px 0;color:var(--doc-text-faint);font-size:12.5px">
-            Chưa có lịch sử phê duyệt nào.
+            @lang('documents::app.timeline.empty')
         </div>
         @else
         <div class="doc-timeline">
@@ -37,7 +37,7 @@
 
                 <div class="doc-timeline-content">
                     <div class="doc-tl-actor">
-                        {{ $approval->actor->name ?? 'Hệ thống' }}
+                        {{ $approval->actor->name ?? __('documents::app.timeline.system') }}
                     </div>
                     <div class="doc-tl-action">
                         {{ $approval->action_label }}

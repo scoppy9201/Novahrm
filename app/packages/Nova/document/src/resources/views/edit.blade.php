@@ -1,6 +1,6 @@
 @extends('nova-dashboard::layouts')
 
-@section('title', 'Chỉnh sửa — ' . $document->file_name . ' — NovaHRM')
+@section('title', __('documents::app.form.edit_page_title', ['name' => $document->file_name]))
 
 @section('styles')
     @vite([
@@ -17,21 +17,21 @@
         <div class="doc-topbar-row1">
             <div>
                 <div class="doc-breadcrumb">
-                    <a href="{{ route('dashboard') }}">Dashboard</a>
+                    <a href="{{ route('dashboard') }}">@lang('documents::app.common.dashboard')</a>
                     <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-                    <a href="{{ route('documents.index') }}">Tài liệu</a>
+                    <a href="{{ route('documents.index') }}">@lang('documents::app.common.documents')</a>
                     <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
                     <a href="{{ route('documents.show', $document) }}">{{ Str::limit($document->file_name, 30) }}</a>
                     <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-                    <span>Chỉnh sửa</span>
+                    <span>@lang('documents::app.common.edit')</span>
                 </div>
-                <div class="doc-page-title">Chỉnh sửa tài liệu</div>
+                <div class="doc-page-title">@lang('documents::app.form.edit_heading')</div>
             </div>
             <div class="doc-topbar-actions">
-                <a href="{{ route('documents.show', $document) }}" class="doc-btn doc-btn-secondary">Huỷ</a>
+                <a href="{{ route('documents.show', $document) }}" class="doc-btn doc-btn-secondary">@lang('documents::app.common.cancel')</a>
                 <button type="submit" form="edit-doc-form" class="doc-btn doc-btn-primary" id="btn-submit">
                     <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                    Lưu thay đổi
+                    @lang('documents::app.common.save_changes')
                 </button>
             </div>
         </div>
@@ -44,7 +44,7 @@
         <div class="doc-alert doc-alert-error">
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
             <div>
-                <div style="font-weight:700;margin-bottom:4px">Có lỗi xảy ra:</div>
+                <div style="font-weight:700;margin-bottom:4px">@lang('documents::app.form.errors_heading')</div>
                 @foreach($errors->all() as $err)<div>· {{ $err }}</div>@endforeach
             </div>
         </div>
@@ -64,7 +64,7 @@
 
                     {{-- File hiện tại --}}
                     <div class="doc-form-card">
-                        <div class="doc-form-card-title">File tài liệu</div>
+                        <div class="doc-form-card-title">@lang('documents::app.form.file_card')</div>
 
                         {{-- File hiện tại --}}
                         <div class="doc-upload-preview">
@@ -74,12 +74,12 @@
                             <div style="flex:1;min-width:0">
                                 <div class="doc-upload-preview-name">{{ $document->file_name }}</div>
                                 <div class="doc-upload-preview-size">
-                                    File hiện tại · {{ $document->fileSizeHuman() }}
+                                    @lang('documents::app.form.current_file') · {{ $document->fileSizeHuman() }}
                                 </div>
                             </div>
                             <a href="{{ route('documents.download', $document) }}"
                                class="doc-btn doc-btn-ghost doc-btn-icon"
-                               title="Tải xuống">
+                               title="@lang('documents::app.common.download')">
                                 <svg viewBox="0 0 24 24" stroke="currentColor"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                             </a>
                         </div>
@@ -88,15 +88,15 @@
                         <div style="margin-top:14px">
                             <div style="font-size:10px;font-weight:700;color:var(--doc-text-faint);
                                         text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">
-                                Thay thế bằng file mới (tuỳ chọn)
+                                @lang('documents::app.form.replace_file')
                             </div>
                             <div class="doc-upload-zone" id="upload-zone" style="padding:24px">
                                 <div class="doc-upload-icon" style="width:40px;height:40px">
                                     <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
                                 </div>
                                 <div class="doc-upload-hint">
-                                    <span onclick="document.getElementById('file-new').click()">Chọn file PDF mới</span>
-                                    &nbsp;hoặc kéo thả vào đây
+                                    <span onclick="document.getElementById('file-new').click()">@lang('documents::app.form.choose_new_pdf')</span>
+                                    <span>&nbsp;@lang('documents::app.form.or_drag_drop')</span>
                                 </div>
                             </div>
                             <input type="file" id="file-new" name="file" accept=".pdf" style="display:none"/>
@@ -119,19 +119,19 @@
 
                     {{-- Thông tin --}}
                     <div class="doc-form-card">
-                        <div class="doc-form-card-title">Thông tin tài liệu</div>
+                        <div class="doc-form-card-title">@lang('documents::app.form.document_info')</div>
                         <div class="doc-form-grid">
 
                             <div class="doc-form-group">
-                                <label class="doc-form-label" for="file_name">Tên hiển thị *</label>
+                                <label class="doc-form-label" for="file_name">@lang('documents::app.form.display_name')</label>
                                 <input class="doc-input" type="text" id="file_name" name="file_name"
                                     value="{{ old('file_name', $document->file_name) }}" required/>
                             </div>
 
                             <div class="doc-form-group">
-                                <label class="doc-form-label" for="category_id">Danh mục *</label>
+                                <label class="doc-form-label" for="category_id">@lang('documents::app.form.category')</label>
                                 <select class="doc-select" id="category_id" name="category_id" required>
-                                    <option value="">— Chọn danh mục —</option>
+                                    <option value="">@lang('documents::app.form.category_placeholder')</option>
                                     @foreach($categories ?? [] as $cat)
                                         <option value="{{ $cat->id }}"
                                             {{ old('category_id', $document->category_id) == $cat->id ? 'selected' : '' }}>
@@ -142,9 +142,9 @@
                             </div>
 
                             <div class="doc-form-group doc-col-full">
-                                <label class="doc-form-label" for="tags-input">Tags</label>
+                                <label class="doc-form-label" for="tags-input">@lang('documents::app.common.tags')</label>
                                 <input class="doc-input" type="text" id="tags-input"
-                                    placeholder="Nhập tag rồi nhấn Enter..." autocomplete="off"/>
+                                    placeholder="@lang('documents::app.form.tags_placeholder')" autocomplete="off"/>
                                 <input type="hidden" id="tags" name="tags"
                                     value="{{ old('tags', json_encode($document->tags ?? [])) }}"/>
                                 <div id="tags-wrap" class="doc-tags-wrap" style="margin-top:6px"></div>
@@ -155,22 +155,22 @@
 
                     {{-- Thời hạn --}}
                     <div class="doc-form-card">
-                        <div class="doc-form-card-title">Thời hạn & phiên bản</div>
+                        <div class="doc-form-card-title">@lang('documents::app.form.date_version')</div>
                         <div class="doc-form-grid doc-grid-2">
                             <div class="doc-form-group">
-                                <label class="doc-form-label">Ngày ban hành</label>
+                                <label class="doc-form-label">@lang('documents::app.form.issued_at')</label>
                                 <input class="doc-input" type="date" name="issued_at"
                                     lang="vi"
                                     value="{{ old('issued_at', $document->issued_at?->format('Y-m-d')) }}"/>
                             </div>
                             <div class="doc-form-group">
-                                <label class="doc-form-label">Ngày hết hạn</label>
+                                <label class="doc-form-label">@lang('documents::app.form.expires_at')</label>
                                 <input class="doc-input" type="date" name="expires_at"
                                     lang="vi"
                                     value="{{ old('expires_at', $document->expires_at?->format('Y-m-d')) }}"/>
                             </div>
                             <div class="doc-form-group">
-                                <label class="doc-form-label">Phiên bản</label>
+                                <label class="doc-form-label">@lang('documents::app.form.version')</label>
                                 <input class="doc-input" type="number" name="version" min="1"
                                     value="{{ old('version', $document->version) }}"
                                     style="max-width:100px"/>
@@ -186,7 +186,7 @@
                     {{-- Trạng thái hiện tại --}}
                     <div class="doc-detail-card">
                         <div class="doc-detail-card-head">
-                            <div class="doc-detail-card-title">Trạng thái</div>
+                            <div class="doc-detail-card-title">@lang('documents::app.common.status')</div>
                         </div>
                         <div class="doc-detail-card-body">
                             <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
@@ -199,7 +199,7 @@
                             @if(in_array($document->status, ['approved','signing','signed']))
                             <div class="doc-alert doc-alert-warning" style="font-size:11.5px">
                                 <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                                Chỉnh sửa tài liệu đã duyệt có thể yêu cầu phê duyệt lại.
+                                @lang('documents::app.form.approved_warning')
                             </div>
                             @endif
                         </div>
@@ -208,13 +208,13 @@
                     {{-- Quyền truy cập --}}
                     <div class="doc-detail-card">
                         <div class="doc-detail-card-head">
-                            <div class="doc-detail-card-title">Quyền truy cập</div>
+                            <div class="doc-detail-card-title">@lang('documents::app.form.access')</div>
                         </div>
                         <div class="doc-detail-card-body" style="display:flex;flex-direction:column;gap:14px">
                             <div class="doc-form-group">
-                                <label class="doc-form-label">Gán cho nhân viên</label>
+                                <label class="doc-form-label">@lang('documents::app.form.assign_employee')</label>
                                 <select class="doc-select" name="employee_id">
-                                    <option value="">— Tài liệu công ty —</option>
+                                    <option value="">@lang('documents::app.form.assign_employee_placeholder')</option>
                                     @foreach($employees ?? [] as $emp)
                                         <option value="{{ $emp->id }}"
                                             {{ old('employee_id', $document->employee_id) == $emp->id ? 'selected' : '' }}>
@@ -229,9 +229,9 @@
                                 <input type="hidden" name="is_confidential" id="is_confidential"
                                     value="{{ old('is_confidential', $document->is_confidential ? '1' : '0') }}"/>
                                 <div>
-                                    <div class="doc-toggle-label">Tài liệu mật</div>
+                                    <div class="doc-toggle-label">@lang('documents::app.form.confidential_title')</div>
                                     <div style="font-size:10.5px;color:var(--doc-text-faint);margin-top:2px">
-                                        Chỉ HR, admin và đương sự xem được
+                                        @lang('documents::app.form.confidential_hint')
                                     </div>
                                 </div>
                             </label>
@@ -262,8 +262,8 @@ zone.addEventListener('drop', e => {
 fileNew.addEventListener('change', () => { if (fileNew.files[0]) setNewFile(fileNew.files[0]); });
 
 function setNewFile(file) {
-    if (file.type !== 'application/pdf') { novaToast('Chỉ hỗ trợ PDF!', 'error'); return; }
-    if (file.size > 20*1024*1024) { novaToast('File tối đa 20MB!', 'warning'); return; }
+    if (file.type !== 'application/pdf') { novaToast(@json(__('documents::app.form.pdf_only')), 'error'); return; }
+    if (file.size > 20*1024*1024) { novaToast(@json(__('documents::app.form.max_size')), 'warning'); return; }
     document.getElementById('new-file-name').textContent = file.name;
     document.getElementById('new-file-size').textContent = formatBytes(file.size);
     document.getElementById('new-file-preview').style.display = 'flex';
@@ -320,7 +320,7 @@ renderTags();
 
 document.getElementById('edit-doc-form').addEventListener('submit', () => {
     const btn = document.getElementById('btn-submit');
-    btn.disabled = true; btn.textContent = 'Đang lưu...';
+    btn.disabled = true; btn.textContent = @json(__('documents::app.form.saving'));
 });
 </script>
 @endsection

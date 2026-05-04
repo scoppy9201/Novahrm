@@ -1,6 +1,6 @@
 @extends('nova-dashboard::layouts')
 
-@section('title', 'Tài liệu — NovaHRM')
+@section('title', __('documents::app.index.page_title'))
 
 @section('styles')
     @vite([
@@ -17,25 +17,25 @@
         <div class="doc-topbar-row1">
             <div>
                 <div class="doc-breadcrumb">
-                    <a href="{{ route('dashboard') }}">Dashboard</a>
+                    <a href="{{ route('dashboard') }}">@lang('documents::app.common.dashboard')</a>
                     <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-                    <a href="#">Nova HRM+</a>
+                    <a href="#">@lang('documents::app.common.suite')</a>
                     <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-                    <span>Tài liệu</span>
+                    <span>@lang('documents::app.common.documents')</span>
                 </div>
-                <div class="doc-page-title">Tài liệu</div>
+                <div class="doc-page-title">@lang('documents::app.index.heading')</div>
             </div>
             <div class="doc-topbar-actions">
-                <button class="doc-btn doc-btn-secondary" id="btn-toggle-view" title="Chuyển chế độ xem">
+                <button class="doc-btn doc-btn-secondary" id="btn-toggle-view" title="@lang('documents::app.index.toggle_view')">
                     <svg id="icon-view" viewBox="0 0 24 24" stroke="currentColor">
                         <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
                         <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
                     </svg>
-                    Lưới
+                    @lang('documents::app.index.grid')
                 </button>
                 <a href="{{ route('documents.create') }}" class="doc-btn doc-btn-primary">
                     <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                    Tải lên tài liệu
+                    @lang('documents::app.index.upload_button')
                 </a>
             </div>
         </div>
@@ -43,23 +43,23 @@
         <div class="doc-topbar-tabs">
             <a href="{{ route('documents.index') }}"
                class="doc-tab {{ !request('tab') || request('tab') === 'all' ? 'active' : '' }}">
-                Tất cả
+                @lang('documents::app.index.tabs.all')
             </a>
             <a href="{{ route('documents.index', ['tab' => 'personal']) }}"
                class="doc-tab {{ request('tab') === 'personal' ? 'active' : '' }}">
-                Của tôi
+                @lang('documents::app.index.tabs.personal')
             </a>
             <a href="{{ route('documents.index', ['tab' => 'company']) }}"
                class="doc-tab {{ request('tab') === 'company' ? 'active' : '' }}">
-                Công ty
+                @lang('documents::app.index.tabs.company')
             </a>
             <a href="{{ route('documents.index', ['tab' => 'pending']) }}"
                class="doc-tab {{ request('tab') === 'pending' ? 'active' : '' }}">
-                Chờ duyệt
+                @lang('documents::app.index.tabs.pending')
             </a>
             <a href="{{ route('documents.index', ['tab' => 'signing']) }}"
                class="doc-tab {{ request('tab') === 'signing' ? 'active' : '' }}">
-                Chờ ký
+                @lang('documents::app.index.tabs.signing')
             </a>
         </div>
     </header>
@@ -75,7 +75,7 @@
                     type="text"
                     class="doc-search-input"
                     id="search-input"
-                    placeholder="Tìm theo tên tài liệu..."
+                    placeholder="@lang('documents::app.index.search_placeholder')"
                     value="{{ request('search') }}"
                     autocomplete="off"
                 />
@@ -84,7 +84,7 @@
             <div class="doc-filter-divider"></div>
 
             <select class="doc-filter-select" id="filter-category" onchange="applyFilters()">
-                <option value="">Tất cả danh mục</option>
+                <option value="">@lang('documents::app.index.all_categories')</option>
                 @foreach($categories ?? [] as $cat)
                     <option value="{{ $cat->id }}" {{ request('category') == $cat->id ? 'selected' : '' }}>
                         {{ $cat->name }}
@@ -93,27 +93,27 @@
             </select>
 
             <select class="doc-filter-select" id="filter-status" onchange="applyFilters()">
-                <option value="">Tất cả trạng thái</option>
-                <option value="draft"    {{ request('status') === 'draft'    ? 'selected' : '' }}>Nháp</option>
-                <option value="pending"  {{ request('status') === 'pending'  ? 'selected' : '' }}>Chờ duyệt</option>
-                <option value="approved" {{ request('status') === 'approved' ? 'selected' : '' }}>Đã duyệt</option>
-                <option value="rejected" {{ request('status') === 'rejected' ? 'selected' : '' }}>Từ chối</option>
-                <option value="signing"  {{ request('status') === 'signing'  ? 'selected' : '' }}>Chờ ký</option>
-                <option value="signed"   {{ request('status') === 'signed'   ? 'selected' : '' }}>Đã ký</option>
-                <option value="expired"  {{ request('status') === 'expired'  ? 'selected' : '' }}>Hết hạn</option>
+                <option value="">@lang('documents::app.index.all_statuses')</option>
+                <option value="draft"    {{ request('status') === 'draft'    ? 'selected' : '' }}>@lang('documents::app.statuses.draft')</option>
+                <option value="pending"  {{ request('status') === 'pending'  ? 'selected' : '' }}>@lang('documents::app.statuses.pending')</option>
+                <option value="approved" {{ request('status') === 'approved' ? 'selected' : '' }}>@lang('documents::app.statuses.approved')</option>
+                <option value="rejected" {{ request('status') === 'rejected' ? 'selected' : '' }}>@lang('documents::app.statuses.rejected')</option>
+                <option value="signing"  {{ request('status') === 'signing'  ? 'selected' : '' }}>@lang('documents::app.statuses.signing')</option>
+                <option value="signed"   {{ request('status') === 'signed'   ? 'selected' : '' }}>@lang('documents::app.statuses.signed')</option>
+                <option value="expired"  {{ request('status') === 'expired'  ? 'selected' : '' }}>@lang('documents::app.statuses.expired')</option>
             </select>
 
             <select class="doc-filter-select" id="filter-sort" onchange="applyFilters()">
-                <option value="newest" {{ request('sort','newest') === 'newest' ? 'selected' : '' }}>Mới nhất</option>
-                <option value="oldest" {{ request('sort') === 'oldest' ? 'selected' : '' }}>Cũ nhất</option>
-                <option value="name"   {{ request('sort') === 'name'   ? 'selected' : '' }}>Tên A-Z</option>
-                <option value="size"   {{ request('sort') === 'size'   ? 'selected' : '' }}>Dung lượng</option>
+                <option value="newest" {{ request('sort','newest') === 'newest' ? 'selected' : '' }}>@lang('documents::app.index.sort_newest')</option>
+                <option value="oldest" {{ request('sort') === 'oldest' ? 'selected' : '' }}>@lang('documents::app.index.sort_oldest')</option>
+                <option value="name"   {{ request('sort') === 'name'   ? 'selected' : '' }}>@lang('documents::app.index.sort_name')</option>
+                <option value="size"   {{ request('sort') === 'size'   ? 'selected' : '' }}>@lang('documents::app.index.sort_size')</option>
             </select>
 
             @if(request()->hasAny(['search','category','status','sort']))
                 <a href="{{ route('documents.index') }}" class="doc-btn doc-btn-secondary doc-btn-sm">
                     <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                    Xoá bộ lọc
+                    @lang('documents::app.index.clear_filters')
                 </a>
             @endif
         </div>
@@ -126,18 +126,18 @@
                         <div class="doc-empty-icon">
                             <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
                         </div>
-                        <div class="doc-empty-title">Chưa có tài liệu nào</div>
+                        <div class="doc-empty-title">@lang('documents::app.index.empty_title')</div>
                         <div class="doc-empty-desc">
                             @if(request()->hasAny(['search','category','status']))
-                                Không tìm thấy tài liệu phù hợp với bộ lọc hiện tại.
+                                @lang('documents::app.index.filtered_empty_description')
                             @else
-                                Bắt đầu bằng cách tải lên tài liệu đầu tiên.
+                                @lang('documents::app.index.empty_description')
                             @endif
                         </div>
                         @if(!request()->hasAny(['search','category','status']))
                             <a href="{{ route('documents.create') }}" class="doc-btn doc-btn-primary" style="margin-top:4px">
                                 <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                                Tải lên tài liệu
+                                @lang('documents::app.index.upload_button')
                             </a>
                         @endif
                     </div>
@@ -145,11 +145,11 @@
                     <table class="doc-table">
                         <thead>
                             <tr>
-                                <th style="width:40%">Tài liệu</th>
-                                <th>Danh mục</th>
-                                <th>Trạng thái</th>
-                                <th>Ngày tải lên</th>
-                                <th>Hết hạn</th>
+                                <th style="width:40%">@lang('documents::app.index.table.document')</th>
+                                <th>@lang('documents::app.index.table.category')</th>
+                                <th>@lang('documents::app.index.table.status')</th>
+                                <th>@lang('documents::app.index.table.uploaded_at')</th>
+                                <th>@lang('documents::app.index.table.expires_at')</th>
                                 <th style="width:90px"></th>
                             </tr>
                         </thead>
@@ -167,7 +167,7 @@
                                                 {{ $doc->fileSizeHuman() }}
                                                 @if($doc->is_confidential)
                                                     &nbsp;·&nbsp;
-                                                    <span style="color:#b45309;font-weight:700">🔒 Mật</span>
+                                                    <span style="color:#b45309;font-weight:700">🔒 @lang('documents::app.index.sensitive')</span>
                                                 @endif
                                                 @if($doc->version > 1)
                                                     &nbsp;·&nbsp; v{{ $doc->version }}
@@ -178,7 +178,7 @@
                                 </td>
                                 <td>
                                     <span style="font-size:12px;color:var(--doc-text-muted)">
-                                        {{ $doc->category->name ?? '—' }}
+                                        {{ $doc->category->name ?? __('documents::app.common.none') }}
                                     </span>
                                 </td>
                                 <td>
@@ -194,31 +194,31 @@
                                         <span style="font-size:12px;color:{{ $doc->isExpiringSoon(30) ? '#b45309' : 'var(--doc-text-muted)' }};font-weight:{{ $doc->isExpiringSoon(30) ? '700' : '400' }}">
                                             {{ $doc->expires_at->format('d/m/Y') }}
                                             @if($doc->isExpiringSoon(30) && !$doc->isExpired())
-                                                <br><span style="font-size:10.5px;color:#b45309">Sắp hết hạn</span>
+                                                <br><span style="font-size:10.5px;color:#b45309">@lang('documents::app.index.expiring_soon')</span>
                                             @elseif($doc->isExpired())
-                                                <br><span style="font-size:10.5px;color:#dc2626">Đã hết hạn</span>
+                                                <br><span style="font-size:10.5px;color:#dc2626">@lang('documents::app.index.expired')</span>
                                             @endif
                                         </span>
                                     @else
-                                        <span style="font-size:12px;color:var(--doc-text-faint)">—</span>
+                                        <span style="font-size:12px;color:var(--doc-text-faint)">@lang('documents::app.common.none')</span>
                                     @endif
                                 </td>
                                 <td onclick="event.stopPropagation()">
                                     <div class="doc-table-actions">
                                         <a href="{{ route('documents.show', $doc) }}"
                                            class="doc-btn doc-btn-ghost doc-btn-icon"
-                                           title="Xem chi tiết">
+                                           title="@lang('documents::app.index.view_details')">
                                             <svg viewBox="0 0 24 24" stroke="currentColor"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                                         </a>
                                         <a href="{{ route('documents.download', $doc) }}"
                                            class="doc-btn doc-btn-ghost doc-btn-icon"
-                                           title="Tải xuống">
+                                           title="@lang('documents::app.index.download')">
                                             <svg viewBox="0 0 24 24" stroke="currentColor"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                                         </a>
                                         @can('update', $doc)
                                         <a href="{{ route('documents.edit', $doc) }}"
                                            class="doc-btn doc-btn-ghost doc-btn-icon"
-                                           title="Chỉnh sửa">
+                                           title="@lang('documents::app.index.edit')">
                                             <svg viewBox="0 0 24 24" stroke="currentColor"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                                         </a>
                                         @endcan
@@ -233,8 +233,7 @@
                     @if($documents->hasPages())
                     <div class="doc-pagination">
                         <div class="doc-pagination-info">
-                            Hiển thị {{ $documents->firstItem() }}–{{ $documents->lastItem() }}
-                            trong tổng số {{ $documents->total() }} tài liệu
+                            {{ __('documents::app.index.pagination.showing', ['from' => $documents->firstItem(), 'to' => $documents->lastItem(), 'total' => $documents->total()]) }}
                         </div>
                         <div class="doc-pagination-pages">
                             @if($documents->onFirstPage())
@@ -290,7 +289,7 @@
                         <div>
                             <div class="doc-card-title">{{ $doc->file_name }}</div>
                             <div class="doc-card-meta">
-                                {{ $doc->category->name ?? '—' }} · {{ $doc->fileSizeHuman() }}
+                                {{ $doc->category->name ?? __('documents::app.common.none') }} · {{ $doc->fileSizeHuman() }}
                             </div>
                         </div>
                         <div class="doc-card-footer">
@@ -300,7 +299,7 @@
                             <div style="display:flex;gap:4px" onclick="event.stopPropagation()">
                                 <a href="{{ route('documents.download', $doc) }}"
                                    class="doc-btn doc-btn-ghost doc-btn-icon doc-btn-sm"
-                                   title="Tải xuống">
+                                   title="@lang('documents::app.index.download')">
                                     <svg viewBox="0 0 24 24" stroke="currentColor"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                                 </a>
                             </div>
@@ -312,7 +311,7 @@
                 @if($documents->hasPages())
                 <div class="doc-pagination" style="background:var(--doc-white);border:1px solid var(--doc-border);border-radius:var(--doc-radius-lg);margin-top:4px">
                     <div class="doc-pagination-info">
-                        {{ $documents->firstItem() }}–{{ $documents->lastItem() }} / {{ $documents->total() }}
+                        {{ __('documents::app.index.pagination.compact', ['from' => $documents->firstItem(), 'to' => $documents->lastItem(), 'total' => $documents->total()]) }}
                     </div>
                     <div class="doc-pagination-pages">
                         @if(!$documents->onFirstPage())
@@ -369,8 +368,8 @@ function setView(grid) {
     viewTable.style.display = grid ? 'none' : 'block';
     viewGrid.style.display  = grid ? 'block' : 'none';
     btnToggle.innerHTML = grid
-        ? `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> Danh sách`
-        : `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg> Lưới`;
+        ? `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> ${@json(__('documents::app.index.list'))}`
+        : `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg> ${@json(__('documents::app.index.grid'))}`;
 }
 
 setView(isGrid);
