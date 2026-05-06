@@ -160,7 +160,7 @@ input {
 .sidebar-nav {
     flex: 1;
     overflow: visible;  
-    padding: 8px 10px 14px;
+    padding: 8px 20px 10px;
     scrollbar-width: none;
 }
 
@@ -177,13 +177,18 @@ input {
 .sidebar:not(.expanded) .sidebar-group {
     display: flex;
     justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 .sidebar-group.is-hidden {
     display: none;
 }
 
-.sidebar-group.is-active .sidebar-group-trigger,
+.sidebar-group.is-active .sidebar-group-icon {
+    box-shadow: 0 0 0 6px rgba(96, 165, 250, 0.18),
+                inset 0 1px 0 rgba(255,255,255,0.12); 
+}
 .sidebar-group:hover .sidebar-group-trigger {
     background: rgba(30, 64, 175, 0.16);
     border-color: rgba(96, 165, 250, 0.22);
@@ -208,9 +213,85 @@ input {
 }
 
 .sidebar:not(.expanded) .sidebar-group-trigger {
-    width: 62px;
+    width: 56px;
+    min-height: 56px;
     gap: 0;
-    padding: 10px 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;         
+}
+
+.sidebar-group.is-active .sidebar-group-trigger {
+    background: rgba(30, 64, 175, 0.22);        
+    border-color: rgba(96, 165, 250, 0.35);
+    border-left: 3px solid #60a5fa;           
+    color: #fff;
+}
+
+/* Active container */
+.sidebar:not(.expanded) .sidebar-group.is-active .sidebar-group-trigger,
+.sidebar:not(.expanded) .sidebar-group:hover .sidebar-group-trigger {
+    background: transparent;
+    border-color: transparent;
+    position: relative;
+}
+
+/* Indicator bar trượt từ trên xuống */
+.sidebar:not(.expanded) .sidebar-group.is-active .sidebar-group-trigger::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) scaleY(1);
+    width: 3px;
+    height: 28px;
+    background: linear-gradient(180deg, #93c5fd, #1d4ed8);
+    border-radius: 0 4px 4px 0;
+    animation: slideIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes slideIn {
+    from { 
+        height: 0; 
+        opacity: 0;
+        top: 30%;
+    }
+    to { 
+        height: 28px; 
+        opacity: 1;
+        top: 50%;
+    }
+}
+
+/* Ripple background */
+.sidebar:not(.expanded) .sidebar-group.is-active .sidebar-group-trigger::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border-radius: 14px;
+    background: radial-gradient(circle at center, rgba(96,165,250,0.18), transparent 70%);
+    animation: rippleFade 0.4s ease both;
+}
+
+@keyframes rippleFade {
+    from { opacity: 0; transform: scale(0.6); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+/* Icon — bounce lên + sáng */
+.sidebar-group.is-active .sidebar-group-icon {
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    box-shadow: 0 8px 20px rgba(29,78,216,0.45),
+                0 0 0 1px rgba(96,165,250,0.3);
+    transform: scale(1.1) translateY(-2px);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Icon hover — nhẹ hơn */
+.sidebar-group:hover .sidebar-group-icon {
+    transform: scale(1.05) translateY(-1px);
+    transition: all 0.2s ease;
 }
 
 .sidebar.expanded .sidebar-group-trigger {
@@ -568,7 +649,7 @@ input {
     border: 1px solid #e2e8f0;
     border-radius: 9px;
     padding: 6px 13px;
-    min-width: 200px;
+    min-width: 315px;
     transition: border-color 0.15s;
 }
 
@@ -643,6 +724,7 @@ input {
     cursor: pointer;
     white-space: nowrap;
     transition: all 0.15s;
+    text-decoration: none;
 }
 
 .btn-primary:hover {

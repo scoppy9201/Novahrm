@@ -57,6 +57,7 @@ class EmployeeController extends Controller
     // CREATE
     public function create(Request $request): View
     {
+        $employee        = new Employee();
         $departments     = Department::active()->orderBy('name')->get();
         $positions       = Position::where('status', 'active')->orderBy('title')->get();
         $managers        = Employee::active()->with('position')->orderBy('first_name')->get();
@@ -78,6 +79,7 @@ class EmployeeController extends Controller
         $universities    = json_decode(file_get_contents(app_path('Data/vietnam_universities.json')), true);
 
         return view('nova-employee::employee.create', compact(
+            'employee',
             'departments',
             'positions',
             'managers',
@@ -458,7 +460,7 @@ class EmployeeController extends Controller
         $employee = $this->service->restore($id);
 
         return redirect()
-            ->route('hr.employees.show', $employee)
+            ->route('hr.employees.index', ['tab' => 'trash'])
             ->with('success', "{$employee->name} đã được khôi phục.");
     }
 

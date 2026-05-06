@@ -347,14 +347,14 @@
                             @if(request('tab') === 'trash')
                                 {{-- Restore --}}
                                 <form method="POST"
-                                      action="{{ route('hr.employees.restore', $employee->id) }}"
-                                      style="display:inline"
-                                      data-nova-confirm-message="Khôi phục nhân viên này?"
-                                      data-nova-confirm-title="Khôi phục nhân viên"
-                                      data-nova-confirm-text="Khôi phục"
-                                      data-nova-confirm-cancel="Huỷ"
-                                      data-nova-confirm-type="info">
-                                    @csrf @method('PATCH')
+                                    action="{{ route('hr.employees.restore', $employee->id) }}"
+                                    style="display:inline"
+                                    data-nova-confirm-message="Khôi phục nhân viên này?"
+                                    data-nova-confirm-title="Khôi phục nhân viên"
+                                    data-nova-confirm-text="Khôi phục"
+                                    data-nova-confirm-cancel="Huỷ"
+                                    data-nova-confirm-type="info">
+                                    @csrf
                                     <button type="submit" class="btn-emp-icon" title="Khôi phục">
                                         <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.41"/></svg>
                                     </button>

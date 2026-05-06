@@ -34,20 +34,22 @@
                     </svg>
                 </button>
 
-                <button class="btn-primary" type="button">
+                <a href="{{ route('hr.employees.create') }}" class="btn-primary">
                     <svg viewBox="0 0 24 24">
                         <line x1="12" y1="5" x2="12" y2="19"/>
                         <line x1="5" y1="12" x2="19" y2="12"/>
                     </svg>
 
                     @lang('nova-dashboard::app.add_employee')
-                </button>
+                </a>
             </div>
         </div>
 
         <div class="topbar-tabs">
             <div class="topbar-tab active">@lang('nova-dashboard::app.employee_tab')</div>
-            <div class="topbar-tab">@lang('nova-dashboard::app.org_chart_tab')</div>
+            <a href="{{ route('org-chart.index') }}" class="topbar-tab" style="text-decoration:none">
+                @lang('nova-dashboard::app.org_chart_tab')
+            </a>
             <div class="topbar-tab">@lang('nova-dashboard::app.hrm_app_tab')</div>
         </div>
     </header>

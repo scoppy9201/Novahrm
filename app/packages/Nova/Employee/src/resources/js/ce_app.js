@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
         clearTimeout(managerTimer);
         managerTimer = setTimeout(async () => {
             try {
-                const res  = await fetch(`{{ route('hr.employees.search') }}?q=${encodeURIComponent(q)}`);
+                const res = await fetch(`${window.EMP_DATA.routes.employeeSearch}?q=${encodeURIComponent(q)}`);
                 const data = await res.json();
 
                 if (!data.length) {
@@ -554,7 +554,7 @@ let bankList = [];
 // Load danh sách ngân hàng
 async function loadBanks() {
     try {
-        const res  = await fetch('{{ route("hr.bank.banks") }}');
+        const res = await fetch(window.EMP_DATA.routes.bankBanks);
         bankList   = await res.json();
     } catch (e) {
         console.error('Không load được danh sách ngân hàng', e);
@@ -670,7 +670,7 @@ async function lookupBankAccount() {
     showBadge('loading', '⏳ Đang kiểm tra...');
 
     try {
-        const res  = await fetch('{{ route("hr.bank.lookup") }}', {
+        const res = await fetch(window.EMP_DATA.routes.bankLookup, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -1107,3 +1107,16 @@ function showTaxBadge(type, text) {
     badge.style.border       = `0.5px solid ${s.border}`;
     badge.style.borderRadius = '20px';
 }
+
+// Expose functions ra global cho inline onclick
+window.toggleLevelDropdown = toggleLevelDropdown;
+window.switchAddrVersion   = switchAddrVersion;
+window.onProvinceChange    = onProvinceChange;
+window.onWardChange        = onWardChange;
+window.lookupBankAccount   = lookupBankAccount;
+window.clearBankSelection  = clearBankSelection;
+window.lookupTaxCode       = lookupTaxCode;
+window.clearMajor          = clearMajor;
+window.clearUniv           = clearUniv;
+window.clearLevel          = clearLevel;
+window.applyTaxRecord      = applyTaxRecord;

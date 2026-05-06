@@ -9,13 +9,6 @@
     ])
 @endsection
 
-@section('scripts')
-    @vite([
-        'app/packages/Nova/Dashboard/src/resources/js/app.js',
-        'app/packages/Nova/Employee/src/resources/js/ce_app.js',
-    ])
-@endsection
-
 @section('content')
 
 <header class="emp-topbar">
@@ -116,14 +109,23 @@
 
 @endsection
 
-@push('scripts')
-<script>
-    window.EMP_DATA = {
-        provincesNew:    @json($provincesNew),
-        provincesOld:    @json($provincesOld),
-        educationMajors: @json($educationMajors),
-        universities:    @json($universities),
-        educationLevels: @json($educationLevels),
-    };
-</script>
-@endpush
+@section('scripts')
+    <script>
+        window.EMP_DATA = {
+            provincesNew:    @json($provincesNew),
+            provincesOld:    @json($provincesOld),
+            educationMajors: @json($educationMajors),
+            universities:    @json($universities),
+            educationLevels: @json($educationLevels),
+            routes: {
+                bankBanks:      "{{ route('hr.bank.banks') }}",
+                bankLookup:     "{{ route('hr.bank.lookup') }}",
+                employeeSearch: "{{ route('hr.employees.search') }}",
+            },
+        };
+    </script>
+    @vite([
+        'app/packages/Nova/Dashboard/src/resources/js/app.js',
+        'app/packages/Nova/Employee/src/resources/js/ce_app.js',
+    ])
+@endsection
