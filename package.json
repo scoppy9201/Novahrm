@@ -14,7 +14,9 @@
         "vite": "^6.2.4"
     },
     "dependencies": {
+        "@vitejs/plugin-vue": "^6.0.6",
         "@zxing/browser": "^0.1.4",
-        "qr-scanner": "^1.4.2"
+        "qr-scanner": "^1.4.2",
+        "vue": "^3.5.34"
     }
 }

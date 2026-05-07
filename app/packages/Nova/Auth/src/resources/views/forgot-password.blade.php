@@ -113,6 +113,10 @@
 
             {{-- STEP 3: Đặt lại mật khẩu --}}
             <div id="step-reset" style="display:none">
+                <button class="back-link" onclick="goTo('step-otp')">
+                    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+                    @lang('nova-auth::app.navigation.back')
+                </button>
                 <h1 class="login-heading">@lang('nova-auth::app.steps.reset.title')</h1>
                 <p class="login-subheading">@lang('nova-auth::app.steps.reset.description')</p>
 
@@ -352,8 +356,27 @@
         }, 1000);
     }
 
-    function resendOtp() {
-        document.getElementById('btn-send-otp').click();
+    async function resendOtp() {
+        document.querySelectorAll('.otp-input').forEach(i => i.value = '');
+        document.getElementById('otp0').focus();
+        if (!currentEmail) return;
+        try {
+            const res = await fetch('/forgot-password/send-otp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({ email: currentEmail })
+            });
+            const data = await res.json();                          
+            if (!res.ok) throw new Error(data.message || '');     
+            novaToast(__lang.otpSent, 'success');
+            startTimer();
+        } catch (e) {
+            showAlert('alert-otp', e.message);
+        }
     }
 
     // STEP 2
