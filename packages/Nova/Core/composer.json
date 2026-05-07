@@ -1,0 +1,18 @@
+{
+    "name": "nova/core",
+    "description": "Nova Core Module",
+    "type": "library",
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Nova\\Core\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Nova\\Core\\Providers\\CoreServiceProvider"
+            ]
+        }
+    }
+}

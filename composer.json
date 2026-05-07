@@ -14,6 +14,13 @@
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
         "nova/auth": "dev-dev",
+        "nova/core": "dev-dev",
+        "nova/dashboard": "dev-dev", 
+        "nova/department": "dev-dev", 
+        "nova/org-chart": "dev-dev",
+        "nova/employee": "dev-dev",
+        "nova/document": "dev-dev",
+        "nova/profile": "dev-dev",
         "relaticle/flowforge": "^2.0",
         "setasign/fpdi": "*",
         "spatie/laravel-permission": "^6.23",
@@ -35,7 +42,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "exclude-from-classmap": [
+            "app/packages/"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
@@ -84,9 +94,13 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": [
-        {
-            "type": "path",
-            "url": "app/packages/Nova/Auth"
-        }
+        {"type": "path", "url": "packages/Nova/Auth"},
+        {"type": "path", "url": "packages/Nova/Core"},
+        {"type": "path", "url": "packages/Nova/Dashboard"},
+        {"type": "path", "url": "packages/Nova/Department"},
+        {"type": "path", "url": "packages/Nova/OrgChart"},
+        {"type": "path", "url": "packages/Nova/Employee"},
+        {"type": "path", "url": "packages/Nova/Document"},
+        {"type": "path", "url": "packages/Nova/Profile"}
     ]
 }

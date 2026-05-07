@@ -1,0 +1,21 @@
+{
+    "name": "nova/auth",
+    "description": "Nova Auth Package",
+    "type": "library",
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Nova\\Auth\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.2"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Nova\\Auth\\Providers\\AuthServiceProvider"
+            ]
+        }
+    }
+}

@@ -1,0 +1,42 @@
+<?php
+
+namespace Nova\Department\Providers;
+
+use Illuminate\Support\ServiceProvider;
+use Nova\Department\Services\DepartmentService;
+
+class DepartmentServiceProvider extends ServiceProvider
+{
+    public function register(): void
+    {
+        $this->app->singleton(DepartmentService::class, DepartmentService::class);
+    }
+
+    public function boot(): void
+    {
+        $this->loadRoutes();
+        $this->loadViews();
+        $this->loadTranslations();
+    }
+
+    private function loadRoutes(): void
+    {
+        $this->loadRoutesFrom(
+            __DIR__ . '/../routes/web.php'
+        );
+    }
+
+    private function loadViews(): void
+    {
+        $this->loadViewsFrom(
+            __DIR__ . '/../resources/views', 'nova-department'
+        );
+    }
+
+    private function loadTranslations(): void
+    {
+        $this->loadTranslationsFrom(
+            __DIR__ . '/../resources/lang', 'nova-department'
+        );
+    }
+}

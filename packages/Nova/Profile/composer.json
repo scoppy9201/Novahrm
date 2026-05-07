@@ -1,0 +1,18 @@
+{
+    "name": "nova/profile",
+    "description": "Nova Profile Module",
+    "type": "library",
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Nova\\Profile\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Nova\\Profile\\Providers\\ProfileServiceProvider"
+            ]
+        }
+    }
+}

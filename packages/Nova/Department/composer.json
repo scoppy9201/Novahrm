@@ -1,0 +1,18 @@
+{
+    "name": "nova/department",
+    "description": "Nova Department Module",
+    "type": "library",
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Nova\\Department\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Nova\\Department\\Providers\\DepartmentServiceProvider"
+            ]
+        }
+    }
+}

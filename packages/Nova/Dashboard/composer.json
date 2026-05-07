@@ -1,0 +1,18 @@
+{
+    "name": "nova/dashboard",
+    "description": "Nova Dashboard Module",
+    "type": "library",
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Nova\\Dashboard\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Nova\\Dashboard\\Providers\\DashboardServiceProvider"
+            ]
+        }
+    }
+}
